@@ -14,6 +14,8 @@
 
   .hero-name { font-size: clamp(3.5rem, 18vw, 6rem); }
 
+  #about { min-height: 0; padding-top: 4rem; padding-bottom: 4rem; }
+  .about-body { margin-top: 2rem; margin-bottom: 2rem; }
   .about-stats { gap: 2rem; }
   .stat-n { font-size: 2.5rem; }
   .about-orb { display: none; }
@@ -32,7 +34,7 @@
 
   #experience { padding-left: 1.5rem; padding-right: 1.5rem; }
 
-  .story-scroll-container { height: 450vh; }
+  .story-scroll-container { height: 650vh; }
 
   .story-sticky {
     height: 100dvh;
