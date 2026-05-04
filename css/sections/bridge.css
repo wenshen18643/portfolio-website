@@ -1,0 +1,26 @@
+﻿
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   BRIDGE: About â†’ Experience
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.section-bridge {
+  background: var(--accent);
+  padding: 3.5rem 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.bridge-track {
+  display: flex;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.bridge-text {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 700;
+  color: var(--bg);
+  letter-spacing: -0.02em;
+  padding-right: 2rem;
+  flex-shrink: 0;
+}

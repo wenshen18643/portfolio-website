@@ -1,0 +1,103 @@
+﻿
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   COMPARE SLIDER
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.compare-slider {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--surface-dark);
+  user-select: none;
+  touch-action: none;
+}
+
+.compare-after,
+.compare-before {
+  position: absolute;
+  inset: 0;
+}
+
+.compare-after video,
+.compare-before video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.compare-before {
+  clip-path: inset(0 50% 0 0);
+  will-change: clip-path;
+}
+
+.compare-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background: var(--bg);
+  transform: translateX(-50%);
+  cursor: ew-resize;
+  z-index: 10;
+  box-shadow: 0 0 20px oklch(0.10 0.015 145 / 0.3);
+  transition: width 0.2s;
+}
+
+.compare-handle:hover {
+  width: 6px;
+}
+
+.handle-grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: var(--accent);
+  box-shadow: 0 4px 16px oklch(0.10 0.015 145 / 0.2);
+  transition: transform 0.2s var(--ease-quart), box-shadow 0.2s;
+  pointer-events: none;
+}
+
+.compare-handle:hover .handle-grip {
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: 0 6px 24px oklch(0.10 0.015 145 / 0.3);
+}
+
+.compare-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.compare-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.before-label { color: var(--muted); }
+.after-label { color: var(--accent); }
+
+@media (max-width: 768px) {
+  .compare-slider {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compare-handle { display: none; }
+  .compare-before { clip-path: inset(0 50% 0 0) !important; }
+}

@@ -1,0 +1,34 @@
+# Development / local config
+.claude/
+.agents/
+skills-lock.json
+
+# Tools (not needed for deployment)
+tools/
+
+# Docker (not needed for static hosting)
+Dockerfile
+nginx.conf
+
+# Vercel
+.vercel
+
+# Environment
+.env
+.env.*
+
+# Node (if you ever add it)
+node_modules/
+package-lock.json
+yarn.lock
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+PRODUCT.md

@@ -1,0 +1,133 @@
+﻿
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   RESPONSIVE
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+@media (max-width: 900px) {
+  .dream-stage {
+    height: 60vh;
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  #hero, #about, #projects, #experience, #contact {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .hero-name { font-size: clamp(3.5rem, 18vw, 6rem); }
+
+  .about-stats { gap: 2rem; }
+  .stat-n { font-size: 2.5rem; }
+  .about-orb { display: none; }
+
+  .contact-inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+  .contact-text { align-items: center; }
+  .contact-plead {
+    height: auto;
+    max-height: 220px;
+    align-self: center;
+  }
+
+  #experience { padding-left: 1.5rem; padding-right: 1.5rem; }
+
+  .story-scroll-container { height: auto; }
+
+  .story-sticky {
+    position: relative;
+    height: auto;
+    display: block;
+    padding: 6rem 0;
+  }
+
+  .story-bg { display: none; }
+
+  .story-scenes {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding: 0;
+  }
+
+  .story-scene {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+    padding: 0;
+  }
+
+  .story-label,
+  .story-desc,
+  .story-cta {
+    opacity: 1;
+    transform: none;
+  }
+
+  .scroll-char {
+    opacity: 1;
+    transform: none;
+  }
+
+  .story-scroll-cue { display: none; }
+
+  .story-progress { display: none; }
+
+  .dream-stage {
+    height: auto;
+    min-height: auto;
+    padding: 3rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .dream-bg-text {
+    position: relative;
+    font-size: clamp(3rem, 12vw, 5rem);
+    opacity: 0.08;
+    margin-bottom: 1rem;
+  }
+
+  .dream-orb { display: none; }
+
+  .dream-card {
+    position: relative;
+    width: 100%;
+    top: auto;
+    left: auto;
+    transform: none;
+  }
+
+  .dot-nav { right: 0.85rem; }
+
+  .overlay-grid { grid-template-columns: 1fr; }
+  .overlay-left { padding: 5.5rem 1.5rem 2rem; }
+  .overlay-scroll { padding: 0 1.5rem 4rem; }
+  .overlay-watermark { font-size: clamp(6rem, 25vw, 14rem); }
+
+  .people-grid { flex-direction: column; }
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   REDUCED MOTION
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .cursor-dot, .cursor-ring { display: none; }
+  body, button { cursor: auto; }
+  .exp-overlay { transition: none; }
+}

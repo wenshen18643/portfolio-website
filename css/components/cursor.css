@@ -1,0 +1,32 @@
+﻿
+/* â”€â”€ Custom cursor â”€â”€ */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  will-change: left, top;
+}
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  transition: opacity 0.3s;
+}
+.cursor-ring {
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid oklch(0.32 0.12 145 / 0.45);
+  transition: width 0.25s var(--ease-quart),
+              height 0.25s var(--ease-quart),
+              border-color 0.25s,
+              opacity 0.3s;
+}
+.cursor-dot.hidden, .cursor-ring.hidden { opacity: 0; }
+
+@media (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none; }
+  body, button { cursor: auto; }
+}

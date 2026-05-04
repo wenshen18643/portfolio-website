@@ -1,0 +1,111 @@
+﻿
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   ABOUT
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+#about {
+  background: var(--surface);
+  min-height: 140vh;
+  padding: 10rem 6vw;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.about-inner {
+  max-width: 1100px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ambient orbs â€” larger, more visible */
+.about-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+  pointer-events: none;
+  will-change: transform;
+  opacity: 0;
+  transition: opacity 1.4s ease-out;
+}
+.about-orb.is-visible { opacity: 1; }
+
+.orb-a { width: 320px; height: 320px; background: oklch(0.35 0.14 145 / 0.11); top: 5%; left: -5%; animation: orbDriftA 26s ease-in-out infinite; }
+.orb-b { width: 240px; height: 240px; background: oklch(0.45 0.10 85 / 0.10); top: 50%; right: -4%; animation: orbDriftB 30s ease-in-out infinite; }
+.orb-c { width: 180px; height: 180px; background: oklch(0.35 0.14 145 / 0.09); bottom: 5%; left: 25%; animation: orbDriftC 22s ease-in-out infinite; }
+.orb-d { width: 280px; height: 280px; background: oklch(0.50 0.08 90 / 0.07); top: 20%; right: 12%; animation: orbDriftD 28s ease-in-out infinite; }
+
+@keyframes orbDriftA {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(35px, -30px); }
+}
+@keyframes orbDriftB {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-25px, 25px); }
+}
+@keyframes orbDriftC {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(20px, 12px); }
+}
+@keyframes orbDriftD {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-15px, -20px); }
+}
+
+/* Magnetic quote â€” massive, living text */
+.about-quote {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  word-spacing: 0.15em;
+  color: var(--text);
+  margin-bottom: 2.5rem;
+}
+
+.magnetic-char {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* Bio */
+.about-body {
+  font-size: 1.15rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+  max-width: 55ch;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+/* Stats â€” larger, with hover scramble */
+.about-stats {
+  display: flex;
+  gap: 5rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  cursor: default;
+}
+
+.stat-n {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.stat-l {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}

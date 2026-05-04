@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lum Wen-Shen — AI Agent Builder and Software Engineer based in Malaysia.">
+  <title>Lum Wen-Shen</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <nav class="dot-nav" aria-label="Page sections">
+    <a href="#hero" class="dot-link" data-label="Home" aria-label="Go to Home"></a>
+    <a href="#about" class="dot-link" data-label="About" aria-label="Go to About"></a>
+    <a href="#experience" class="dot-link" data-label="Experience" aria-label="Go to Experience"></a>
+    <a href="#projects" class="dot-link" data-label="Projects" aria-label="Go to Projects"></a>
+    <a href="#contact" class="dot-link" data-label="Contact" aria-label="Go to Contact"></a>
+  </nav>
+
+  <main>
+
+    <!-- ── Hero ── -->
+    <section id="hero" aria-label="Introduction">
+      <canvas id="heroCanvas" aria-hidden="true"></canvas>
+      <div class="hero-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        available for opportunities
+      </div>
+      <div class="hero-content">
+        <h1 class="hero-name" aria-label="Lum Wen-Shen">
+          <span class="name-first">LUM</span>
+          <span class="name-last">WEN-SHEN</span>
+        </h1>
+        <p class="hero-role">
+          <span class="role-plus" aria-hidden="true">+</span>
+          <span class="role-typewriter" aria-live="polite" aria-atomic="true"></span><span class="tw-cursor"
+            aria-hidden="true">|</span>
+        </p>
+        <p class="hero-tagline">
+          Building systems that think,<br>
+          Monash University&nbsp;·&nbsp;Malaysia.
+        </p>
+      </div>
+      <span class="scroll-hint" aria-hidden="true">scroll ↓</span>
+    </section>
+
+    <!-- ── About ── -->
+    <section id="about" aria-labelledby="about-heading">
+      <h2 class="sr-only" id="about-heading">About</h2>
+
+      <!-- Ambient orbs -->
+      <div class="about-orb orb-a" aria-hidden="true"></div>
+      <div class="about-orb orb-b" aria-hidden="true"></div>
+      <div class="about-orb orb-c" aria-hidden="true"></div>
+      <div class="about-orb orb-d" aria-hidden="true"></div>
+
+      <div class="about-inner">
+        <blockquote class="about-quote">
+          I build AI agents professionally.<br>Before finishing my degree.
+        </blockquote>
+        <p class="about-body" data-reveal>
+          Currently at Beyond Photography, architecting agentic platforms for enterprise clients. Also running a 300K+
+          Ringgit club budget, automated with Python.
+        </p>
+        <div class="about-stats" data-reveal aria-label="Quick facts">
+          <div class="stat">
+            <span class="stat-n" data-count="3.725">3.725</span>
+            <span class="stat-l">CGPA</span>
+          </div>
+          <div class="stat">
+            <span class="stat-n" data-count="4">4</span>
+            <span class="stat-l">languages</span>
+          </div>
+          <div class="stat">
+            <span class="stat-n" data-count="2" data-suffix="+">2+</span>
+            <span class="stat-l">yrs in prod</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Bridge: About → Experience ── -->
+    <div class="section-bridge" aria-hidden="true">
+      <div class="bridge-track">
+        <span class="bridge-text">BUILD · SHIP · LEARN · FAIL · IMPROVE · REPEAT ·</span>
+        <span class="bridge-text">BUILD · SHIP · LEARN · FAIL · IMPROVE · REPEAT ·</span>
+      </div>
+    </div>
+
+    <!-- ── Experience ── -->
+    <section id="experience" aria-labelledby="exp-heading">
+      <h2 class="sr-only" id="exp-heading">Where I've Worked</h2>
+      <div class="story-scroll-container">
+        <div class="story-sticky">
+
+          <!-- Background layers -->
+          <div class="story-bg" aria-hidden="true">
+            <div class="story-bg-scene" data-scene="0">
+              <div class="shape orb orb-1" data-depth="300"></div>
+              <div class="shape orb orb-2" data-depth="-200"></div>
+              <div class="shape orb orb-3" data-depth="150"></div>
+              <div class="cat-silhouette" data-depth="-100">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                  <path
+                    d="M22 82 C15 82, 10 70, 10 55 C10 38, 18 30, 28 30 C30 25, 32 15, 35 12 C38 15, 40 25, 42 30 C46 30, 50 30, 54 30 C56 25, 58 15, 61 12 C64 15, 66 25, 68 30 C78 30, 85 38, 85 55 C85 70, 80 82, 72 82 L22 82Z" />
+                  <circle cx="32" cy="45" r="3" fill="var(--surface)" />
+                  <circle cx="62" cy="45" r="3" fill="var(--surface)" />
+                  <path d="M42 55 Q47 59 52 55" stroke="var(--surface)" stroke-width="2" fill="none"
+                    stroke-linecap="round" />
+                </svg>
+              </div>
+            </div>
+            <div class="story-bg-scene" data-scene="1">
+              <div class="shape geo geo-1" data-depth="250"></div>
+              <div class="shape geo geo-2" data-depth="-150"></div>
+              <div class="shape geo geo-3" data-depth="100"></div>
+              <div class="grid-lines"></div>
+            </div>
+            <div class="story-bg-scene" data-scene="2">
+              <div class="shape line line-1" data-depth="200"></div>
+              <div class="shape line line-2" data-depth="-100"></div>
+              <div class="shape line line-3" data-depth="50"></div>
+              <div class="shape block block-1" data-depth="-250"></div>
+              <div class="grid-lines"></div>
+            </div>
+          </div>
+
+          <!-- Persistent header -->
+          <div class="exp-header" aria-hidden="true">
+            <span class="exp-header-label">Experience</span>
+            <span class="exp-header-company"></span>
+            <div class="exp-header-dots">
+              <span class="exp-header-dot" data-scene="0"></span>
+              <span class="exp-header-dot" data-scene="1"></span>
+              <span class="exp-header-dot" data-scene="2"></span>
+            </div>
+          </div>
+
+          <!-- Content scenes -->
+          <div class="story-scenes">
+
+            <div class="story-scene" data-scene="0" data-phase="Best boss ever">
+              <span class="story-label">01 — The Beginning</span>
+              <h3 class="story-company" data-scroll-text>HeadSpace SS15</h3>
+              <p class="story-role" data-scroll-text>Co-working Space Coordinator</p>
+              <p class="story-desc">My first real job. Not exactly building AI agents, but everyone starts somewhere —
+                customer service in the trenches, de-escalating booking disasters, and keeping printers only moderately
+                broken.</p>
+              <button class="story-cta" data-exp="headspace">Read the origin story →</button>
+            </div>
+
+            <div class="story-scene" data-scene="1" data-phase="Wait, they actually hired me?">
+              <span class="story-label">02 — Building</span>
+              <h3 class="story-company" data-scroll-text>Beyond Photography</h3>
+              <p class="story-role" data-scroll-text>AI Agent Engineer</p>
+              <p class="story-desc">Architecting agentic platforms with autonomous tool-use and multi-modal RAG.
+                Streamlined deployments from 20 min to under 30 sec, saving 10 engineer-hours a month.</p>
+              <button class="story-cta" data-exp="beyond">See what I built →</button>
+            </div>
+
+            <div class="story-scene" data-scene="2" data-phase="300k is abit scary to manage">
+              <span class="story-label">03 — Leading</span>
+              <h3 class="story-company" data-scroll-text>Monash University Malaysia Engineering Club</h3>
+              <p class="story-role" data-scroll-text>Head Treasurer</p>
+              <p class="story-desc">This right here is what I call <strong>PEAK LAZINESS</strong></p>
+              <button class="story-cta" data-exp="monash">View the impact →</button>
+            </div>
+
+          </div>
+
+          <!-- Scroll cue -->
+          <div class="story-scroll-cue" aria-hidden="true">
+            <span>Keep scrolling</span>
+            <span class="story-cue-arrow">↓</span>
+          </div>
+
+          <!-- Progress indicator -->
+          <div class="story-progress" aria-hidden="true">
+            <div class="story-progress-track">
+              <div class="story-progress-fill"></div>
+            </div>
+            <div class="story-progress-dots">
+              <span class="story-progress-dot" data-dot="0"></span>
+              <span class="story-progress-dot" data-dot="1"></span>
+              <span class="story-progress-dot" data-dot="2"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Projects ── -->
+    <section id="projects" aria-labelledby="proj-heading">
+      <h2 class="sr-only" id="proj-heading">What I Build</h2>
+      <div class="dream-stage" id="dreamStage">
+
+        <!-- Ghost text background -->
+        <div class="dream-bg-text" aria-hidden="true">What I Build</div>
+
+        <!-- Ambient orbs -->
+        <div class="dream-orb orb-1"></div>
+        <div class="dream-orb orb-2"></div>
+        <div class="dream-orb orb-3"></div>
+        <div class="dream-orb orb-4"></div>
+        <div class="dream-orb orb-5"></div>
+        <div class="dream-orb orb-6"></div>
+
+        <!-- Floating project cards -->
+        <article class="dream-card" data-project="trading" aria-label="AI Trading Agent">
+          <h3 class="dream-card-title">AI Trading Agent</h3>
+          <p class="dream-card-desc">Autonomous agent with tool-calling for market analysis and trade execution.</p>
+          <ul class="dream-card-tags">
+            <li>LangChain</li>
+            <li>Python</li>
+            <li>Node.js</li>
+          </ul>
+        </article>
+
+        <article class="dream-card" data-project="lms" aria-label="Learning Management System">
+          <h3 class="dream-card-title">LMS</h3>
+          <p class="dream-card-desc">Full-stack RESTful LMS. 15+ endpoints, 50+ tests, 3 roles.</p>
+          <ul class="dream-card-tags">
+            <li>Flask</li>
+            <li>MySQL</li>
+            <li>REST</li>
+          </ul>
+        </article>
+
+        <article class="dream-card" data-project="budget" aria-label="Budget Dashboard">
+          <h3 class="dream-card-title">Budget Dashboard</h3>
+          <p class="dream-card-desc">Python pipeline + JS frontend. Cut reporting time by 80%.</p>
+          <ul class="dream-card-tags">
+            <li>Python</li>
+            <li>JavaScript</li>
+            <li>Pipeline</li>
+          </ul>
+        </article>
+
+        <article class="dream-card" data-project="whatsapp" aria-label="WhatsApp Chat Bot">
+          <h3 class="dream-card-title">WhatsApp Chat Bot</h3>
+          <p class="dream-card-desc">Handles the DMs so I don't have to. Auto-replies, status pings, and backend triggers.</p>
+          <ul class="dream-card-tags">
+            <li>Node.js</li>
+            <li>WhatsApp API</li>
+            <li>Automation</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ── Contact ── -->
+    <section id="contact" aria-labelledby="contact-heading">
+      <div class="contact-inner" data-reveal>
+        <img class="contact-plead" src="Images/dum image.png" alt="" width="200" height="229" loading="lazy">
+        <div class="contact-text">
+          <h2 class="contact-heading" id="contact-heading">
+            Hire Me<br>Pretty Please.
+          </h2>
+          <a class="contact-email" href="mailto:wenshen18643@gmail.com">
+            wenshen18643@gmail.com
+          </a>
+          <a class="contact-phone" href="tel:60125956822">
+            +60 12-595 6822
+          </a>
+          <p class="contact-linkedin">
+            Or find me on <a href="https://www.linkedin.com/in/wen-shen-lum-7a7681380" target="_blank"
+              rel="noopener noreferrer">LinkedIn</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Experience overlay (full-screen) ── -->
+  <div id="expOverlay" class="exp-overlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle" hidden>
+    <!-- Ambient orbs -->
+    <div class="overlay-orb orb-1" aria-hidden="true"></div>
+    <div class="overlay-orb orb-2" aria-hidden="true"></div>
+    <div class="overlay-orb orb-3" aria-hidden="true"></div>
+
+    <button class="overlay-back" id="overlayClose" aria-label="Close experience detail">← Back</button>
+    <div class="overlay-progress" aria-hidden="true">
+      <div class="progress-bar" id="overlayProgress"></div>
+    </div>
+
+    <div class="overlay-grid">
+      <div class="overlay-left">
+        <div class="overlay-watermark" id="overlayWatermark" aria-hidden="true"></div>
+        <div class="overlay-left-inner" id="overlayLeft"></div>
+      </div>
+      <div class="overlay-right">
+        <div class="overlay-scroll">
+          <div class="overlay-body" id="overlayBody"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Project overlay ── -->
+  <div id="projOverlay" class="proj-overlay" role="dialog" aria-modal="true" aria-labelledby="projOverlayTitle" hidden>
+    <button class="overlay-back" id="projOverlayClose" aria-label="Close project detail">← Back</button>
+    <div class="proj-overlay-inner" id="projOverlayBody"></div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

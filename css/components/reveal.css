@@ -1,0 +1,11 @@
+﻿
+/* â”€â”€ Reveal â”€â”€ */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(32px) scale(0.97);
+  transition: opacity 0.75s var(--ease-quart), transform 0.75s var(--ease-quart);
+}
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}

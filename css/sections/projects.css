@@ -1,0 +1,182 @@
+﻿
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   PROJECTS â€” DREAM STAGE
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+#projects {
+  padding: 8rem 6vw;
+}
+
+.dream-stage {
+  position: relative;
+  min-height: 600px;
+  height: 75vh;
+  max-height: 850px;
+  border-radius: 24px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+/* Ghost background text */
+.dream-bg-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 14vw, 11rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  opacity: 0.055;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+  text-align: center;
+  line-height: 0.9;
+}
+
+/* Ambient orbs */
+.dream-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(50px);
+  opacity: 0.5;
+  will-change: transform;
+}
+
+.orb-1 { width: 200px; height: 200px; background: oklch(0.90 0.025 95 / 0.35); top: 10%; left: 5%; }
+.orb-2 { width: 150px; height: 150px; background: oklch(0.92 0.020 145 / 0.25); top: 60%; right: 10%; }
+.orb-3 { width: 120px; height: 120px; background: oklch(0.88 0.030 90 / 0.30); top: 30%; left: 55%; }
+.orb-4 { width: 180px; height: 180px; background: oklch(0.90 0.025 95 / 0.25); bottom: 15%; left: 20%; }
+.orb-5 { width: 100px; height: 100px; background: oklch(0.92 0.020 145 / 0.20); top: 15%; right: 30%; }
+.orb-6 { width: 140px; height: 140px; background: oklch(0.88 0.030 90 / 0.20); bottom: 25%; right: 25%; }
+
+/* Floating cards */
+.dream-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 280px;
+  background: oklch(0.97 0.018 95 / 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid oklch(0.30 0.14 145 / 0.12);
+  border-radius: 18px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 4px 24px oklch(0.30 0.14 145 / 0.08);
+  will-change: transform;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.dream-card:hover {
+  box-shadow: 0 12px 40px oklch(0.30 0.14 145 / 0.15);
+  border-color: oklch(0.30 0.14 145 / 0.30);
+  z-index: 100;
+}
+
+.dream-card-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.dream-card-desc {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.dream-card-tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.dream-card-tags li {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+  background: var(--surface);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+/* Agent terminal (moved to standalone, kept for reuse) */
+.agent-terminal {
+  background: var(--surface-dark);
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-dark);
+}
+
+.terminal-bar {
+  background: oklch(0.18 0.012 145);
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-bottom: 1px solid var(--border-dark);
+  flex-shrink: 0;
+}
+
+.terminal-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.t-red    { background: oklch(0.63 0.20 20); }
+.t-yellow { background: oklch(0.78 0.16 85); }
+.t-green  { background: oklch(0.70 0.18 145); }
+
+.terminal-title {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: oklch(0.52 0.022 145);
+  margin-left: -2.5rem;
+  pointer-events: none;
+}
+
+.terminal-body {
+  padding: 1.2rem 1.4rem;
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.85;
+  overflow: hidden;
+  color: oklch(0.88 0.012 145);
+}
+
+.t-line { display: block; animation: t-in 0.12s var(--ease-expo) both; }
+@keyframes t-in {
+  from { opacity: 0; transform: translateX(-3px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.t-line.t-prompt   { color: oklch(0.90 0.012 145); }
+.t-line.t-tool     { color: oklch(0.72 0.16 145); }
+.t-line.t-result   { color: oklch(0.65 0.08 145); }
+.t-line.t-agent    { color: oklch(0.78 0.08 100); font-weight: 500; }
+.t-line.t-blank    { display: block; height: 0.55rem; }
+
+.t-cursor {
+  display: inline-block;
+  width: 7px; height: 0.9em;
+  background: oklch(0.72 0.16 145);
+  vertical-align: text-bottom;
+  animation: t-blink 1s step-end infinite;
+  margin-left: 1px;
+}
+@keyframes t-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }

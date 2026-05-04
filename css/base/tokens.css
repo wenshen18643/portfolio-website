@@ -1,0 +1,22 @@
+﻿
+/* â”€â”€ Tokens â”€â”€ */
+:root {
+  --bg:           oklch(0.97 0.018 95);
+  --surface:      oklch(0.93 0.022 98);
+  --surface-dark: oklch(0.12 0.018 145);
+  --accent:       oklch(0.30 0.14 145);
+  --accent-soft:  oklch(0.30 0.14 145 / 0.10);
+  --accent-mid:   oklch(0.30 0.14 145 / 0.35);
+  --text:         oklch(0.10 0.015 145);
+  --text-dim:     oklch(0.28 0.020 145);
+  --muted:        oklch(0.48 0.022 145);
+  --border:       oklch(0.80 0.020 98);
+  --border-dark:  oklch(0.20 0.018 145);
+
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Courier New', monospace;
+
+  --ease-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+}

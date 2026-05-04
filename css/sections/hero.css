@@ -1,0 +1,155 @@
+﻿
+/* Hero canvas */
+#heroCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   HERO
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+#hero {
+  position: relative;
+  min-height: 100svh;
+  padding: 5rem 6vw 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Warm radial glow behind content */
+#hero::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 60%;
+  height: 80%;
+  background: radial-gradient(ellipse, oklch(0.94 0.03 100 / 0.40), transparent 65%);
+  pointer-events: none;
+}
+
+.hero-status {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 13vw, 11rem);
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  display: block;
+  margin-bottom: 2rem;
+}
+.name-first { display: block; color: var(--text); }
+.name-last  { display: block; color: var(--accent); }
+
+.hero-role {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  min-height: 2rem;
+}
+
+.role-plus {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.role-typewriter {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.tw-cursor {
+  font-family: var(--font-mono);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--accent);
+  line-height: 1;
+  animation: tw-blink 0.9s step-end infinite;
+}
+
+@keyframes tw-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.hero-tagline {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 38ch;
+}
+
+.contact-plead {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 16px;
+  opacity: 0.92;
+  transition: transform 0.35s var(--ease-quart), opacity 0.35s;
+  align-self: stretch;
+}
+
+.contact-plead:hover {
+  transform: scale(1.03) rotate(-1deg);
+  opacity: 1;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 6vw;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  animation: hint-bob 2.8s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes hint-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50%       { transform: translateY(6px); opacity: 1; }
+}
