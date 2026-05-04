@@ -60,6 +60,8 @@
   .dream-stage {
     height: auto;
     min-height: auto;
+    max-height: none;
+    overflow: visible;
     padding: 3rem 1.5rem;
     display: flex;
     flex-direction: column;
