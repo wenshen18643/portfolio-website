@@ -92,6 +92,11 @@
   .compare-slider {
     aspect-ratio: 4 / 3;
   }
+  .compare-labels {
+    flex-direction: column;
+    gap: 0.4rem;
+    align-items: flex-start;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
