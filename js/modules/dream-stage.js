@@ -6,7 +6,7 @@ export function initDreamStage() {
   const orbs = stage.querySelectorAll('.dream-orb');
   if (!cards.length) return;
 
-  if (window.matchMedia('(max-width: 767px)').matches) return;
+  if (window.matchMedia('(max-width: 768px)').matches) return;
 
   let width = stage.offsetWidth;
   let height = stage.offsetHeight;

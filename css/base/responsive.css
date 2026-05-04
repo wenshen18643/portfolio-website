@@ -39,7 +39,11 @@
     height: auto;
     display: block;
     padding: 6rem 0;
+    perspective: none;
+    transform-style: flat;
   }
+
+  .exp-header { display: none; }
 
   .story-bg { display: none; }
 

@@ -73,7 +73,7 @@ export function initStoryScroll() {
 
   if (!container || !sticky || !scenes.length) return;
 
-  const isMobile = window.matchMedia('(max-width: 767px)').matches || reduced;
+  const isMobile = window.matchMedia('(max-width: 768px)').matches || reduced;
   if (isMobile) {
     scenes.forEach(s => s.classList.add('active'));
     bgScenes.forEach(b => b.classList.add('active'));
