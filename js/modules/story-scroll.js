@@ -73,23 +73,14 @@ export function initStoryScroll() {
 
   if (!container || !sticky || !scenes.length) return;
 
-  const isMobile = window.matchMedia('(max-width: 768px)').matches || reduced;
-  if (isMobile) {
+  if (reduced) {
     scenes.forEach(s => s.classList.add('active'));
     bgScenes.forEach(b => b.classList.add('active'));
     if (expHeaderCompany && phases.length) expHeaderCompany.textContent = phases[0];
-
-    const mobileIo = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('mobile-visible');
-          mobileIo.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-    scenes.forEach(s => mobileIo.observe(s));
     return;
   }
+
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
   splitScrollText();
 
@@ -121,29 +112,41 @@ export function initStoryScroll() {
       }
 
       let rotateY = 0, translateX = 0, translateZ = 0, opacity = 0;
+      let mTranslateY = 0, mScale = 1;
 
       if (localProgress > 0 && localProgress <= 1) {
         if (localProgress < 0.20) {
           const p = localProgress / 0.20;
           opacity = Math.min(1, p * 2.5);
-          rotateY = 55 * (1 - p);
-          translateX = 55 * (1 - p);
-          translateZ = -900 * (1 - p);
+          if (isMobile) {
+            mTranslateY = 50 * (1 - p);
+            mScale = 0.95 + 0.05 * p;
+          } else {
+            rotateY = 55 * (1 - p);
+            translateX = 55 * (1 - p);
+            translateZ = -900 * (1 - p);
+          }
         } else if (localProgress < 0.80) {
-          rotateY = 0;
-          translateX = 0;
-          translateZ = 0;
           opacity = 1;
         } else {
           const p = (localProgress - 0.80) / 0.20;
           opacity = Math.max(0, 1 - p * 2.5);
-          rotateY = -55 * p;
-          translateX = -55 * p;
-          translateZ = -900 * p;
+          if (isMobile) {
+            mTranslateY = -40 * p;
+            mScale = 1 - 0.04 * p;
+          } else {
+            rotateY = -55 * p;
+            translateX = -55 * p;
+            translateZ = -900 * p;
+          }
         }
       }
 
-      scene.style.transform = `translateY(-50%) rotateY(${rotateY}deg) translateX(${translateX}%) translateZ(${translateZ}px)`;
+      if (isMobile) {
+        scene.style.transform = `translateY(calc(-50% + ${mTranslateY}px)) scale(${mScale})`;
+      } else {
+        scene.style.transform = `translateY(-50%) rotateY(${rotateY}deg) translateX(${translateX}%) translateZ(${translateZ}px)`;
+      }
       scene.style.opacity = String(opacity);
 
       const titleChars = scene.querySelectorAll('.story-company .scroll-char');

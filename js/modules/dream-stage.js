@@ -6,7 +6,19 @@ export function initDreamStage() {
   const orbs = stage.querySelectorAll('.dream-orb');
   if (!cards.length) return;
 
-  if (window.matchMedia('(max-width: 768px)').matches) return;
+  if (window.matchMedia('(max-width: 768px)').matches) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const delay = Array.from(cards).indexOf(entry.target) * 100;
+          setTimeout(() => entry.target.classList.add('mobile-visible'), delay);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(c => io.observe(c));
+    return;
+  }
 
   let width = stage.offsetWidth;
   let height = stage.offsetHeight;
