@@ -90,7 +90,6 @@ export function initMagneticQuote() {
     if (!isVisible) { rafId = null; return; }
     time++;
     chars.forEach(c => {
-      // Mouse repulsion
       const dx = c.cx - mouseX;
       const dy = c.cy - mouseY;
       const dist = Math.sqrt(dx * dx + dy * dy);
@@ -100,19 +99,15 @@ export function initMagneticQuote() {
         c.vy += (dy / dist) * force;
       }
 
-      // Spring back to origin
       c.vx += (0 - c.x) * SPRING;
       c.vy += (0 - c.y) * SPRING;
 
-      // Damping
       c.vx *= DAMPING;
       c.vy *= DAMPING;
 
-      // Integrate
       c.x += c.vx;
       c.y += c.vy;
 
-      // Idle float
       const idleX = Math.sin(time * 0.001 + c.phase) * 1.5;
       const idleY = Math.cos(time * 0.0013 + c.phase * 1.3) * 1.2;
 

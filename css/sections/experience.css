@@ -1,7 +1,4 @@
 ﻿
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   EXPERIENCE â€” SCROLL STORY
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 #experience {
   background: var(--surface);
 }
@@ -71,7 +68,6 @@
   transform-style: preserve-3d;
 }
 
-/* Scroll cue */
 .story-scroll-cue {
   position: absolute;
   bottom: 6rem;
@@ -106,7 +102,6 @@
   50% { transform: translateY(6px); }
 }
 
-/* Background layers */
 .story-bg {
   position: absolute;
   inset: 0;
@@ -126,7 +121,6 @@
   opacity: 1;
 }
 
-/* Floating shapes */
 .shape {
   position: absolute;
   pointer-events: none;
@@ -149,7 +143,6 @@
   66% { transform: translate(-15px, 20px) scale(0.95); }
 }
 
-/* Cat silhouette for HeadSpace scene */
 .cat-silhouette {
   position: absolute;
   top: 25%;
@@ -166,7 +159,6 @@
   height: 100%;
 }
 
-/* Geometric shapes for Beyond */
 .geo {
   border-radius: 4px;
   background: oklch(0.88 0.015 175 / 0.25);
@@ -182,7 +174,6 @@
   50% { transform: translate(-20px, 30px) rotate(25deg); }
 }
 
-/* Grid + lines for Monash */
 .grid-lines {
   position: absolute;
   inset: 0;
@@ -220,7 +211,6 @@
   50% { transform: translate(15px, -20px) rotate(90deg); }
 }
 
-/* Scene content â€” 3D stage */
 .story-scenes {
   position: relative;
   z-index: 1;
@@ -240,7 +230,6 @@
   opacity: 0;
   pointer-events: none;
   backface-visibility: hidden;
-  /* Transforms and opacity driven by JS scroll progress */
 }
 
 .story-label {
@@ -322,7 +311,6 @@
   transform: translateX(4px);
 }
 
-/* Scroll-driven character reveal */
 .scroll-char {
   display: inline-block;
   opacity: 0;
@@ -336,7 +324,6 @@
   transform: translateY(0) rotate(0deg) scale(1);
 }
 
-/* Progress indicator */
 .story-progress {
   position: absolute;
   bottom: 3rem;

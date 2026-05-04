@@ -1,7 +1,4 @@
 ﻿
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   EXPERIENCE OVERLAY
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .exp-overlay {
   position: fixed;
   inset: 0;
@@ -16,7 +13,7 @@
 }
 
 .exp-overlay[hidden] {
-  display: flex; /* override hidden so CSS transition works */
+  display: flex;
 }
 
 .exp-overlay.open {
@@ -25,7 +22,6 @@
   pointer-events: auto;
 }
 
-/* Company-specific tints */
 .exp-overlay.tint-beyond {
   background: linear-gradient(135deg, var(--bg) 0%, oklch(0.94 0.015 180) 100%);
 }
@@ -33,7 +29,6 @@
   background: linear-gradient(135deg, var(--bg) 0%, oklch(0.94 0.020 85) 100%);
 }
 
-/* Progress bar */
 .overlay-progress {
   position: absolute;
   top: 0;
@@ -70,7 +65,6 @@
 }
 .overlay-back:hover { color: var(--accent); transform: translateX(-4px); }
 
-/* Overlay grid layout */
 .overlay-grid {
   display: grid;
   grid-template-columns: 40% 1fr;
@@ -132,7 +126,6 @@
   max-width: 640px;
 }
 
-/* Entrance animations */
 .ov-animate {
   opacity: 0;
   transform: translateY(30px);
@@ -143,7 +136,6 @@
   transform: translateY(0);
 }
 
-/* Whistle animation */
 .whistle {
   position: absolute;
   top: 50%;
@@ -190,7 +182,6 @@
   }
 }
 
-/* Character run-in animation */
 .char-run {
   display: inline-block;
   opacity: 0;
@@ -205,7 +196,6 @@
   }
 }
 
-/* Overlay ambient orbs */
 .overlay-orb {
   position: absolute;
   border-radius: 50%;
@@ -239,7 +229,6 @@
   right: 20%;
 }
 
-/* Overlay content styles */
 .ov-company {
   font-family: var(--font-display);
   font-size: clamp(2.2rem, 5vw, 4rem);
@@ -320,7 +309,6 @@
 
 .ov-bullets strong { color: var(--text); font-weight: 600; }
 
-/* Before / After */
 .ov-beforeafter {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -366,7 +354,6 @@
   }
 }
 
-/* Playful origin-story styles */
 .ov-tagline {
   font-family: var(--font-display);
   font-size: clamp(1.2rem, 3vw, 1.6rem);
@@ -425,7 +412,6 @@
   max-width: 55ch;
 }
 
-/* Proof of work placeholder */
 .proof-slot {
   border: 1.5px dashed var(--border);
   border-radius: 16px;
@@ -501,9 +487,6 @@
   }
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   PROJECT OVERLAY
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .proj-overlay {
   position: fixed;
   inset: 0;
@@ -590,7 +573,6 @@
   margin-bottom: 0.5rem;
 }
 
-/* People section */
 .people-grid {
   display: flex;
   gap: 1rem;

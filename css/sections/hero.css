@@ -1,5 +1,4 @@
 ﻿
-/* Hero canvas */
 #heroCanvas {
   position: absolute;
   inset: 0;
@@ -9,9 +8,6 @@
   z-index: 0;
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   HERO
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 #hero {
   position: relative;
   min-height: 100svh;
@@ -22,7 +18,6 @@
   overflow: hidden;
 }
 
-/* Warm radial glow behind content */
 #hero::before {
   content: '';
   position: absolute;

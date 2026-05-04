@@ -1,5 +1,4 @@
-﻿// â”€â”€ Project overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-export const PROJECTS = {
+﻿export const PROJECTS = {
   trading: {
     title: 'AI Trading Agent',
     tags: ['LangChain', 'Tool Calling', 'Python', 'Node.js', 'Proxmox'],

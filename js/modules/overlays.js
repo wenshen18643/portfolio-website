@@ -1,7 +1,6 @@
 ﻿import { reduced } from './utils.js';
 import { EXP } from '../data/experience.js';
 
-// â”€â”€ Experience overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function buildOverlay(data) {
   const wm = document.getElementById('overlayWatermark');
   const left = document.getElementById('overlayLeft');
@@ -124,7 +123,6 @@ function buildOverlay(data) {
     ${peopleHtml}
   `;
 
-  // Character run-in removed â€” clean, readable text
 }
 
 export function initOverlay() {
@@ -137,7 +135,6 @@ export function initOverlay() {
     if (!data) return;
     lastFocused = document.activeElement;
 
-    // Remove old tint, add new one
     overlay.classList.remove('tint-beyond', 'tint-monash', 'tint-headspace');
     overlay.classList.add(`tint-${expId}`);
 
@@ -149,7 +146,6 @@ export function initOverlay() {
         overlay.classList.add('open');
 
         {
-          // Standard staggered entrance
           const animatables = overlay.querySelectorAll('.ov-animate');
           animatables.forEach((el, i) => {
             setTimeout(() => el.classList.add('in'), 150 + i * 90);
@@ -163,14 +159,12 @@ export function initOverlay() {
     scrollContainer.scrollTop = 0;
     progressBar.style.width = '0%';
 
-    // Scroll progress
     scrollContainer.addEventListener('scroll', () => {
       const max = scrollContainer.scrollHeight - scrollContainer.clientHeight;
       const pct = max > 0 ? scrollContainer.scrollTop / max : 0;
       progressBar.style.width = `${pct * 100}%`;
     }, { passive: true });
 
-    // Initialise drag-to-compare slider if present
     initMumecSlider(overlay);
 
     closeBtn.focus();
@@ -197,7 +191,6 @@ export function initOverlay() {
   });
 }
 
-// â”€â”€ Monash hover-to-compare slider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function initMumecSlider(container) {
   const slider = container ? container.querySelector('#mumecSlider') : document.getElementById('mumecSlider');
   if (!slider) return;
@@ -237,19 +230,16 @@ function initMumecSlider(container) {
     if (!rafId) rafId = requestAnimationFrame(lerpPosition);
   }
 
-  // Hover: slider follows mouse
   slider.addEventListener('mousemove', e => {
     if (!isDragging) setTarget(e.clientX);
   });
 
-  // Touch: drag the handle
   handle.addEventListener('touchstart', e => { isDragging = true; e.preventDefault(); }, { passive: false });
   window.addEventListener('touchend', () => isDragging = false);
   window.addEventListener('touchmove', e => {
     if (isDragging) setTarget(e.touches[0].clientX);
   }, { passive: true });
 
-  // Click: jump to position
   slider.addEventListener('click', e => {
     if (e.target === handle || e.target.closest('.compare-handle')) return;
     setTarget(e.clientX);

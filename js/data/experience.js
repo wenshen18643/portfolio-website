@@ -1,5 +1,4 @@
-﻿// â”€â”€ Experience data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-export const EXP = {
+﻿export const EXP = {
   beyond: {
     company: 'Beyond Photography',
     watermark: 'BP',
@@ -15,7 +14,6 @@ export const EXP = {
       'When our Proxmox server breaks, I unfortunately  fix it. ',
     ],
     people: [
-      // Add real colleagues: { name: 'Name', role: 'Their Role' }
     ],
     proof: 'Drop a screenshot of the platform, chatbot, or agent output here.',
   },
@@ -31,7 +29,6 @@ export const EXP = {
       'Made me look competent at my job :>'
     ],
     people: [
-      // Add real colleagues: { name: 'Name', role: 'Their Role' }
     ],
     proofVideo: 'videos/monash-after-60s.mp4',
     beforeVideo: 'videos/monash-before-60s.mp4',

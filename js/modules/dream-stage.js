@@ -6,7 +6,6 @@ export function initDreamStage() {
   const orbs = stage.querySelectorAll('.dream-orb');
   if (!cards.length) return;
 
-  // Disable on mobile
   if (window.matchMedia('(max-width: 767px)').matches) return;
 
   let width = stage.offsetWidth;
@@ -16,7 +15,6 @@ export function initDreamStage() {
   const floaters = [];
   const orbFloaters = [];
 
-  // Initialize cards with slow drift velocities
   cards.forEach((el, i) => {
     const w = el.offsetWidth;
     const h = el.offsetHeight;
@@ -30,7 +28,6 @@ export function initDreamStage() {
     });
   });
 
-  // Initialize orbs with even slower drift
   orbs.forEach((el, i) => {
     const w = el.offsetWidth;
     const h = el.offsetHeight;
@@ -46,15 +43,10 @@ export function initDreamStage() {
 
   function softRepel(f) {
     const margin = 50;
-    // Left wall repulsion
     if (f.x < margin) f.vx += 0.008 * (margin - f.x);
-    // Right wall repulsion
     if (f.x + f.w > width - margin) f.vx -= 0.008 * (f.x + f.w - (width - margin));
-    // Top wall repulsion
     if (f.y < margin) f.vy += 0.008 * (margin - f.y);
-    // Bottom wall repulsion
     if (f.y + f.h > height - margin) f.vy -= 0.008 * (f.y + f.h - (height - margin));
-    // Hard clamp as safety
     f.x = Math.min(Math.max(f.x, 0), width - f.w);
     f.y = Math.min(Math.max(f.y, 0), height - f.h);
   }
@@ -79,24 +71,19 @@ export function initDreamStage() {
   function tick() {
     time += 0.016;
 
-    // Update orbs
     orbFloaters.forEach((o, i) => {
-      // Very gentle sine wave drift on top of velocity
       o.x += o.vx + Math.sin(time * 0.3 + i) * 0.08;
       o.y += o.vy + Math.cos(time * 0.2 + i * 1.5) * 0.08;
       softRepel(o);
       o.el.style.transform = `translate(${o.x}px, ${o.y}px)`;
     });
 
-    // Update cards
     floaters.forEach((f, i) => {
-      // Slow drift with tiny sine wobble
       f.x += f.vx + Math.sin(time * 0.15 + i * 2) * 0.05;
       f.y += f.vy + Math.cos(time * 0.12 + i * 3) * 0.05;
       softRepel(f);
     });
 
-    // Soft separation between cards (multiple passes)
     for (let pass = 0; pass < 3; pass++) {
       for (let i = 0; i < floaters.length; i++) {
         for (let j = i + 1; j < floaters.length; j++) {
@@ -105,7 +92,6 @@ export function initDreamStage() {
       }
     }
 
-    // Render cards
     floaters.forEach(f => {
       f.el.style.transform = `translate(${f.x}px, ${f.y}px)`;
     });
@@ -113,19 +99,16 @@ export function initDreamStage() {
     requestAnimationFrame(tick);
   }
 
-  // Random nudge every 4 seconds to keep movement alive
   setInterval(() => {
     floaters.forEach(f => {
       f.vx += (Math.random() - 0.5) * 0.15;
       f.vy += (Math.random() - 0.5) * 0.15;
-      // Clamp velocity
       const maxSpeed = 0.7;
       f.vx = Math.max(-maxSpeed, Math.min(maxSpeed, f.vx));
       f.vy = Math.max(-maxSpeed, Math.min(maxSpeed, f.vy));
     });
   }, 4000);
 
-  // Resize handler
   window.addEventListener('resize', () => {
     width = stage.offsetWidth;
     height = stage.offsetHeight;
