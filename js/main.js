@@ -1,3 +1,4 @@
+import './modules/cursor.js';
 import { scramble } from './modules/utils.js';
 import { initHeroCanvas, initHeroSequence, initTypewriter } from './modules/hero.js';
 import { initReveals } from './modules/reveals.js';
