@@ -11,7 +11,7 @@ function buildOverlay(data) {
   const animClass = data.vibe === 'playful' ? 'rush' : 'ov-animate';
 
   const rolesHtml = data.roles.map(r =>
-    `<p class="ov-role-line ${animClass}"><strong>${r.title}</strong> Â· ${r.period}</p>`
+    `<p class="ov-role-line ${animClass}"><strong>${r.title}</strong>· ${r.period}</p>`
   ).join('');
 
   const taglineHtml = data.tagline
@@ -69,12 +69,12 @@ function buildOverlay(data) {
           <video src="${data.beforeVideo}" autoplay muted loop playsinline preload="metadata"></video>
         </div>
         <div class="compare-handle" aria-hidden="true">
-          <span class="handle-grip">â†”</span>
+          <span class="handle-grip"></span>
         </div>
       </div>
       <div class="compare-labels ${animClass}">
-        <span class="compare-label before-label">Before â€” Manual chaos</span>
-        <span class="compare-label after-label">After â€” Yes I'm not doing anything</span>
+        <span class="compare-label before-label">Before - Manual chaos</span>
+        <span class="compare-label after-label">After - Yes I'm not doing anything</span>
       </div>
     `;
   } else if (data.proofVideo) {

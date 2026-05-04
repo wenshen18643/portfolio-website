@@ -78,6 +78,16 @@ export function initStoryScroll() {
     scenes.forEach(s => s.classList.add('active'));
     bgScenes.forEach(b => b.classList.add('active'));
     if (expHeaderCompany && phases.length) expHeaderCompany.textContent = phases[0];
+
+    const mobileIo = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('mobile-visible');
+          mobileIo.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    scenes.forEach(s => mobileIo.observe(s));
     return;
   }
 

@@ -2,7 +2,7 @@
   trading: {
     title: 'AI Trading Agent',
     tags: ['LangChain', 'Tool Calling', 'Python', 'Node.js', 'Proxmox'],
-    desc: 'Autonomous agent analyzing market signals and executing trade recommendations via structured tool calling. Built with prompt-driven multi-step reasoning that genuinely makes decisions â€” not just pattern matching.',
+    desc: 'Autonomous agent analyzing market signals and executing trade recommendations via structured tool calling. Built with prompt-driven multi-step reasoning that genuinely makes decisions not just pattern matching.',
     proof: 'Screenshot of agent trace, trade execution log, or system architecture diagram.',
   },
   lms: {

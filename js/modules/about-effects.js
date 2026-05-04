@@ -28,30 +28,34 @@ export function initMagneticQuote() {
   if (!quote) return;
 
   const html = quote.innerHTML.trim();
-  const items = [];
-  const parts = html.split(/(<br\s*\/?>)/i);
-  parts.forEach(part => {
-    if (/^<br\s*\/?>$/i.test(part)) {
-      items.push({ type: 'br' });
-    } else {
-      for (const ch of part) items.push({ type: 'char', value: ch });
-    }
-  });
+  const lines = html.split(/(<br\s*\/?>)/i);
 
   quote.innerHTML = '';
   const chars = [];
-  items.forEach((item, idx) => {
-    if (item.type === 'br') {
-      quote.appendChild(document.createElement('br'));
-    } else if (item.value === ' ') {
-      quote.appendChild(document.createTextNode(' '));
-    } else {
-      const span = document.createElement('span');
-      span.className = 'magnetic-char';
-      span.textContent = item.value;
-      quote.appendChild(span);
-      chars.push({ el: span, x: 0, y: 0, vx: 0, vy: 0, cx: 0, cy: 0, phase: idx * 0.4 });
-    }
+
+  lines.forEach((line, lineIdx) => {
+    if (/^<br\s*\/?>$/i.test(line)) return;
+    if (lineIdx > 0) quote.appendChild(document.createElement('br'));
+
+    const words = line.split(/(\s+)/);
+    words.forEach(word => {
+      if (/^\s+$/.test(word)) {
+        quote.appendChild(document.createTextNode(word));
+      } else {
+        const wordSpan = document.createElement('span');
+        wordSpan.style.display = 'inline-block';
+        wordSpan.style.whiteSpace = 'nowrap';
+
+        for (const ch of word) {
+          const span = document.createElement('span');
+          span.className = 'magnetic-char';
+          span.textContent = ch;
+          wordSpan.appendChild(span);
+          chars.push({ el: span, x: 0, y: 0, vx: 0, vy: 0, cx: 0, cy: 0, phase: chars.length * 0.4 });
+        }
+        quote.appendChild(wordSpan);
+      }
+    });
   });
 
   if (reduced) return;
