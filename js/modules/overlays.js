@@ -11,7 +11,7 @@ function buildOverlay(data) {
   const animClass = data.vibe === 'playful' ? 'rush' : 'ov-animate';
 
   const rolesHtml = data.roles.map(r =>
-    `<p class="ov-role-line ${animClass}"><strong>${r.title}</strong>· ${r.period}</p>`
+    `<p class="ov-role-line ${animClass}"><strong class="ov-role-title">${r.title}</strong><span class="ov-role-sep"> · </span><span class="ov-role-period">${r.period}</span></p>`
   ).join('');
 
   const taglineHtml = data.tagline

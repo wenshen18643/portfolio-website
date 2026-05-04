@@ -255,8 +255,6 @@
   font-size: 0.85rem;
   color: var(--muted);
   letter-spacing: 0.02em;
-  white-space: nowrap;
-  overflow-wrap: break-word;
 }
 
 .ov-role-line strong {
