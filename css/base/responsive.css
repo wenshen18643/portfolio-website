@@ -137,6 +137,10 @@
   .ov-roles { margin-bottom: 1.5rem; }
   .ov-role-line { white-space: normal; overflow-wrap: break-word; }
 
+  .proj-overlay-inner { padding: 4rem 1.25rem 2rem; }
+  .proj-detail-title { font-size: clamp(1.6rem, 6vw, 3.5rem); }
+  .proj-proof-slot { padding: 1.5rem; }
+
   .people-grid { flex-direction: column; }
 }
 

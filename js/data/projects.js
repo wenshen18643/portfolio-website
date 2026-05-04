@@ -56,11 +56,16 @@ export function initProjectOverlay() {
 
   function close() {
     overlay.classList.remove('open');
-    overlay.addEventListener('transitionend', () => {
+    let closed = false;
+    function finish() {
+      if (closed) return;
+      closed = true;
       overlay.setAttribute('hidden', '');
       document.body.style.overflow = '';
       if (lastFocused) lastFocused.focus();
-    }, { once: true });
+    }
+    overlay.addEventListener('transitionend', finish, { once: true });
+    setTimeout(finish, 600);
   }
 
   document.querySelectorAll('.dream-card').forEach(card => {

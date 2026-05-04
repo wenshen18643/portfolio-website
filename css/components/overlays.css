@@ -62,8 +62,11 @@
   cursor: none;
   transition: color 0.2s, transform 0.2s;
   padding: 0.5rem 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 .overlay-back:hover { color: var(--accent); transform: translateX(-4px); }
+.overlay-back:active { color: var(--accent); transform: translateX(-4px); }
 
 .overlay-grid {
   display: grid;
