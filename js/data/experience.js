@@ -12,9 +12,9 @@ export const experienceData = {
       { title: 'AI Engineer Intern', period: 'Oct 2025 to Feb 2026' },
     ],
     bullets: [
-      'Designed autonomous tool-use frameworks for SME clients (Allianz, Worknova). Agents resolve requests end-to-end instead of bouncing back to me like a boomerang.',
-      'Cut deployment time from 20 minutes to 30 seconds. Saves ~10 engineer-hours monthly. I automate anything I have to do more than twice.',
-      'Automated container cloning and nginx configuration for internal dev environments. New developer onboarding: hours → minutes.',
+      'Created a whatsapp chat bot.. super boring intern work.',
+      'Built an AI agent with ability to analyze data and place trades automatically.',
+      'Cut deployment time from 20 minutes to 30 seconds via automated container cloning. Saves ~10 hours monthly. I automate anything I have to do more than twice.',
       'Built a multi-modal RAG pipeline: ingests voice, images, and unstructured text into a unified retrieval layer. Basically, it reads everything.',
       'Proxmox infrastructure ops: VM provisioning, container management, resource allocation, and occasional networking detective work at 2am. Unfortunately.',
     ],
@@ -47,7 +47,7 @@ export const experienceData = {
     achievements: [
       'Managed a co-working space for 20+ tenants. Kept Wi-Fi breathing, coffee flowing, and printers alive against their will.',
       'Handled booking coordination and tenant relations. Learned that most problems are solved by listening first, fixing second.',
-      'Coordinated 5+ community events. Respect to people who do this full-time — it\'s harder than it looks.',
+      'Coordinated 5+ community events. Respect to people who do this full-time cause it dam hard.',
     ],
     firstJobNote: 'My first real job. Not exactly related to Software Engineering, but everyone starts somewhere.',
     proofImage: 'Images/Headspace/headspace_bg.jpeg',
