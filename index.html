@@ -11,9 +11,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Caveat:wght@500;600&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.css?v=3">
 </head>
 
 <body>
@@ -80,9 +80,9 @@
           I automate the boring so I can obsess over the rest.
         </blockquote>
         <p class="about-body" data-reveal>
-          I'm a Software Engineering student at Monash who builds AI agents for SMEs going through Industry 4.0 transformation. I believe anything repetitive
-          should be automated because I'm lazy. I'll spend three hours writing a script to save five minutes forever. First job
-          was running a co-working space for 20+ tenants. Now I keep servers alive, ship RAG pipelines, and live on automated spreadsheets.
+          I'm a Software Engineering student at Monash and a junior AI Engineer at Beyond Photography. I'm super lazy so I attempt to make
+          everything automatable. First job was running a co-working space for 20+ tenants.
+          Now I keep servers alive, ship AI Agents, and live on automated spreadsheets.
         </p>
         <div class="about-stats" data-reveal aria-label="Quick facts">
           <div class="stat">
@@ -90,11 +90,7 @@
             <span class="stat-l">CGPA</span>
           </div>
           <div class="stat">
-            <span class="stat-n" data-count="4">4</span>
-            <span class="stat-l">languages</span>
-          </div>
-          <div class="stat">
-            <span class="stat-n" data-count="2" data-suffix="+">2+</span>
+            <span class="stat-n" data-count="1" data-suffix="+">1+</span>
             <span class="stat-l">yrs in prod</span>
           </div>
         </div>
@@ -357,10 +353,7 @@
 
   <!-- ── Experience overlay (full-screen) ── -->
   <div id="expOverlay" class="exp-overlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle" hidden>
-    <!-- Ambient orbs -->
-    <div class="overlay-orb orb-1" aria-hidden="true"></div>
-    <div class="overlay-orb orb-2" aria-hidden="true"></div>
-    <div class="overlay-orb orb-3" aria-hidden="true"></div>
+    <div class="overlay-decor" id="overlayDecor" aria-hidden="true"></div>
 
     <button class="overlay-back" id="overlayClose" aria-label="Close experience detail">← Back</button>
     <div class="overlay-progress" aria-hidden="true">

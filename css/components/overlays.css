@@ -21,11 +21,12 @@
   pointer-events: auto;
 }
 
-.exp-overlay.tint-beyond {
-  background: linear-gradient(135deg, var(--bg) 0%, oklch(0.93 0.09 135) 100%);
-}
-.exp-overlay.tint-monash {
-  background: linear-gradient(135deg, var(--bg) 0%, oklch(0.94 0.07 105) 100%);
+.overlay-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
 }
 
 .overlay-progress {
@@ -72,6 +73,8 @@
   grid-template-columns: 40% 1fr;
   flex: 1;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 }
 
 .overlay-left {
@@ -150,39 +153,6 @@
     opacity: 1;
     transform: translateY(0) rotate(0deg) scale(1);
   }
-}
-
-.overlay-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(50px);
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.5;
-}
-
-.overlay-orb.orb-1 {
-  width: 280px;
-  height: 280px;
-  background: oklch(0.80 0.18 130 / 0.22);
-  top: -5%;
-  right: -5%;
-}
-
-.overlay-orb.orb-2 {
-  width: 200px;
-  height: 200px;
-  background: oklch(0.90 0.12 112 / 0.25);
-  bottom: 10%;
-  left: -3%;
-}
-
-.overlay-orb.orb-3 {
-  width: 150px;
-  height: 150px;
-  background: oklch(0.80 0.18 130 / 0.15);
-  top: 40%;
-  right: 20%;
 }
 
 .ov-company {

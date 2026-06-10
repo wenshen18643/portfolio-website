@@ -6,13 +6,14 @@
   z-index: 9999;
 }
 
-/* ── The plus cursor (difference blend keeps it visible on every zone) ── */
+/* ── The plus cursor (ink core + cream halo reads on every zone) ── */
 .cursor {
-  width: 18px;
-  height: 18px;
-  margin-left: -9px;
-  margin-top: -9px;
+  width: 28px;
+  height: 28px;
+  margin-left: -14px;
+  margin-top: -14px;
   will-change: transform;
+  filter: drop-shadow(0 1px 4px oklch(0 0 0 / 0.35));
   transition: width 0.25s var(--ease-quart), height 0.25s var(--ease-quart), margin 0.25s var(--ease-quart);
 }
 
@@ -20,29 +21,30 @@
 .cursor::after {
   content: '';
   position: absolute;
-  background: oklch(1 0 0);
-  mix-blend-mode: difference;
+  background: oklch(0.10 0.02 152);
+  border: 2px solid oklch(1 0 0);
+  border-radius: 3px;
   transition: width 0.25s var(--ease-quart), height 0.25s var(--ease-quart);
 }
 
 /* horizontal bar */
 .cursor::before {
   top: 50%; left: 50%;
-  width: 100%; height: 2px;
+  width: 100%; height: 9px;
   transform: translate(-50%, -50%);
 }
 
 /* vertical bar */
 .cursor::after {
   top: 50%; left: 50%;
-  width: 2px; height: 100%;
+  width: 9px; height: 100%;
   transform: translate(-50%, -50%);
 }
 
 /* ── Hover: becomes an × ── */
 .cursor.hover {
-  width: 26px; height: 26px;
-  margin-left: -13px; margin-top: -13px;
+  width: 36px; height: 36px;
+  margin-left: -18px; margin-top: -18px;
   transform-origin: center;
 }
 
@@ -53,10 +55,10 @@
 
 /* ── Click ping ring ── */
 .cursor-ping {
-  width: 18px; height: 18px;
-  margin-left: -9px; margin-top: -9px;
-  border: 2px solid oklch(1 0 0);
-  mix-blend-mode: difference;
+  width: 28px; height: 28px;
+  margin-left: -14px; margin-top: -14px;
+  border: 3px solid oklch(0.10 0.02 152);
+  box-shadow: 0 0 0 1.5px oklch(1 0 0 / 0.9), inset 0 0 0 1.5px oklch(1 0 0 / 0.9);
   border-radius: 50%;
   opacity: 0;
   transform: scale(0);

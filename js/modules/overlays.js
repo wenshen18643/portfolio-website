@@ -6,6 +6,14 @@
 import { prefersReducedMotion } from './utils.js';
 import { experienceData } from '../data/experience.js';
 
+const overlayThemeClasses = ['theme-beyond', 'theme-monash', 'theme-headspace'];
+
+const overlayThemeDecorations = {
+  beyond: '<div class="darkroom-safelight"></div><div class="darkroom-vignette"></div>',
+  monash: '<div class="ledger-margin"></div><div class="audit-stamp">Audited ✓</div>',
+  headspace: '<div class="scrapbook-tape tape-a"></div><div class="scrapbook-tape tape-b"></div>',
+};
+
 /**
  * Builds overlay DOM content from experience data.
  *
@@ -157,8 +165,12 @@ export function initializeOverlay() {
     if (!data) return;
     lastFocusedElement = document.activeElement;
 
-    overlay.classList.remove('tint-beyond', 'tint-monash', 'tint-headspace');
-    overlay.classList.add(`tint-${experienceId}`);
+    overlay.classList.remove(...overlayThemeClasses);
+    overlay.classList.add(`theme-${experienceId}`);
+
+    const decorContainer = document.getElementById('overlayDecor');
+    decorContainer.classList.remove('decor-in');
+    decorContainer.innerHTML = overlayThemeDecorations[experienceId] || '';
 
     buildOverlayContent(data);
     overlay.removeAttribute('hidden');
@@ -171,6 +183,9 @@ export function initializeOverlay() {
         animatables.forEach((element, index) => {
           setTimeout(() => element.classList.add('in'), initialRevealDelay + index * revealStaggerMilliseconds);
         });
+
+        const decorRevealDelay = initialRevealDelay + animatables.length * revealStaggerMilliseconds + 250;
+        setTimeout(() => decorContainer.classList.add('decor-in'), prefersReducedMotion ? 0 : decorRevealDelay);
       });
     });
 
