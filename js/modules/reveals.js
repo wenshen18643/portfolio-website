@@ -1,19 +1,35 @@
-import { reduced } from './utils.js';
+/**
+ * Scroll-triggered reveal animations for data-reveal elements.
+ * @module reveals
+ */
 
-export function initReveals() {
-  const els = document.querySelectorAll('[data-reveal]');
-  if (reduced) { els.forEach(el => el.classList.add('revealed')); return; }
+import { prefersReducedMotion } from './utils.js';
 
-  const io = new IntersectionObserver(entries => {
+const revealThreshold = 0.08;
+const revealRootMargin = '0px 0px -50px 0px';
+const staggerDelayMilliseconds = 120;
+
+/**
+ * Initializes intersection observers that toggle the 'revealed' class
+ * when elements enter the viewport.
+ */
+export function initializeReveals() {
+  const elements = document.querySelectorAll('[data-reveal]');
+  if (prefersReducedMotion) {
+    elements.forEach(element => element.classList.add('revealed'));
+    return;
+  }
+
+  const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      const el = entry.target;
-      const siblings = [...el.parentElement.querySelectorAll('[data-reveal]')];
-      const idx = siblings.indexOf(el);
-      setTimeout(() => el.classList.add('revealed'), idx * 120);
-      io.unobserve(el);
+      const element = entry.target;
+      const siblings = [...element.parentElement.querySelectorAll('[data-reveal]')];
+      const siblingIndex = siblings.indexOf(element);
+      setTimeout(() => element.classList.add('revealed'), siblingIndex * staggerDelayMilliseconds);
+      revealObserver.unobserve(element);
     });
-  }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+  }, { threshold: revealThreshold, rootMargin: revealRootMargin });
 
-  els.forEach(el => io.observe(el));
+  elements.forEach(element => revealObserver.observe(element));
 }

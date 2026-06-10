@@ -1,148 +1,244 @@
-import { reduced } from './utils.js';
+/**
+ * Hero section effects: animated canvas blobs, typewriter text, and entrance sequence.
+ * @module hero
+ */
 
-const TW_PHRASES = [
+import { prefersReducedMotion } from './utils.js';
+
+const typewriterPhrases = [
   'Built as proof of work. So its less CViy.',
   'Monash SWE · CGPA 3.725',
   'Speaks 4 Languages Badly',
-  'Me like fancy design'
+  'I Drive'
 ];
 
-export function initTypewriter() {
-  const el = document.querySelector('.role-typewriter');
-  if (!el) return;
+const typewriterInitialDelay = 1400;
+const typewriterTypingInterval = 75;
+const typewriterDeletingInterval = 40;
+const typewriterPauseBeforeDelete = 1900;
+const typewriterPauseBeforeNextPhrase = 280;
 
-  if (reduced) { el.textContent = TW_PHRASES[0]; return; }
+const heroSequenceRoleDelay = 1000;
+const heroSequenceTaglineDelay = 1250;
+const heroSequenceHintDelay = 1500;
+const heroSequenceFadeDuration = 850;
 
-  let phraseIdx = 0;
-  let charIdx = 0;
-  let deleting = false;
+const canvasBlobMouseRadius = 250;
+const canvasBlobMouseForce = 30;
+const canvasBlobPointCount = 12;
+
+/**
+ * Initializes the typewriter effect cycling through phrases.
+ */
+export function initializeTypewriter() {
+  const element = document.querySelector('.role-typewriter');
+  if (!element) return;
+
+  if (prefersReducedMotion) {
+    element.textContent = typewriterPhrases[0];
+    return;
+  }
+
+  let phraseIndex = 0;
+  let characterIndex = 0;
+  let isDeleting = false;
 
   function tick() {
-    const phrase = TW_PHRASES[phraseIdx];
-    if (!deleting) {
-      charIdx++;
-      el.textContent = phrase.slice(0, charIdx);
-      if (charIdx === phrase.length) {
-        deleting = true;
-        setTimeout(tick, 1900);
+    const phrase = typewriterPhrases[phraseIndex];
+    if (!isDeleting) {
+      characterIndex++;
+      element.textContent = phrase.slice(0, characterIndex);
+      if (characterIndex === phrase.length) {
+        isDeleting = true;
+        setTimeout(tick, typewriterPauseBeforeDelete);
         return;
       }
-      setTimeout(tick, 75);
+      setTimeout(tick, typewriterTypingInterval);
     } else {
-      charIdx--;
-      el.textContent = phrase.slice(0, charIdx);
-      if (charIdx === 0) {
-        deleting = false;
-        phraseIdx = (phraseIdx + 1) % TW_PHRASES.length;
-        setTimeout(tick, 280);
+      characterIndex--;
+      element.textContent = phrase.slice(0, characterIndex);
+      if (characterIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % typewriterPhrases.length;
+        setTimeout(tick, typewriterPauseBeforeNextPhrase);
         return;
       }
-      setTimeout(tick, 40);
+      setTimeout(tick, typewriterDeletingInterval);
     }
   }
 
-  setTimeout(tick, 1400);
+  setTimeout(tick, typewriterInitialDelay);
 }
 
-export function initHeroSequence() {
-  if (reduced) return;
-  const role = document.querySelector('.hero-role');
-  const tagline = document.querySelector('.hero-tagline');
-  const hint = document.querySelector('.scroll-hint');
+/**
+ * Orchestrates the fade-in entrance sequence for hero sub-elements.
+ */
+export function initializeHeroEntranceSequence() {
+  if (prefersReducedMotion) return;
 
-  [role, tagline, hint].forEach(el => {
-    if (!el) return;
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1)';
+  const roleElement = document.querySelector('.hero-role');
+  const taglineElement = document.querySelector('.hero-tagline');
+  const hintElement = document.querySelector('.scroll-hint');
+
+  [roleElement, taglineElement, hintElement].forEach(element => {
+    if (!element) return;
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(20px)';
+    element.style.transition = `opacity ${heroSequenceFadeDuration}ms cubic-bezier(0.16,1,0.3,1), transform ${heroSequenceFadeDuration}ms cubic-bezier(0.16,1,0.3,1)`;
   });
 
-  [[role, 1000], [tagline, 1250], [hint, 1500]].forEach(([el, delay]) => {
-    if (!el) return;
+  const sequence = [
+    { element: roleElement, delay: heroSequenceRoleDelay },
+    { element: taglineElement, delay: heroSequenceTaglineDelay },
+    { element: hintElement, delay: heroSequenceHintDelay }
+  ];
+
+  sequence.forEach(({ element, delay }) => {
+    if (!element) return;
     setTimeout(() => {
-      el.style.opacity = '1';
-      el.style.transform = 'translateY(0)';
+      element.style.opacity = '1';
+      element.style.transform = 'translateY(0)';
     }, delay);
   });
 }
 
-export function initHeroCanvas() {
-  if (reduced) return;
+const parallaxFirstLineFactor = -0.22;
+const parallaxLastLineFactor = 0.30;
+
+/**
+ * Slides the hero name lines apart horizontally and fades the hero
+ * content as the visitor scrolls past the first viewport.
+ */
+export function initializeHeroParallax() {
+  if (prefersReducedMotion) return;
+
+  const nameFirst = document.querySelector('.name-first');
+  const nameLast = document.querySelector('.name-last');
+  const content = document.querySelector('.hero-content');
+  if (!nameFirst || !nameLast || !content) return;
+
+  let isTicking = false;
+
+  function updateParallax() {
+    const scrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+
+    if (scrollY <= viewportHeight) {
+      nameFirst.style.transform = `translateX(${scrollY * parallaxFirstLineFactor}px)`;
+      nameLast.style.transform = `translateX(${scrollY * parallaxLastLineFactor}px)`;
+      content.style.opacity = String(Math.max(0, 1 - (scrollY / viewportHeight) * 1.3));
+    }
+    isTicking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      isTicking = true;
+      requestAnimationFrame(updateParallax);
+    }
+  }, { passive: true });
+}
+
+/**
+ * Initializes the hero canvas with drifting blob shapes that react to mouse movement.
+ */
+export function initializeHeroCanvas() {
+  if (prefersReducedMotion) return;
+
   const canvas = document.getElementById('heroCanvas');
   if (!canvas) return;
-  const ctx = canvas.getContext('2d');
+
+  const canvasContext = canvas.getContext('2d');
   let width, height;
-  let mouseX = 0, mouseY = 0;
+  let mouseX = 0;
+  let mouseY = 0;
   let isVisible = true;
 
-  function resize() {
+  function resizeCanvas() {
     width = canvas.offsetWidth;
     height = canvas.offsetHeight;
     canvas.width = width * window.devicePixelRatio;
     canvas.height = height * window.devicePixelRatio;
-    ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+    canvasContext.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
   }
-  resize();
-  window.addEventListener('resize', resize);
 
-  canvas.parentElement.addEventListener('mousemove', e => {
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  canvas.parentElement.addEventListener('mousemove', event => {
     const rect = canvas.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
+    mouseX = event.clientX - rect.left;
+    mouseY = event.clientY - rect.top;
   });
 
   const blobs = [
-    { x: 0.3, y: 0.4, r: 180, color: 'oklch(0.92 0.025 100 / 0.5)', phase: 0, speed: 0.0004 },
-    { x: 0.7, y: 0.6, r: 220, color: 'oklch(0.90 0.030 145 / 0.35)', phase: 2, speed: 0.0003 },
-    { x: 0.5, y: 0.3, r: 150, color: 'oklch(0.93 0.020 100 / 0.45)', phase: 4, speed: 0.0005 },
+    { x: 0.3, y: 0.4, radius: 180, color: 'oklch(0.94 0.16 122 / 0.55)', phase: 0, speed: 0.0004 },
+    { x: 0.7, y: 0.6, radius: 220, color: 'oklch(0.80 0.21 132 / 0.30)', phase: 2, speed: 0.0003 },
+    { x: 0.5, y: 0.3, radius: 150, color: 'oklch(0.93 0.18 118 / 0.45)', phase: 4, speed: 0.0005 },
   ];
 
+  /**
+   * Renders a single animated blob at the given time.
+   *
+   * @param {Object} blob - The blob configuration object.
+   * @param {number} time - Current animation timestamp.
+   */
   function drawBlob(blob, time) {
-    const t = time * blob.speed + blob.phase;
-    const cx = blob.x * width + Math.sin(t) * 60 + Math.cos(t * 0.7) * 40;
-    const cy = blob.y * height + Math.cos(t * 0.8) * 50 + Math.sin(t * 1.2) * 30;
+    const elapsedPhase = time * blob.speed + blob.phase;
+    const centerX = blob.x * width + Math.sin(elapsedPhase) * 60 + Math.cos(elapsedPhase * 0.7) * 40;
+    const centerY = blob.y * height + Math.cos(elapsedPhase * 0.8) * 50 + Math.sin(elapsedPhase * 1.2) * 30;
 
-    const dx = cx - mouseX;
-    const dy = cy - mouseY;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    let mdx = 0, mdy = 0;
-    if (dist < 250 && dist > 0) {
-      const force = (250 - dist) / 250 * 30;
-      mdx = (dx / dist) * force;
-      mdy = (dy / dist) * force;
+    const deltaX = centerX - mouseX;
+    const deltaY = centerY - mouseY;
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    let mouseOffsetX = 0;
+    let mouseOffsetY = 0;
+
+    if (distance < canvasBlobMouseRadius && distance > 0) {
+      const force = (canvasBlobMouseRadius - distance) / canvasBlobMouseRadius * canvasBlobMouseForce;
+      mouseOffsetX = (deltaX / distance) * force;
+      mouseOffsetY = (deltaY / distance) * force;
     }
 
-    ctx.beginPath();
-    const points = 12;
-    for (let i = 0; i <= points; i++) {
-      const angle = (i / points) * Math.PI * 2;
-      const r = blob.r + Math.sin(angle * 3 + t * 2) * 20 + Math.cos(angle * 5 - t) * 15;
-      const px = cx + mdx + Math.cos(angle) * r;
-      const py = cy + mdy + Math.sin(angle) * r;
-      if (i === 0) ctx.moveTo(px, py);
-      else ctx.lineTo(px, py);
+    canvasContext.beginPath();
+    for (let pointIndex = 0; pointIndex <= canvasBlobPointCount; pointIndex++) {
+      const angle = (pointIndex / canvasBlobPointCount) * Math.PI * 2;
+      const radius = blob.radius + Math.sin(angle * 3 + elapsedPhase * 2) * 20 + Math.cos(angle * 5 - elapsedPhase) * 15;
+      const pointX = centerX + mouseOffsetX + Math.cos(angle) * radius;
+      const pointY = centerY + mouseOffsetY + Math.sin(angle) * radius;
+      if (pointIndex === 0) {
+        canvasContext.moveTo(pointX, pointY);
+      } else {
+        canvasContext.lineTo(pointX, pointY);
+      }
     }
-    ctx.closePath();
-    ctx.fillStyle = blob.color;
-    ctx.fill();
+    canvasContext.closePath();
+    canvasContext.fillStyle = blob.color;
+    canvasContext.fill();
   }
 
-  let rafId = null;
+  let animationFrameId = null;
+
+  /**
+   * Main canvas animation loop.
+   *
+   * @param {number} now - Current animation timestamp.
+   */
   function animate(now) {
     if (isVisible) {
-      ctx.clearRect(0, 0, width, height);
+      canvasContext.clearRect(0, 0, width, height);
       for (const blob of blobs) drawBlob(blob, now);
-      rafId = requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     } else {
-      rafId = null;
+      animationFrameId = null;
     }
   }
 
-  const io = new IntersectionObserver(entries => {
+  const visibilityObserver = new IntersectionObserver(entries => {
     isVisible = entries[0].isIntersecting;
-    if (isVisible && !rafId) rafId = requestAnimationFrame(animate);
+    if (isVisible && !animationFrameId) animationFrameId = requestAnimationFrame(animate);
   });
-  io.observe(canvas);
+  visibilityObserver.observe(canvas);
 
-  rafId = requestAnimationFrame(animate);
+  animationFrameId = requestAnimationFrame(animate);
 }

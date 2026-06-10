@@ -11,15 +11,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
 
-  <div class="cursor-dot" aria-hidden="true"></div>
-  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
 
   <nav class="dot-nav" aria-label="Page sections">
     <a href="#hero" class="dot-link" data-label="Home" aria-label="Go to Home"></a>
@@ -32,7 +31,7 @@
   <main>
 
     <!-- ── Hero ── -->
-    <section id="hero" aria-label="Introduction">
+    <section id="hero" class="zone-lime" aria-label="Introduction">
       <canvas id="heroCanvas" aria-hidden="true"></canvas>
       <div class="hero-status">
         <span class="status-dot" aria-hidden="true"></span>
@@ -43,12 +42,25 @@
           <span class="name-first">LUM</span>
           <span class="name-last">WEN-SHEN</span>
         </h1>
-        <p class="hero-role">
-          <span class="role-plus" aria-hidden="true">+</span>
-          <span class="role-typewriter" aria-live="polite" aria-atomic="true"></span><span class="tw-cursor"
-            aria-hidden="true">|</span>
-        </p>
-        <p class="hero-tagline">Monash University&nbsp;·&nbsp;Malaysia.</p>
+        <div class="hero-foot">
+          <p class="hero-role">
+            <span class="role-plus" aria-hidden="true">+</span>
+            <span class="role-typewriter" aria-live="polite" aria-atomic="true"></span><span class="tw-cursor"
+              aria-hidden="true">|</span>
+          </p>
+          <p class="hero-tagline">Monash University&nbsp;·&nbsp;Malaysia.</p>
+        </div>
+      </div>
+      <div class="hero-badge" aria-hidden="true">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <path id="heroBadgeCircle" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
+          </defs>
+          <text class="hero-badge-text">
+            <textPath href="#heroBadgeCircle">AI AGENT BUILDER · SOFTWARE ENGINEER ·&#160;</textPath>
+          </text>
+          <text class="hero-badge-bolt" x="100" y="100" text-anchor="middle" dominant-baseline="central">⚡</text>
+        </svg>
       </div>
       <span class="scroll-hint" aria-hidden="true">scroll ↓</span>
     </section>
@@ -65,11 +77,12 @@
 
       <div class="about-inner">
         <blockquote class="about-quote">
-          I build AI agents professionally.<br>Before finishing my degree.
+          I automate the boring so I can obsess over the rest.
         </blockquote>
         <p class="about-body" data-reveal>
-          Currently at Beyond Photography, architecting agentic platforms for enterprise clients. Also running a 300K+
-          Ringgit club budget, automated with Python.
+          I'm a Software Engineering student at Monash who builds AI agents for SMEs going through Industry 4.0 transformation. I believe anything repetitive
+          should be automated because I'm lazy. I'll spend three hours writing a script to save five minutes forever. First job
+          was running a co-working space for 20+ tenants. Now I keep servers alive, ship RAG pipelines, and live on automated spreadsheets.
         </p>
         <div class="about-stats" data-reveal aria-label="Quick facts">
           <div class="stat">
@@ -88,16 +101,8 @@
       </div>
     </section>
 
-    <!-- ── Bridge: About → Experience ── -->
-    <div class="section-bridge" aria-hidden="true">
-      <div class="bridge-track">
-        <span class="bridge-text">BUILD · SHIP · LEARN · FAIL · IMPROVE · REPEAT ·</span>
-        <span class="bridge-text">BUILD · SHIP · LEARN · FAIL · IMPROVE · REPEAT ·</span>
-      </div>
-    </div>
-
     <!-- ── Experience ── -->
-    <section id="experience" aria-labelledby="exp-heading">
+    <section id="experience" class="zone-dark" aria-labelledby="exp-heading">
       <h2 class="sr-only" id="exp-heading">Where I've Worked</h2>
       <div class="story-scroll-container">
         <div class="story-sticky">
@@ -152,9 +157,9 @@
               <span class="story-label">01 — The Beginning</span>
               <h3 class="story-company" data-scroll-text>HeadSpace SS15</h3>
               <p class="story-role" data-scroll-text>Co-working Space Coordinator</p>
-              <p class="story-desc">My first real job. Not exactly building AI agents, but everyone starts somewhere —
-                customer service in the trenches, de-escalating booking disasters, and keeping printers only moderately
-                broken.</p>
+              <p class="story-desc">My first real job. Keeping a co-working space running taught me that most technical
+                problems are actually people problems — calm them down, listen first, fix second. Also that printers are
+                sentient and they hate us.</p>
               <button class="story-cta" data-exp="headspace">Read the origin story →</button>
             </div>
 
@@ -162,8 +167,9 @@
               <span class="story-label">02 — Building</span>
               <h3 class="story-company" data-scroll-text>Beyond Photography</h3>
               <p class="story-role" data-scroll-text>AI Agent Engineer</p>
-              <p class="story-desc">Architecting agentic platforms with autonomous tool-use and multi-modal RAG.
-                Streamlined deployments from 20 min to under 30 sec, saving 10 engineer-hours a month.</p>
+              <p class="story-desc">Building AI agents that guide SMEs through Industry 4.0 adoption — document
+                processing, RAG pipelines, workflow automation, autonomous systems that actually ship. I automate anything repetitive
+                and fix whatever breaks at 2am. Usually both.</p>
               <button class="story-cta" data-exp="beyond">See what I built →</button>
             </div>
 
@@ -171,7 +177,10 @@
               <span class="story-label">03 — Leading</span>
               <h3 class="story-company" data-scroll-text>Monash University Malaysia Engineering Club</h3>
               <p class="story-role" data-scroll-text>Head Treasurer</p>
-              <p class="story-desc">Laziness at its peak :D</p>
+              <p class="story-desc">Got handed a six-figure student budget and told not to mess it up. Automated most of
+                the tedious work so I could focus on not letting anyone down. My predecessor lived in Excel
+                spreadsheets;
+                I live in Python scripts.</p>
               <button class="story-cta" data-exp="monash">View the impact →</button>
             </div>
 
@@ -200,79 +209,132 @@
     </section>
 
     <!-- ── Projects ── -->
-    <section id="projects" aria-labelledby="proj-heading">
-      <h2 class="sr-only" id="proj-heading">Side Projects</h2>
-      <div class="dream-stage" id="dreamStage">
+    <section id="projects" class="zone-dark" aria-labelledby="proj-heading">
+      <h2 class="projects-section-title" id="proj-heading">Projects</h2>
 
-        <!-- Ghost text background -->
-        <div class="dream-bg-text" aria-hidden="true">Side Projects</div>
+      <!-- 01: AI Agents (intern chatbot + part-time trading agent) -->
+      <article class="project-scene project-scene--agents" data-project="agents" data-reveal>
+        <div class="project-scene-inner project-scene-inner--stacked">
+          <div class="project-info project-info--full">
+            <span class="project-num">01</span>
+            <h3 class="project-title">AI Agents, On the Clock</h3>
+            <p class="project-desc">Two agents from two jobs. As an intern I shipped a WhatsApp bot that handles
+              inbound customer messages and triggers backend workflows on its own. Now, as a part-time AI Engineer,
+              I build a sentiment-driven trading agent that reasons through market signals via structured tool
+              calling. 70% accuracy on directional calls, slightly better than my gut feeling.</p>
+            <ul class="project-tags">
+              <li>LangChain</li>
+              <li>Tool Calling</li>
+              <li>WhatsApp API</li>
+              <li>Python</li>
+              <li>Node.js</li>
+            </ul>
+          </div>
+          <div class="agents-demos">
+            <figure class="agent-demo-col">
+              <figcaption class="demo-caption">Intern · WhatsApp Bot</figcaption>
+              <div class="project-demo project-demo--phone">
+                <div class="phone-frame">
+                  <div class="phone-header">
+                    <span class="phone-contact">Customer</span>
+                    <span class="phone-status">online</span>
+                  </div>
+                  <div class="phone-chat" data-chat>
+                    <div class="chat-bubble chat-bubble--in">
+                      <p>Hi, do you have this in stock?</p>
+                      <span class="chat-time">14:21</span>
+                    </div>
+                    <div class="chat-bubble chat-bubble--out">
+                      <p>Yes! Available in 3 sizes. Want me to send pricing?</p>
+                      <span class="chat-time">14:21</span>
+                    </div>
+                    <div class="chat-bubble chat-bubble--in">
+                      <p>Yes please</p>
+                      <span class="chat-time">14:22</span>
+                    </div>
+                    <div class="chat-bubble chat-bubble--out">
+                      <p>Sent! Reply BOOK to reserve yours.</p>
+                      <span class="chat-time">14:22</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </figure>
+            <figure class="agent-demo-col">
+              <figcaption class="demo-caption">Part-time AI Engineer · Trading Agent</figcaption>
+              <div class="project-demo project-demo--terminal">
+                <div class="agent-terminal">
+                  <div class="terminal-bar">
+                    <span class="terminal-dot t-red"></span>
+                    <span class="terminal-dot t-yellow"></span>
+                    <span class="terminal-dot t-green"></span>
+                    <span class="terminal-title">trading-agent</span>
+                  </div>
+                  <div class="terminal-body" data-terminal="trading"></div>
+                </div>
+              </div>
+            </figure>
+          </div>
+        </div>
+      </article>
 
-        <!-- Ambient orbs -->
-        <div class="dream-orb orb-1"></div>
-        <div class="dream-orb orb-2"></div>
-        <div class="dream-orb orb-3"></div>
-        <div class="dream-orb orb-4"></div>
-        <div class="dream-orb orb-5"></div>
-        <div class="dream-orb orb-6"></div>
+      <!-- 02: LMS -->
+      <article class="project-scene project-scene--lms" data-project="lms" data-reveal>
+        <div class="project-scene-inner">
+          <div class="project-info project-info--full">
+            <span class="project-num">02</span>
+            <h3 class="project-title">Learning Management System</h3>
+            <p class="project-desc">Full-stack RESTful LMS with 15+ API endpoints, 50+ unit tests, and 3 distinct user
+              roles. Designed for scalability with clean architecture and comprehensive test coverage.</p>
+            <ul class="project-tags">
+              <li>Flask</li>
+              <li>MySQL</li>
+              <li>REST API</li>
+              <li>Python</li>
+            </ul>
+          </div>
+          <div class="project-demo project-demo--routes">
+            <div class="route-bar" data-route>
+              <span class="route-method">GET</span>
+              <span class="route-path">/api/courses</span>
+            </div>
+            <div class="route-bar" data-route>
+              <span class="route-method">POST</span>
+              <span class="route-path">/api/enroll</span>
+            </div>
+            <div class="route-bar" data-route>
+              <span class="route-method">GET</span>
+              <span class="route-path">/api/progress</span>
+            </div>
+            <div class="route-bar" data-route>
+              <span class="route-method">DELETE</span>
+              <span class="route-path">/api/drop</span>
+            </div>
+          </div>
+        </div>
+      </article>
 
-        <!-- Floating project cards -->
-        <article class="dream-card" data-project="trading" aria-label="AI Trading Agent">
-          <h3 class="dream-card-title">AI Trading Agent</h3>
-          <p class="dream-card-desc">Autonomous agent with tool-calling for market analysis and trade execution.</p>
-          <ul class="dream-card-tags">
-            <li>LangChain</li>
-            <li>Python</li>
-            <li>Node.js</li>
-          </ul>
-        </article>
-
-        <article class="dream-card" data-project="lms" aria-label="Learning Management System">
-          <h3 class="dream-card-title">LMS</h3>
-          <p class="dream-card-desc">Full-stack RESTful LMS. 15+ endpoints, 50+ tests, 3 roles.</p>
-          <ul class="dream-card-tags">
-            <li>Flask</li>
-            <li>MySQL</li>
-            <li>REST</li>
-          </ul>
-        </article>
-
-        <article class="dream-card" data-project="budget" aria-label="Budget Dashboard">
-          <h3 class="dream-card-title">Budget Dashboard</h3>
-          <p class="dream-card-desc">Python pipeline + JS frontend. Cut reporting time by 80%.</p>
-          <ul class="dream-card-tags">
-            <li>Python</li>
-            <li>JavaScript</li>
-            <li>Pipeline</li>
-          </ul>
-        </article>
-
-        <article class="dream-card" data-project="whatsapp" aria-label="WhatsApp Chat Bot">
-          <h3 class="dream-card-title">WhatsApp Chat Bot</h3>
-          <p class="dream-card-desc">Handles the DMs so I don't have to. Auto-replies, status pings, and backend
-            triggers.</p>
-          <ul class="dream-card-tags">
-            <li>Node.js</li>
-            <li>WhatsApp API</li>
-            <li>Automation</li>
-          </ul>
-        </article>
-
-      </div>
     </section>
 
     <!-- ── Contact ── -->
-    <section id="contact" aria-labelledby="contact-heading">
+    <section id="contact" class="zone-lime" aria-labelledby="contact-heading">
+      <div class="contact-orb orb-1" aria-hidden="true"></div>
+      <div class="contact-orb orb-2" aria-hidden="true"></div>
       <div class="contact-inner" data-reveal>
         <img class="contact-plead" src="Images/dum image.png" alt="" width="200" height="229" loading="lazy">
         <div class="contact-text">
+          <span class="contact-label">Contact</span>
           <h2 class="contact-heading" id="contact-heading">
-            Hire Me<br>Pretty Please
+            Let's Build<br>Something
           </h2>
           <a class="contact-email" href="mailto:wenshen18643@gmail.com">
             wenshen18643@gmail.com
           </a>
           <a class="contact-phone" href="tel:60125956822">
             +60 12-595 6822
+          </a>
+          <a class="contact-resume" href="resume.pdf" download>
+            Download Resume ↓
           </a>
           <p class="contact-linkedin">
             Or find me on <a href="https://www.linkedin.com/in/wen-shen-lum-7a7681380" target="_blank"
@@ -283,6 +345,15 @@
     </section>
 
   </main>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer zone-dark">
+    <div class="footer-inner">
+      <p class="footer-note">Handwritten HTML, CSS and JS. Zero frameworks, zero templates.</p>
+      <p class="footer-copyright">© 2026 Lum Wen-Shen</p>
+      <a class="footer-top" href="#hero">Back to top ↑</a>
+    </div>
+  </footer>
 
   <!-- ── Experience overlay (full-screen) ── -->
   <div id="expOverlay" class="exp-overlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle" hidden>
@@ -307,12 +378,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- ── Project overlay ── -->
-  <div id="projOverlay" class="proj-overlay" role="dialog" aria-modal="true" aria-labelledby="projOverlayTitle" hidden>
-    <button class="overlay-back" id="projOverlayClose" aria-label="Close project detail">← Back</button>
-    <div class="proj-overlay-inner" id="projOverlayBody"></div>
   </div>
 
   <script type="module" src="js/main.js"></script>

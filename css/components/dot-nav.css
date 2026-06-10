@@ -1,4 +1,3 @@
-﻿
 .dot-nav {
   position: fixed;
   right: 1.75rem;
@@ -9,6 +8,7 @@
   flex-direction: column;
   gap: 0.75rem;
   align-items: center;
+  mix-blend-mode: difference;
 }
 
 .dot-link {
@@ -17,7 +17,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--border);
+  background: oklch(1 0 0 / 0.40);
   transition: background 0.25s, transform 0.25s;
 }
 
@@ -29,7 +29,7 @@
   transform: translateY(-50%);
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  color: var(--muted);
+  color: oklch(1 0 0);
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.2s;
@@ -42,11 +42,11 @@
 }
 
 .dot-link.active {
-  background: var(--accent);
+  background: oklch(1 0 0);
   transform: scale(1.4);
 }
 
 .dot-link:hover {
-  background: var(--accent);
+  background: oklch(1 0 0);
   transform: scale(1.3);
 }

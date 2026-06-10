@@ -1,15 +1,23 @@
-export function initDotNav() {
-  const links = document.querySelectorAll('.dot-link');
-  const sections = [...links].map(l => document.querySelector(l.getAttribute('href')));
+/**
+ * Dot navigation highlighting based on visible sections.
+ * @module dot-nav
+ */
 
-  const io = new IntersectionObserver(entries => {
+/**
+ * Initializes the dot navigation to track which section is in view.
+ */
+export function initializeDotNavigation() {
+  const links = document.querySelectorAll('.dot-link');
+  const sections = [...links].map(link => document.querySelector(link.getAttribute('href')));
+
+  const sectionObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      const idx = sections.indexOf(entry.target);
-      if (idx === -1) return;
-      links.forEach((l, i) => l.classList.toggle('active', i === idx));
+      const sectionIndex = sections.indexOf(entry.target);
+      if (sectionIndex === -1) return;
+      links.forEach((link, index) => link.classList.toggle('active', index === sectionIndex));
     });
   }, { threshold: 0.4 });
 
-  sections.forEach(s => s && io.observe(s));
+  sections.forEach(section => section && sectionObserver.observe(section));
 }

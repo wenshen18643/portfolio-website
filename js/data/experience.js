@@ -1,21 +1,25 @@
-﻿export const EXP = {
+/**
+ * Experience data for overlay content generation.
+ * @module experience
+ */
+
+export const experienceData = {
   beyond: {
     company: 'Beyond Photography',
     watermark: 'BP',
     roles: [
-      { title: 'Part-time Applied AI Engineer', period: 'Feb 2026 to Present' },
-      { title: 'AI Reseacher Intern', period: 'Oct 2025 to Feb 2026' },
+      { title: 'Part-time AI Engineer', period: 'Feb 2026 to Present' },
+      { title: 'AI Engineer Intern', period: 'Oct 2025 to Feb 2026' },
     ],
     bullets: [
-      'Teaching AI agents to use tools so they stop asking me stupid questions.',
-      'Built a trading bot that reads market sentiment and yells BUY or SELL. Right about 70% of the time better than me.',
-      'Cut deploy time from 20 minutes to 30 seconds. That\'s <strong>10 hours/month</strong> saved. I did this cause I was lazy.',
-      'Build a RAG pipeline that can take anything that is thrown at it : voice, images, text, whatever. ',
-      'When our Proxmox server breaks, I unfortunately  fix it. ',
+      'Designed autonomous tool-use frameworks for SME clients (Allianz, Worknova). Agents resolve requests end-to-end instead of bouncing back to me like a boomerang.',
+      'Cut deployment time from 20 minutes to 30 seconds. Saves ~10 engineer-hours monthly. I automate anything I have to do more than twice.',
+      'Automated container cloning and nginx configuration for internal dev environments. New developer onboarding: hours → minutes.',
+      'Built a multi-modal RAG pipeline: ingests voice, images, and unstructured text into a unified retrieval layer. Basically, it reads everything.',
+      'Proxmox infrastructure ops: VM provisioning, container management, resource allocation, and occasional networking detective work at 2am. Unfortunately.',
     ],
-    people: [
-    ],
-    proof: 'Drop a screenshot of the platform, chatbot, or agent output here.',
+    people: [],
+    proof: null,
   },
   monash: {
     company: 'Monash University Malaysia Engineering Club',
@@ -24,12 +28,11 @@
       { title: 'Head Treasurer', period: 'Jul 2025 to Present' },
     ],
     bullets: [
-      'Overseeing <strong>300K+ Ringgit</strong> annual budget allocation across all clubs and events.',
-      'Automated my way out of actually doing any work',
-      'Made me look competent at my job :>'
+      'Overseeing <strong>300K+ Ringgit</strong> annual budget across 15+ student clubs and flagship events. Zero audit flags, zero missed deadlines.',
+      'Built a Python pipeline that pulls data from Asana, cleans it, and writes structured budget tracking to spreadsheets. Manual work: 5 hrs/week → 30 min. My predecessor copy-pasted; I wrote logic.',
+      'Still treasurer because nobody else wants to deal with spreadsheets. Can\'t blame them.',
     ],
-    people: [
-    ],
+    people: [],
     proofVideo: 'videos/monash-after-60s.mp4',
     beforeVideo: 'videos/monash-before-60s.mp4',
   },
@@ -42,12 +45,12 @@
       { title: 'Co-working Space Coordinator', period: 'Jan 2024 to Present' },
     ],
     achievements: [
-      'Managed a co-working space. Kept Wi-Fi breathing, coffee flowing, and printers occasionally breaking.',
-      'So far no booking disasters and no angry tenants yet.',
-      'Coordinating events is hard. Respect to people that can do it all the time.',
+      'Managed a co-working space for 20+ tenants. Kept Wi-Fi breathing, coffee flowing, and printers alive against their will.',
+      'Handled booking coordination and tenant relations. Learned that most problems are solved by listening first, fixing second.',
+      'Coordinated 5+ community events. Respect to people who do this full-time — it\'s harder than it looks.',
     ],
-    firstJobNote: 'My first real job. Not exactly related, but everyone starts somewhere',
+    firstJobNote: 'My first real job. Not exactly related to Software Engineering, but everyone starts somewhere.',
+    proofImage: 'Images/Headspace/headspace_bg.jpeg',
     people: [],
-    proof: null,
   },
 };

@@ -1,6 +1,5 @@
-﻿
 #experience {
-  background: var(--surface);
+  background: var(--forest);
 }
 
 .exp-header {
@@ -23,13 +22,14 @@
 
 .exp-header-company {
   display: block;
-  font-family: var(--font-display);
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
   font-weight: 600;
   color: var(--text);
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  letter-spacing: 0;
+  line-height: 1.3;
   min-height: 1.5em;
+  max-width: min(38vw, 30ch);
 }
 
 .exp-header-dots {
@@ -129,13 +129,13 @@
 
 .orb {
   border-radius: 50%;
-  background: oklch(0.90 0.025 95 / 0.35);
+  background: oklch(0.92 0.22 127 / 0.07);
   animation: float-orb 10s ease-in-out infinite;
 }
 
 .orb-1 { width: 180px; height: 180px; top: 15%; left: 8%; animation-delay: 0s; }
-.orb-2 { width: 120px; height: 120px; top: 60%; right: 12%; animation-delay: -3s; background: oklch(0.92 0.020 145 / 0.25); }
-.orb-3 { width: 80px; height: 80px; top: 30%; left: 55%; animation-delay: -6s; background: oklch(0.88 0.030 90 / 0.2); }
+.orb-2 { width: 120px; height: 120px; top: 60%; right: 12%; animation-delay: -3s; background: oklch(0.97 0.02 110 / 0.06); }
+.orb-3 { width: 80px; height: 80px; top: 30%; left: 55%; animation-delay: -6s; background: oklch(0.92 0.22 127 / 0.05); }
 
 @keyframes float-orb {
   0%, 100% { transform: translate(0, 0) scale(1); }
@@ -149,7 +149,7 @@
   right: 18%;
   width: 60px;
   height: 60px;
-  color: oklch(0.30 0.14 145 / 0.08);
+  color: oklch(0.92 0.22 127 / 0.16);
   animation: float-orb 14s ease-in-out infinite;
   animation-delay: -2s;
 }
@@ -161,13 +161,13 @@
 
 .geo {
   border-radius: 4px;
-  background: oklch(0.88 0.015 175 / 0.25);
+  background: oklch(0.92 0.22 127 / 0.08);
   animation: float-geo 12s ease-in-out infinite;
 }
 
 .geo-1 { width: 60px; height: 60px; top: 20%; right: 20%; animation-delay: 0s; transform: rotate(15deg); }
-.geo-2 { width: 40px; height: 40px; top: 65%; left: 15%; animation-delay: -4s; transform: rotate(-10deg); background: oklch(0.90 0.012 145 / 0.2); }
-.geo-3 { width: 100px; height: 2px; top: 45%; left: 50%; animation-delay: -7s; background: oklch(0.82 0.015 175 / 0.3); }
+.geo-2 { width: 40px; height: 40px; top: 65%; left: 15%; animation-delay: -4s; transform: rotate(-10deg); background: oklch(0.97 0.02 110 / 0.07); }
+.geo-3 { width: 100px; height: 2px; top: 45%; left: 50%; animation-delay: -7s; background: oklch(0.92 0.22 127 / 0.18); }
 
 @keyframes float-geo {
   0%, 100% { transform: translate(0, 0) rotate(15deg); }
@@ -178,14 +178,14 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to right, oklch(0.30 0.14 145 / 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, oklch(0.30 0.14 145 / 0.04) 1px, transparent 1px);
+    linear-gradient(to right, oklch(0.92 0.22 127 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.92 0.22 127 / 0.05) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
 .line {
   height: 2px;
-  background: oklch(0.30 0.14 145 / 0.12);
+  background: oklch(0.92 0.22 127 / 0.20);
   animation: float-line 15s ease-in-out infinite;
 }
 
@@ -196,7 +196,7 @@
 .block {
   width: 30px;
   height: 30px;
-  border: 2px solid oklch(0.30 0.14 145 / 0.15);
+  border: 2px solid oklch(0.92 0.22 127 / 0.25);
   top: 40%; right: 15%;
   animation: float-block 8s ease-in-out infinite;
 }
@@ -214,7 +214,7 @@
 .story-scenes {
   position: relative;
   z-index: 1;
-  max-width: 800px;
+  max-width: 900px;
   width: 100%;
   padding: 0 6vw;
   transform-style: preserve-3d;
@@ -251,28 +251,27 @@
 }
 
 .story-company {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 7vw, 5rem);
-  font-weight: 700;
-  letter-spacing: -0.04em;
+  font-stretch: 110%;
+  font-size: clamp(1.9rem, 5vw, 4.2rem);
   color: var(--text);
-  line-height: 1.05;
-  margin-bottom: 0.75rem;
+  line-height: 0.98;
+  margin-bottom: 1rem;
+  max-width: 18ch;
 }
 
 .story-role {
-  font-family: var(--font-display);
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-family: var(--font-mono);
+  font-size: clamp(0.95rem, 2vw, 1.25rem);
   font-weight: 500;
   color: var(--accent);
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   margin-bottom: 1.5rem;
 }
 
 .story-desc {
   font-size: 1rem;
   color: var(--text-dim);
-  line-height: 1.75;
+  line-height: 1.8;
   max-width: 55ch;
   margin-bottom: 2.5rem;
   opacity: 0;
@@ -288,14 +287,14 @@
 .story-cta {
   font-family: var(--font-mono);
   font-size: 0.85rem;
-  color: var(--muted);
+  color: var(--text);
   letter-spacing: 0.04em;
   background: none;
   border: 1px solid var(--border);
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 100px;
   cursor: none;
-  transition: color 0.25s, border-color 0.25s, transform 0.25s, opacity 0.5s ease;
+  transition: color 0.25s, border-color 0.25s, background 0.25s, transform 0.25s, opacity 0.5s ease;
   opacity: 0;
   transform: translateY(10px);
 }
@@ -306,7 +305,8 @@
 }
 
 .story-cta:hover {
-  color: var(--accent);
+  color: var(--ink);
+  background: var(--accent);
   border-color: var(--accent);
   transform: translateX(4px);
 }

@@ -1,31 +1,76 @@
-﻿
-.cursor-dot,
-.cursor-ring {
+.cursor,
+.cursor-ping {
   position: fixed;
-  border-radius: 50%;
+  top: 0; left: 0;
   pointer-events: none;
-  z-index: 10000;
-  transform: translate(-50%, -50%);
-  will-change: left, top;
+  z-index: 9999;
 }
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
-  transition: opacity 0.3s;
-}
-.cursor-ring {
-  width: 30px;
-  height: 30px;
-  border: 1.5px solid oklch(0.32 0.12 145 / 0.45);
-  transition: width 0.25s var(--ease-quart),
-              height 0.25s var(--ease-quart),
-              border-color 0.25s,
-              opacity 0.3s;
-}
-.cursor-dot.hidden, .cursor-ring.hidden { opacity: 0; }
 
+/* ── The plus cursor (difference blend keeps it visible on every zone) ── */
+.cursor {
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  margin-top: -9px;
+  will-change: transform;
+  transition: width 0.25s var(--ease-quart), height 0.25s var(--ease-quart), margin 0.25s var(--ease-quart);
+}
+
+.cursor::before,
+.cursor::after {
+  content: '';
+  position: absolute;
+  background: oklch(1 0 0);
+  mix-blend-mode: difference;
+  transition: width 0.25s var(--ease-quart), height 0.25s var(--ease-quart);
+}
+
+/* horizontal bar */
+.cursor::before {
+  top: 50%; left: 50%;
+  width: 100%; height: 2px;
+  transform: translate(-50%, -50%);
+}
+
+/* vertical bar */
+.cursor::after {
+  top: 50%; left: 50%;
+  width: 2px; height: 100%;
+  transform: translate(-50%, -50%);
+}
+
+/* ── Hover: becomes an × ── */
+.cursor.hover {
+  width: 26px; height: 26px;
+  margin-left: -13px; margin-top: -13px;
+  transform-origin: center;
+}
+
+/* ── Click: brief snap ── */
+.cursor.click {
+  transition: width 0.08s var(--ease-quart), height 0.08s var(--ease-quart), margin 0.08s var(--ease-quart);
+}
+
+/* ── Click ping ring ── */
+.cursor-ping {
+  width: 18px; height: 18px;
+  margin-left: -9px; margin-top: -9px;
+  border: 2px solid oklch(1 0 0);
+  mix-blend-mode: difference;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+}
+.cursor-ping.pop {
+  animation: ping-out 0.45s var(--ease-expo) forwards;
+}
+
+@keyframes ping-out {
+  0%   { opacity: 0.6; transform: scale(0.5); }
+  100% { opacity: 0;   transform: scale(3.5); }
+}
+
+/* ── Hide on touch / reduced motion ── */
 @media (pointer: coarse) {
-  .cursor-dot, .cursor-ring { display: none; }
-  body, button { cursor: auto; }
+  .cursor, .cursor-ping { display: none !important; }
 }

@@ -1,21 +1,63 @@
-﻿
+/*
+ * Greenhouse design tokens.
+ * One drenched green identity: every surface is a tonal step of hue ~125-150.
+ * Sections remap the semantic tokens locally (light, lime, dark zones).
+ */
 :root {
-  --bg:           oklch(0.97 0.018 95);
-  --surface:      oklch(0.93 0.022 98);
-  --surface-dark: oklch(0.12 0.018 145);
-  --accent:       oklch(0.30 0.14 145);
-  --accent-soft:  oklch(0.30 0.14 145 / 0.10);
-  --accent-mid:   oklch(0.30 0.14 145 / 0.35);
-  --text:         oklch(0.10 0.015 145);
-  --text-dim:     oklch(0.28 0.020 145);
-  --muted:        oklch(0.48 0.022 145);
-  --border:       oklch(0.80 0.020 98);
-  --border-dark:  oklch(0.20 0.018 145);
+  --lime:        oklch(0.89 0.21 128);
+  --lime-bright: oklch(0.92 0.22 127);
+  --cream:       oklch(0.97 0.02 110);
+  --forest:      oklch(0.27 0.06 150);
+  --ink:         oklch(0.18 0.04 152);
+  --ink-deep:    oklch(0.14 0.03 152);
+  --leaf:        oklch(0.44 0.14 148);
 
-  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
-  --font-body:    'DM Sans', system-ui, sans-serif;
+  --bg:            oklch(0.96 0.04 120);
+  --surface:       oklch(0.93 0.055 122);
+  --surface-dark:  var(--ink-deep);
+  --accent:        var(--leaf);
+  --accent-soft:   oklch(0.44 0.14 148 / 0.12);
+  --accent-mid:    oklch(0.44 0.14 148 / 0.35);
+  --text:          oklch(0.16 0.03 150);
+  --text-dim:      oklch(0.30 0.04 149);
+  --muted:         oklch(0.44 0.05 147);
+  --border:        oklch(0.84 0.06 125);
+
+  --font-display: 'Archivo', system-ui, sans-serif;
+  --font-body:    'Onest', system-ui, sans-serif;
   --font-mono:    'JetBrains Mono', 'Courier New', monospace;
+
+  --display-stretch: 125%;
+  --seam: clamp(28px, 4.5vw, 52px);
 
   --ease-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*
+ * Lime zone: the drench. Surface IS the brand color, type is ink.
+ */
+.zone-lime {
+  --bg:            var(--lime);
+  --surface:       oklch(0.86 0.20 128);
+  --accent:        var(--ink);
+  --accent-soft:   oklch(0.18 0.04 152 / 0.10);
+  --text:          var(--ink);
+  --text-dim:      oklch(0.26 0.06 150);
+  --muted:         oklch(0.33 0.08 148);
+  --border:        oklch(0.58 0.15 132);
+}
+
+/*
+ * Dark zone: forest and ink acts. Cream type, electric lime accents.
+ */
+.zone-dark {
+  --bg:            oklch(0.22 0.05 150);
+  --surface:       oklch(0.24 0.05 150);
+  --accent:        var(--lime-bright);
+  --accent-soft:   oklch(0.92 0.22 127 / 0.12);
+  --text:          var(--cream);
+  --text-dim:      oklch(0.87 0.04 130);
+  --muted:         oklch(0.73 0.06 135);
+  --border:        oklch(0.36 0.06 148);
 }

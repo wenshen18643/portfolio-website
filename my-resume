@@ -1,0 +1,139 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Packages ---
+\usepackage[margin=0.6in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=false,    
+    linkbordercolor=accent,    
+    urlbordercolor=accent,     
+    pdfborderstyle={/S/U/W 1}
+}
+\usepackage{fontawesome5} 
+
+% --- Settings ---
+\definecolor{primary}{HTML}{2E2E2E}
+\definecolor{accent}{HTML}{8F0D0D}
+\setlist[itemize]{leftmargin=0.15in, itemsep=2pt, parsep=0pt, topsep=2pt}
+
+% Section formatting
+\titleformat{\section}{\large\bfseries\color{accent}\uppercase}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{12pt}{8pt}
+
+\begin{document}
+
+% --- Header ---
+\begin{center}
+    {\Huge \textbf{Lum Wen-Shen}} \\[6pt]
+    \small
+    \faPhone\ +60 12-595 6822 \ $|$ \
+    \faEnvelope\ \href{mailto:wenshen18643@gmail.com}{wenshen18643@gmail.com} \ $|$ \
+    \faLinkedin\ \href{https://linkedin.com/in/wen-shen-lum}{linkedin.com/in/wen-shen-lum} \ $|$ \
+    \faGlobe\ \href{https://wenshen.dev}{wenshen.dev} \ $|$ \
+    \faMapMarker*\ SS19, Subang Jaya
+\end{center}
+
+% --- Summary ---
+\section*{Summary}
+\noindent
+Software Engineering student at Monash University building production AI agents and infrastructure for SME digital transformation.
+Shipped autonomous agentic systems, multi-modal RAG pipelines, and containerized deployments guiding 3--4 clients through Industry 4.0 adoption.
+Seeking applied research or engineering roles at the intersection of industrial AI, IIoT, and smart manufacturing.
+
+% --- Education ---
+\section*{Education}
+\noindent
+\textbf{Monash University Malaysia} \hfill Oct 2024 -- Present \\
+Bachelor of Engineering (Software Engineering) \hfill \textbf{CGPA : 3.725} \\
+\textit{Awards: Monash High Achiever Award}
+
+% --- Experience ---
+\section*{Experience}
+
+\noindent
+\textbf{Part-time AI Agent Engineer }$|$ \textit{Beyond Photography} \hfill Feb 2026 -- Present
+\begin{itemize}
+    \item Architected modular agentic AI platform with tool-use orchestration and autonomous task execution, onboarded across 3--4 enterprise client deployments.
+    \item Administered Proxmox VE cluster of 30--50 VMs, maintaining 10 concurrent production environments for live AI service deployments.
+    \item Developing proof-of-concept AI automation systems for SME clients, enabling structured Industry 4.0 adoption by eliminating manual operational bottlenecks before full deployment.
+\end{itemize}
+
+\vspace{4pt}
+\noindent
+\textbf{AI Researcher Intern} $|$ \textit{Beyond Photography} \hfill Oct 2025 -- Feb 2026
+\begin{itemize}
+    \item Reduced deployment time from \textbf{20 minutes to 30 seconds}, saving \textbf{10 engineer-hours/month} across 30+ deployments.
+    \item Developed LLM-powered WhatsApp chatbot for client-facing customer support and sales, automating inbound enquiry handling and lead qualification via structured conversation flows.
+    \item Architected multi-modal \textbf{RAG pipeline} (PDF, image, voice) achieving \textbf{$\sim$90\% retrieval accuracy} versus full-context baseline, with dynamic re-indexing via text extraction for scalable document updates.
+\end{itemize}
+
+\vspace{6pt}
+
+\noindent
+\textbf{Head Treasurer} $|$ \textit{Monash University Engineering Club} \hfill Jul 2025 -- Present
+\begin{itemize}
+    \item Automated financial synchronization via Python/Asana/Google Sheets APIs, saving \textbf{5 hours/week}.
+    \item Implemented OAuth2-secured budget logic, achieving \textbf{100\%} expenditure tracking accuracy.
+    \item Oversaw \textbf{RM 300K+} annual budget across all Engineering Club allocations, processing $\sim$5 claims and up to 10 purchase approvals weekly with \textbf{zero financial discrepancies}.
+\end{itemize}
+
+\vspace{6pt}
+
+\noindent
+\textbf{Co-working Space Coordinator} $|$ \textit{HeadSpace SS15} \hfill Jan 2024 -- Present
+\begin{itemize}
+    \item Maintained day-to-day operations and tenant relations for a co-working space serving \textbf{15--20 active accounts}, resolving facilities and administrative requests end-to-end.
+    \item Organised \textbf{5+ corporate events} and community programs, managing vendor coordination, scheduling, and on-site execution.
+\end{itemize}
+
+% --- Technical Projects ---
+\section*{Projects}
+
+\noindent
+\textbf{Budget Claim Analysis Dashboard} \hfill Jan 2026 -- Present
+\begin{itemize}
+    \item Built Python ETL pipeline and vanilla JS frontend delivering real-time operational analytics and automated reporting for multi-club financial oversight.
+    \item Reduced reporting time by \textbf{80\%} via automated data ingestion, transformation, and spending categorization.
+\end{itemize}
+
+\vspace{6pt}
+
+\noindent
+\textbf{AI Trading Agent} $|$ \textit{Beyond Photography}
+\begin{itemize}
+    \item Built autonomous sentiment-driven trading agent with structured tool calling and multi-step reasoning.
+    \item Achieved 70\% accuracy on directional market calls via prompt-driven decision framework.
+\end{itemize}
+
+\vspace{6pt}
+
+\noindent
+\textbf{Automated Door Control System} $|$ \textit{Arduino, PIR Sensor, Servo Motors} \hfill Coursework
+\begin{itemize}
+    \item Designed motion-sensing entry system using PIR sensor to detect movement and trigger dual servo motors.
+    \item Implemented sensor-to-actuator control loop for real-time mechanical response in embedded environment.
+\end{itemize}
+
+\vspace{6pt}
+
+\noindent
+\textbf{Intelligent Traffic Light Controller} $|$ \textit{Arduino} \hfill Coursework
+\begin{itemize}
+    \item Built programmable traffic light system with custom state-machine logic for intersection flow management.
+    \item Programmed timing sequences and safety interlocks in embedded C for Arduino microcontroller.
+\end{itemize}
+
+% --- Skills & Languages ---
+\section*{Skills \& Languages}
+\begin{itemize}
+    \item \textbf{AI \& Automation:} Agentic AI, RAG Pipelines, IIoT Integration, LLM Integration, n8n
+    \item \textbf{Programming:} Python, JavaScript (Node.js), SQL, HTML/CSS
+    \item \textbf{Infrastructure:} Proxmox VE, Docker, Nginx, Container Management, Git, REST APIs
+    \item \textbf{Data \& Analytics:} ETL Pipelines, Real-time Dashboards, Automated Reporting, Data Visualization
+    \item \textbf{Languages:} English (Fluent), Malay (Native), Mandarin (Conversational), German (B1)
+\end{itemize}
+
+\end{document}

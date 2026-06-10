@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap');
 @import 'base/tokens.css';
 @import 'base/reset.css';
 @import 'components/cursor.css';
@@ -8,9 +8,8 @@
 @import 'sections/about.css';
 @import 'components/compare-slider.css';
 @import 'sections/projects.css';
-@import 'sections/bridge.css';
 @import 'sections/experience.css';
-@import 'sections/showreel.css';
 @import 'sections/contact.css';
+@import 'sections/footer.css';
 @import 'components/overlays.css';
 @import 'base/responsive.css';

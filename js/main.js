@@ -1,32 +1,37 @@
+/**
+ * Main application entry point. Initializes all modules on DOM ready.
+ * @module main
+ */
+
 import './modules/cursor.js';
 import { scramble } from './modules/utils.js';
-import { initHeroCanvas, initHeroSequence, initTypewriter } from './modules/hero.js';
-import { initReveals } from './modules/reveals.js';
-import { initDotNav } from './modules/dot-nav.js';
-import { initCountUp } from './modules/count-up.js';
-import { initOverlay } from './modules/overlays.js';
-import { initStoryScroll } from './modules/story-scroll.js';
-import { initDreamStage } from './modules/dream-stage.js';
-import { initProjectOverlay } from './data/projects.js';
-import { initAboutOrbs, initMagneticQuote, initStatHoverScramble } from './modules/about-effects.js';
-import { initBridgeMarquee } from './modules/bridge-marquee.js';
+import { initializeHeroCanvas, initializeHeroEntranceSequence, initializeHeroParallax, initializeTypewriter } from './modules/hero.js';
+import { initializeReveals } from './modules/reveals.js';
+import { initializeDotNavigation } from './modules/dot-nav.js';
+import { initializeCountUp } from './modules/count-up.js';
+import { initializeOverlay } from './modules/overlays.js';
+import { initializeStoryScroll } from './modules/story-scroll.js';
+import { initializeProjectsScroll } from './modules/projects-scroll.js';
+import { initializeAboutOrbs, initializeMagneticQuote, initializeStatHoverScramble } from './modules/about-effects.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  scramble(document.querySelector('.name-first'), 'LUM', 600, 150);
-  scramble(document.querySelector('.name-last'), 'WEN-SHEN', 950, 380);
+  const nameFirst = document.querySelector('.name-first');
+  const nameLast = document.querySelector('.name-last');
 
-  initHeroCanvas();
-  initHeroSequence();
-  initTypewriter();
-  initReveals();
-  initDotNav();
-  initCountUp();
-  initOverlay();
-  initStoryScroll();
-  initDreamStage();
-  initProjectOverlay();
-  initAboutOrbs();
-  initMagneticQuote();
-  initStatHoverScramble();
-  initBridgeMarquee();
+  if (nameFirst) scramble(nameFirst, 'LUM', 600, 150);
+  if (nameLast) scramble(nameLast, 'WEN-SHEN', 950, 380);
+
+  initializeHeroCanvas();
+  initializeHeroEntranceSequence();
+  initializeHeroParallax();
+  initializeTypewriter();
+  initializeReveals();
+  initializeDotNavigation();
+  initializeCountUp();
+  initializeOverlay();
+  initializeStoryScroll();
+  initializeProjectsScroll();
+  initializeAboutOrbs();
+  initializeMagneticQuote();
+  initializeStatHoverScramble();
 });

@@ -1,28 +1,48 @@
-import { reduced, scramble } from './utils.js';
+/**
+ * About section ambient orbs, magnetic quote, and stat hover scramble.
+ * @module about-effects
+ */
 
-export function initAboutOrbs() {
+import { prefersReducedMotion, scramble } from './utils.js';
+
+const offscreenCoordinate = -9999;
+const magneticEffectRadius = 140;
+const magneticMaxForce = 3.5;
+const magneticSpringStrength = 0.06;
+const magneticDampingFactor = 0.88;
+const orbRevealStaggerMilliseconds = 200;
+const sectionRevealThreshold = 0.15;
+
+/**
+ * Initializes ambient orb visibility when the about section enters view.
+ */
+export function initializeAboutOrbs() {
   const section = document.getElementById('about');
   const orbs = section?.querySelectorAll('.about-orb');
   if (!orbs?.length) return;
 
-  if (reduced) {
-    orbs.forEach(o => o.classList.add('is-visible'));
+  if (prefersReducedMotion) {
+    orbs.forEach(orb => orb.classList.add('is-visible'));
     return;
   }
 
-  const obs = new IntersectionObserver((entries) => {
+  const orbObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        orbs.forEach((o, i) => setTimeout(() => o.classList.add('is-visible'), i * 200));
-        obs.disconnect();
+        orbs.forEach((orb, index) => setTimeout(() => orb.classList.add('is-visible'), index * orbRevealStaggerMilliseconds));
+        orbObserver.disconnect();
       }
     });
-  }, { threshold: 0.15 });
+  }, { threshold: sectionRevealThreshold });
 
-  obs.observe(section);
+  orbObserver.observe(section);
 }
 
-export function initMagneticQuote() {
+/**
+ * Wraps quote characters in spans and applies a magnetic repulsion
+ * effect driven by mouse position.
+ */
+export function initializeMagneticQuote() {
   const section = document.getElementById('about');
   const quote = section?.querySelector('.about-quote');
   if (!quote) return;
@@ -31,11 +51,11 @@ export function initMagneticQuote() {
   const lines = html.split(/(<br\s*\/?>)/i);
 
   quote.innerHTML = '';
-  const chars = [];
+  const characters = [];
 
-  lines.forEach((line, lineIdx) => {
+  lines.forEach((line, lineIndex) => {
     if (/^<br\s*\/?>$/i.test(line)) return;
-    if (lineIdx > 0) quote.appendChild(document.createElement('br'));
+    if (lineIndex > 0) quote.appendChild(document.createElement('br'));
 
     const words = line.split(/(\s+)/);
     words.forEach(word => {
@@ -46,95 +66,111 @@ export function initMagneticQuote() {
         wordSpan.style.display = 'inline-block';
         wordSpan.style.whiteSpace = 'nowrap';
 
-        for (const ch of word) {
+        for (const character of word) {
           const span = document.createElement('span');
           span.className = 'magnetic-char';
-          span.textContent = ch;
+          span.textContent = character;
           wordSpan.appendChild(span);
-          chars.push({ el: span, x: 0, y: 0, vx: 0, vy: 0, cx: 0, cy: 0, phase: chars.length * 0.4 });
+          characters.push({
+            element: span,
+            x: 0,
+            y: 0,
+            velocityX: 0,
+            velocityY: 0,
+            centerX: 0,
+            centerY: 0,
+            phase: characters.length * 0.4
+          });
         }
         quote.appendChild(wordSpan);
       }
     });
   });
 
-  if (reduced) return;
+  if (prefersReducedMotion) return;
 
-  const RADIUS = 140;
-  const MAX_FORCE = 3.5;
-  const SPRING = 0.06;
-  const DAMPING = 0.88;
-
-  function measure() {
-    chars.forEach(c => {
-      const r = c.el.getBoundingClientRect();
-      c.cx = r.left + r.width / 2 + window.scrollX;
-      c.cy = r.top + r.height / 2 + window.scrollY;
+  function measureCharacterCenters() {
+    characters.forEach(character => {
+      const rect = character.element.getBoundingClientRect();
+      character.centerX = rect.left + rect.width / 2 + window.scrollX;
+      character.centerY = rect.top + rect.height / 2 + window.scrollY;
     });
   }
 
-  measure();
-  window.addEventListener('resize', measure);
+  measureCharacterCenters();
+  window.addEventListener('resize', measureCharacterCenters);
 
-  let mouseX = -9999, mouseY = -9999;
-  section.addEventListener('mousemove', e => {
-    mouseX = e.clientX + window.scrollX;
-    mouseY = e.clientY + window.scrollY;
+  let mouseX = offscreenCoordinate;
+  let mouseY = offscreenCoordinate;
+
+  section.addEventListener('mousemove', event => {
+    mouseX = event.clientX + window.scrollX;
+    mouseY = event.clientY + window.scrollY;
   });
+
   section.addEventListener('mouseleave', () => {
-    mouseX = -9999;
-    mouseY = -9999;
+    mouseX = offscreenCoordinate;
+    mouseY = offscreenCoordinate;
   });
 
   let time = 0;
-  let rafId = null;
+  let animationFrameId = null;
   let isVisible = false;
 
-  function tick() {
-    if (!isVisible) { rafId = null; return; }
+  function updateFrame() {
+    if (!isVisible) {
+      animationFrameId = null;
+      return;
+    }
     time++;
-    chars.forEach(c => {
-      const dx = c.cx - mouseX;
-      const dy = c.cy - mouseY;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < RADIUS && dist > 0) {
-        const force = (1 - dist / RADIUS) * MAX_FORCE;
-        c.vx += (dx / dist) * force;
-        c.vy += (dy / dist) * force;
+    characters.forEach(character => {
+      const deltaX = character.centerX - mouseX;
+      const deltaY = character.centerY - mouseY;
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+      if (distance < magneticEffectRadius && distance > 0) {
+        const force = (1 - distance / magneticEffectRadius) * magneticMaxForce;
+        character.velocityX += (deltaX / distance) * force;
+        character.velocityY += (deltaY / distance) * force;
       }
 
-      c.vx += (0 - c.x) * SPRING;
-      c.vy += (0 - c.y) * SPRING;
+      character.velocityX += (0 - character.x) * magneticSpringStrength;
+      character.velocityY += (0 - character.y) * magneticSpringStrength;
 
-      c.vx *= DAMPING;
-      c.vy *= DAMPING;
+      character.velocityX *= magneticDampingFactor;
+      character.velocityY *= magneticDampingFactor;
 
-      c.x += c.vx;
-      c.y += c.vy;
+      character.x += character.velocityX;
+      character.y += character.velocityY;
 
-      const idleX = Math.sin(time * 0.001 + c.phase) * 1.5;
-      const idleY = Math.cos(time * 0.0013 + c.phase * 1.3) * 1.2;
+      const idleX = Math.sin(time * 0.001 + character.phase) * 1.5;
+      const idleY = Math.cos(time * 0.0013 + character.phase * 1.3) * 1.2;
 
-      c.el.style.transform = `translate(${(c.x + idleX).toFixed(2)}px, ${(c.y + idleY).toFixed(2)}px)`;
+      character.element.style.transform = `translate(${(character.x + idleX).toFixed(2)}px, ${(character.y + idleY).toFixed(2)}px)`;
     });
 
-    rafId = requestAnimationFrame(tick);
+    animationFrameId = requestAnimationFrame(updateFrame);
   }
 
-  const io = new IntersectionObserver(entries => {
+  const visibilityObserver = new IntersectionObserver(entries => {
     isVisible = entries[0].isIntersecting;
-    if (isVisible && !rafId) rafId = requestAnimationFrame(tick);
+    if (isVisible && !animationFrameId) animationFrameId = requestAnimationFrame(updateFrame);
   });
-  io.observe(section);
+  visibilityObserver.observe(section);
 }
 
-export function initStatHoverScramble() {
-  if (reduced) return;
+/**
+ * Attaches scramble effects to stat labels on mouse enter.
+ */
+export function initializeStatHoverScramble() {
+  if (prefersReducedMotion) return;
+
   document.querySelectorAll('.about-stats .stat').forEach(stat => {
     const label = stat.querySelector('.stat-l');
     if (!label) return;
-    const original = label.textContent;
-    stat.addEventListener('mouseenter', () => scramble(label, original, 300, 0));
-    stat.addEventListener('mouseleave', () => label.textContent = original);
+
+    const originalText = label.textContent;
+    stat.addEventListener('mouseenter', () => scramble(label, originalText, 300, 0));
+    stat.addEventListener('mouseleave', () => label.textContent = originalText);
   });
 }

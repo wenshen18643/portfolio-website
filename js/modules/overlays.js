@@ -1,33 +1,44 @@
-﻿import { reduced } from './utils.js';
-import { EXP } from '../data/experience.js';
+/**
+ * Experience overlay rendering, open/close logic, and compare slider.
+ * @module overlays
+ */
 
-function buildOverlay(data) {
-  const wm = document.getElementById('overlayWatermark');
-  const left = document.getElementById('overlayLeft');
-  const body = document.getElementById('overlayBody');
+import { prefersReducedMotion } from './utils.js';
+import { experienceData } from '../data/experience.js';
 
-  wm.textContent = data.watermark;
+/**
+ * Builds overlay DOM content from experience data.
+ *
+ * @param {Object} data - Experience entry data object.
+ */
+function buildOverlayContent(data) {
+  const watermarkElement = document.getElementById('overlayWatermark');
+  const leftPanel = document.getElementById('overlayLeft');
+  const bodyPanel = document.getElementById('overlayBody');
 
-  const animClass = data.vibe === 'playful' ? 'rush' : 'ov-animate';
+  watermarkElement.textContent = data.watermark;
 
-  const rolesHtml = data.roles.map(r =>
-    `<p class="ov-role-line ${animClass}"><strong class="ov-role-title">${r.title}</strong><span class="ov-role-sep"> · </span><span class="ov-role-period">${r.period}</span></p>`
+  const animationClass = 'ov-animate';
+  const staggerDelayMilliseconds = 60;
+
+  const rolesHtml = data.roles.map(role =>
+    `<p class="ov-role-line ${animationClass}"><strong class="ov-role-title">${role.title}</strong><span class="ov-role-sep"> · </span><span class="ov-role-period">${role.period}</span></p>`
   ).join('');
 
   const taglineHtml = data.tagline
-    ? `<p class="ov-tagline ${animClass}">${data.tagline}</p>`
+    ? `<p class="ov-tagline ${animationClass}">${data.tagline}</p>`
     : '';
 
   let contentHtml = '';
   if (data.beforeAfter) {
-    const beforeItems = data.beforeAfter.before.map((b, i) =>
-      `<li class="${animClass}" style="transition-delay: ${i * 60}ms">${b}</li>`
+    const beforeItems = data.beforeAfter.before.map((item, index) =>
+      `<li class="${animationClass}" style="transition-delay: ${index * staggerDelayMilliseconds}ms">${item}</li>`
     ).join('');
-    const afterItems = data.beforeAfter.after.map((b, i) =>
-      `<li class="${animClass}" style="transition-delay: ${(i + data.beforeAfter.before.length) * 60}ms">${b}</li>`
+    const afterItems = data.beforeAfter.after.map((item, index) =>
+      `<li class="${animationClass}" style="transition-delay: ${(index + data.beforeAfter.before.length) * staggerDelayMilliseconds}ms">${item}</li>`
     ).join('');
     contentHtml = `
-      <div class="ov-beforeafter ${animClass}">
+      <div class="ov-beforeafter ${animationClass}">
         <div class="ov-beforeafter-col ov-before">
           <p class="ov-section-label">The Old Way</p>
           <ul class="ov-bullets">${beforeItems}</ul>
@@ -39,29 +50,31 @@ function buildOverlay(data) {
       </div>
     `;
   } else if (data.achievements) {
-    const achievementsHtml = data.achievements.map((a, i) =>
-      `<div class="ov-achievement-item ${animClass}" style="transition-delay: ${i * 60}ms">${a}</div>`
+    const achievementsHtml = data.achievements.map((item, index) =>
+      `<div class="ov-achievement-item ${animationClass}" style="transition-delay: ${index * staggerDelayMilliseconds}ms">${item}</div>`
     ).join('');
     contentHtml = `
-      <p class="ov-section-label ${animClass}">Unlocked abilities</p>
+      <p class="ov-section-label ${animationClass}">Unlocked abilities</p>
       <div class="ov-achievements">${achievementsHtml}</div>
     `;
   } else if (data.bullets) {
-    const bulletsHtml = data.bullets.map((b, i) => `<li class="${animClass}" style="transition-delay: ${i * 60}ms">${b}</li>`).join('');
+    const bulletsHtml = data.bullets.map((item, index) =>
+      `<li class="${animationClass}" style="transition-delay: ${index * staggerDelayMilliseconds}ms">${item}</li>`
+    ).join('');
     contentHtml = `
-      <p class="ov-section-label ${animClass}">What I did</p>
+      <p class="ov-section-label ${animationClass}">What I did</p>
       <ul class="ov-bullets">${bulletsHtml}</ul>
     `;
   }
 
   const noteHtml = data.firstJobNote
-    ? `<p class="ov-first-note ${animClass}">${data.firstJobNote}</p>`
+    ? `<p class="ov-first-note ${animationClass}">${data.firstJobNote}</p>`
     : '';
 
   let proofHtml = '';
   if (data.proofVideo && data.beforeVideo) {
     proofHtml = `
-      <div class="compare-slider ${animClass}" id="mumecSlider">
+      <div class="compare-slider ${animationClass}" id="mumecSlider">
         <div class="compare-after">
           <video src="${data.proofVideo}" autoplay muted loop playsinline preload="metadata"></video>
         </div>
@@ -72,21 +85,28 @@ function buildOverlay(data) {
           <span class="handle-grip"></span>
         </div>
       </div>
-      <div class="compare-labels ${animClass}">
+      <div class="compare-labels ${animationClass}">
         <span class="compare-label before-label">Before - Manual chaos</span>
         <span class="compare-label after-label">After - Yes I'm not doing anything</span>
       </div>
     `;
   } else if (data.proofVideo) {
     proofHtml = `
-      <div class="proof-slot proof-video ${animClass}">
+      <div class="proof-slot proof-video ${animationClass}">
         <video src="${data.proofVideo}" autoplay muted loop playsinline preload="metadata"></video>
+      </div>
+    `;
+  } else if (data.proofImage) {
+    proofHtml = `
+      <p class="ov-section-label ${animationClass}">Where I worked</p>
+      <div class="proof-slot ${animationClass}">
+        <img src="${data.proofImage}" alt="${data.company} proof of work" loading="lazy">
       </div>
     `;
   } else if (data.proof) {
     proofHtml = `
-      <p class="ov-section-label ${animClass}">Proof of work</p>
-      <div class="proof-slot ${animClass}">
+      <p class="ov-section-label ${animationClass}">Proof of work</p>
+      <div class="proof-slot ${animationClass}">
         <strong>Screenshot / demo coming soon</strong>
         ${data.proof}
       </div>
@@ -95,62 +115,62 @@ function buildOverlay(data) {
 
   let peopleHtml = '';
   if (data.people && data.people.length > 0) {
-    const chips = data.people.map(p =>
-      `<div class="person-chip ${animClass}">
-        <span class="person-name">${p.name}</span>
-        <span class="person-role">${p.role}</span>
+    const chips = data.people.map(person =>
+      `<div class="person-chip ${animationClass}">
+        <span class="person-name">${person.name}</span>
+        <span class="person-role">${person.role}</span>
       </div>`
     ).join('');
     peopleHtml = `
-      <p class="ov-section-label ${animClass}">People I've worked with</p>
+      <p class="ov-section-label ${animationClass}">People I've worked with</p>
       <div class="people-grid">${chips}</div>
     `;
   }
 
-  const whistleHtml = '';
-
-  left.innerHTML = `
-    <h2 class="ov-company ${animClass}" id="overlayTitle">${data.company}</h2>
+  leftPanel.innerHTML = `
+    <h2 class="ov-company ${animationClass}" id="overlayTitle">${data.company}</h2>
     ${taglineHtml}
     <div class="ov-roles">${rolesHtml}</div>
   `;
 
-  body.innerHTML = `
-    ${whistleHtml}
+  bodyPanel.innerHTML = `
     ${contentHtml}
     ${noteHtml}
     ${proofHtml}
     ${peopleHtml}
   `;
-
 }
 
-export function initOverlay() {
+/**
+ * Initializes the experience overlay open/close interactions.
+ */
+export function initializeOverlay() {
   const overlay = document.getElementById('expOverlay');
-  const closeBtn = document.getElementById('overlayClose');
-  let lastFocused = null;
+  const closeButton = document.getElementById('overlayClose');
+  let lastFocusedElement = null;
 
-  function open(expId) {
-    const data = EXP[expId];
+  const initialRevealDelay = 150;
+  const revealStaggerMilliseconds = 90;
+
+  function openOverlay(experienceId) {
+    const data = experienceData[experienceId];
     if (!data) return;
-    lastFocused = document.activeElement;
+    lastFocusedElement = document.activeElement;
 
     overlay.classList.remove('tint-beyond', 'tint-monash', 'tint-headspace');
-    overlay.classList.add(`tint-${expId}`);
+    overlay.classList.add(`tint-${experienceId}`);
 
-    buildOverlay(data);
+    buildOverlayContent(data);
     overlay.removeAttribute('hidden');
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         overlay.classList.add('open');
 
-        {
-          const animatables = overlay.querySelectorAll('.ov-animate');
-          animatables.forEach((el, i) => {
-            setTimeout(() => el.classList.add('in'), 150 + i * 90);
-          });
-        }
+        const animatables = overlay.querySelectorAll('.ov-animate');
+        animatables.forEach((element, index) => {
+          setTimeout(() => element.classList.add('in'), initialRevealDelay + index * revealStaggerMilliseconds);
+        });
       });
     });
 
@@ -160,88 +180,100 @@ export function initOverlay() {
     progressBar.style.width = '0%';
 
     scrollContainer.addEventListener('scroll', () => {
-      const max = scrollContainer.scrollHeight - scrollContainer.clientHeight;
-      const pct = max > 0 ? scrollContainer.scrollTop / max : 0;
-      progressBar.style.width = `${pct * 100}%`;
+      const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+      const scrollPercentage = maxScroll > 0 ? scrollContainer.scrollTop / maxScroll : 0;
+      progressBar.style.width = `${scrollPercentage * 100}%`;
     }, { passive: true });
 
-    initMumecSlider(overlay);
+    initializeCompareSlider(overlay);
 
-    closeBtn.focus();
+    closeButton.focus();
     document.body.style.overflow = 'hidden';
   }
 
-  function close() {
+  function closeOverlay() {
     overlay.classList.remove('open');
     overlay.addEventListener('transitionend', () => {
       overlay.setAttribute('hidden', '');
       document.body.style.overflow = '';
-      if (lastFocused) lastFocused.focus();
+      if (lastFocusedElement) lastFocusedElement.focus();
     }, { once: true });
   }
 
   document.querySelectorAll('.story-cta[data-exp]').forEach(card => {
-    card.addEventListener('click', () => open(card.dataset.exp));
+    card.addEventListener('click', () => openOverlay(card.dataset.exp));
   });
 
-  closeBtn.addEventListener('click', close);
+  closeButton.addEventListener('click', closeOverlay);
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && overlay.classList.contains('open')) close();
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && overlay.classList.contains('open')) closeOverlay();
   });
 }
 
-function initMumecSlider(container) {
+/**
+ * Initializes the before/after video compare slider within an overlay.
+ *
+ * @param {HTMLElement} container - The overlay element to search within.
+ */
+function initializeCompareSlider(container) {
   const slider = container ? container.querySelector('#mumecSlider') : document.getElementById('mumecSlider');
   if (!slider) return;
-  if (reduced) return;
+  if (prefersReducedMotion) return;
 
-  const before = slider.querySelector('.compare-before');
+  const beforeLayer = slider.querySelector('.compare-before');
   const handle = slider.querySelector('.compare-handle');
   let isDragging = false;
-  let rafId = null;
-  let targetPct = 50;
-  let currentPct = 50;
+  let animationFrameId = null;
+  let targetPercentage = 50;
+  let currentPercentage = 50;
 
-  function applyPosition(pct) {
-    const p = Math.max(0, Math.min(100, pct));
-    before.style.clipPath = `inset(0 ${100 - p}% 0 0)`;
-    handle.style.left = `${p}%`;
+  const lerpSpeed = 0.15;
+  const lerpThreshold = 0.12;
+
+  function applySliderPosition(percentage) {
+    const clamped = Math.max(0, Math.min(100, percentage));
+    beforeLayer.style.clipPath = `inset(0 ${100 - clamped}% 0 0)`;
+    handle.style.left = `${clamped}%`;
   }
 
-  function lerpPosition() {
-    const diff = targetPct - currentPct;
-    if (Math.abs(diff) < 0.12) {
-      currentPct = targetPct;
-      applyPosition(currentPct);
-      rafId = null;
+  function animateSliderPosition() {
+    const difference = targetPercentage - currentPercentage;
+    if (Math.abs(difference) < lerpThreshold) {
+      currentPercentage = targetPercentage;
+      applySliderPosition(currentPercentage);
+      animationFrameId = null;
       return;
     }
-    currentPct += diff * 0.15;
-    applyPosition(currentPct);
-    rafId = requestAnimationFrame(lerpPosition);
+    currentPercentage += difference * lerpSpeed;
+    applySliderPosition(currentPercentage);
+    animationFrameId = requestAnimationFrame(animateSliderPosition);
   }
 
-  function setTarget(x) {
+  function setSliderTarget(clientX) {
     const rect = slider.getBoundingClientRect();
-    let pct = ((x - rect.left) / rect.width) * 100;
-    pct = Math.max(0, Math.min(100, pct));
-    targetPct = pct;
-    if (!rafId) rafId = requestAnimationFrame(lerpPosition);
+    let percentage = ((clientX - rect.left) / rect.width) * 100;
+    percentage = Math.max(0, Math.min(100, percentage));
+    targetPercentage = percentage;
+    if (!animationFrameId) animationFrameId = requestAnimationFrame(animateSliderPosition);
   }
 
-  slider.addEventListener('mousemove', e => {
-    if (!isDragging) setTarget(e.clientX);
+  slider.addEventListener('mousemove', event => {
+    if (!isDragging) setSliderTarget(event.clientX);
   });
 
-  handle.addEventListener('touchstart', e => { isDragging = true; e.preventDefault(); }, { passive: false });
+  handle.addEventListener('touchstart', event => {
+    isDragging = true;
+    event.preventDefault();
+  }, { passive: false });
+
   window.addEventListener('touchend', () => isDragging = false);
-  window.addEventListener('touchmove', e => {
-    if (isDragging) setTarget(e.touches[0].clientX);
+  window.addEventListener('touchmove', event => {
+    if (isDragging) setSliderTarget(event.touches[0].clientX);
   }, { passive: true });
 
-  slider.addEventListener('click', e => {
-    if (e.target === handle || e.target.closest('.compare-handle')) return;
-    setTarget(e.clientX);
+  slider.addEventListener('click', event => {
+    if (event.target === handle || event.target.closest('.compare-handle')) return;
+    setSliderTarget(event.clientX);
   });
 }

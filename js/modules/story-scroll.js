@@ -1,226 +1,348 @@
-import { reduced } from './utils.js';
+/**
+ * Experience section scroll-driven story scenes with parallax backgrounds.
+ * @module story-scroll
+ */
 
-function runInChars(container, baseDelay) {
+import { prefersReducedMotion } from './utils.js';
+
+const landingScrollThreshold = 0.15;
+const exitScrollThreshold = 0.85;
+
+const animationBounds = [
+  { start: 0.00, end: 0.35 },
+  { start: 0.25, end: 0.65 },
+  { start: 0.55, end: 1.00 },
+];
+
+const uiBounds = [0, 0.30, 0.60, 1.0];
+
+const fadeInPhaseLength = 0.12;
+const fadeOutPhaseLength = 0.12;
+const fadeInOpacityMultiplier = 1.8;
+const fadeOutOpacityMultiplier = 2.0;
+
+const mobileFadeInTranslateY = 40;
+const mobileFadeInScaleStart = 0.96;
+const mobileFadeOutTranslateY = -30;
+const mobileFadeOutScaleEnd = 0.97;
+
+const desktopFadeInRotateY = 35;
+const desktopFadeInTranslateX = 30;
+const desktopFadeInTranslateZ = -400;
+const desktopFadeOutRotateY = -35;
+const desktopFadeOutTranslateX = -30;
+const desktopFadeOutTranslateZ = -400;
+
+const labelRevealThreshold = 0.02;
+const titleStartProgress = 0.04;
+const titleEndProgress = 0.30;
+const roleStartProgress = 0.20;
+const roleEndProgress = 0.45;
+const descriptionRevealThreshold = 0.50;
+const callToActionRevealThreshold = 0.45;
+const pointerEventsLowerBound = 0.05;
+const pointerEventsUpperBound = 0.95;
+
+const parallaxDepthMultiplier = 0.3;
+
+const scrollCueHideThreshold = 0.03;
+const mobileBreakpoint = 768;
+
+/**
+ * Wraps each text node inside a container in individually animated characters.
+ *
+ * @param {HTMLElement} container - The element whose text will be split.
+ * @param {number} baseDelay - Base animation delay in milliseconds.
+ */
+function wrapTextInAnimatedCharacters(container, baseDelay) {
   const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
-  const nodes = [];
-  let n;
-  while (n = walker.nextNode()) {
-    if (n.textContent.trim().length > 0) nodes.push(n);
+  const textNodes = [];
+  let node;
+  while (node = walker.nextNode()) {
+    if (node.textContent.trim().length > 0) textNodes.push(node);
   }
 
-  let idx = 0;
-  nodes.forEach(node => {
-    const text = node.textContent;
+  let characterIndex = 0;
+  textNodes.forEach(textNode => {
+    const text = textNode.textContent;
     const wrapper = document.createElement('span');
-    const chars = [];
-    for (let i = 0; i < text.length; i++) {
-      const c = text[i];
-      if (c === ' ') {
-        chars.push(' ');
+    const characters = [];
+
+    for (let index = 0; index < text.length; index++) {
+      const character = text[index];
+      if (character === ' ') {
+        characters.push(' ');
       } else {
-        const delay = baseDelay + idx * 15;
-        chars.push(`<span class="char-run" style="animation-delay:${delay}ms">${c}</span>`);
-        idx++;
+        const delay = baseDelay + characterIndex * 15;
+        characters.push(`<span class="char-run" style="animation-delay:${delay}ms">${character}</span>`);
+        characterIndex++;
       }
     }
-    wrapper.innerHTML = chars.join('');
+
+    wrapper.innerHTML = characters.join('');
     while (wrapper.firstChild) {
-      node.parentNode.insertBefore(wrapper.firstChild, node);
+      textNode.parentNode.insertBefore(wrapper.firstChild, textNode);
     }
-    node.parentNode.removeChild(node);
+    textNode.parentNode.removeChild(textNode);
   });
 }
 
-function splitScrollText() {
-  document.querySelectorAll('[data-scroll-text]').forEach(el => {
-    const text = el.textContent;
-    el.innerHTML = '';
-    el.setAttribute('aria-label', text);
+/**
+ * Splits scroll-text elements into per-character spans for animation.
+ */
+function splitScrollTextIntoCharacters() {
+  document.querySelectorAll('[data-scroll-text]').forEach(element => {
+    const text = element.textContent;
+    element.innerHTML = '';
+    element.setAttribute('aria-label', text);
 
-    const words = text.split(' ').filter(w => w.length > 0);
-    words.forEach((word, wi) => {
+    const words = text.split(' ').filter(word => word.length > 0);
+    words.forEach((word, wordIndex) => {
       const wordSpan = document.createElement('span');
       wordSpan.style.whiteSpace = 'nowrap';
       wordSpan.style.display = 'inline-block';
 
-      for (let i = 0; i < word.length; i++) {
+      for (let characterIndex = 0; characterIndex < word.length; characterIndex++) {
         const charSpan = document.createElement('span');
         charSpan.className = 'scroll-char';
-        charSpan.textContent = word[i];
+        charSpan.textContent = word[characterIndex];
         wordSpan.appendChild(charSpan);
       }
 
-      el.appendChild(wordSpan);
+      element.appendChild(wordSpan);
 
-      if (wi < words.length - 1) {
-        el.appendChild(document.createTextNode(' '));
+      if (wordIndex < words.length - 1) {
+        element.appendChild(document.createTextNode(' '));
       }
     });
   });
 }
 
-export function initStoryScroll() {
+/**
+ * Initializes the scroll-driven experience story section.
+ */
+export function initializeStoryScroll() {
   const container = document.querySelector('.story-scroll-container');
   const sticky = document.querySelector('.story-sticky');
   const scenes = document.querySelectorAll('.story-scene');
-  const bgScenes = document.querySelectorAll('.story-bg-scene');
+  const backgroundScenes = document.querySelectorAll('.story-bg-scene');
   const progressFill = document.querySelector('.story-progress-fill');
   const progressDots = document.querySelectorAll('.story-progress-dot');
   const scrollCue = document.querySelector('.story-scroll-cue');
-  const expHeaderCompany = document.querySelector('.exp-header-company');
-  const expHeaderDots = document.querySelectorAll('.exp-header-dot');
-  const phases = Array.from(scenes).map(s => s.dataset.phase || '');
+  const headerCompany = document.querySelector('.exp-header-company');
+  const headerDots = document.querySelectorAll('.exp-header-dot');
+  const phases = Array.from(scenes).map(scene => scene.dataset.phase || '');
 
   if (!container || !sticky || !scenes.length) return;
 
-  if (reduced) {
-    scenes.forEach(s => s.classList.add('active'));
-    bgScenes.forEach(b => b.classList.add('active'));
-    if (expHeaderCompany && phases.length) expHeaderCompany.textContent = phases[0];
+  if (prefersReducedMotion) {
+    scenes.forEach(scene => scene.classList.add('active'));
+    backgroundScenes.forEach(background => background.classList.add('active'));
+    if (headerCompany && phases.length) headerCompany.textContent = phases[0];
     return;
   }
 
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const isMobile = window.matchMedia(`(max-width: ${mobileBreakpoint}px)`).matches;
+  const sceneCount = scenes.length;
 
-  splitScrollText();
+  splitScrollTextIntoCharacters();
 
-  function update() {
+  /**
+   * Determines which scene should be considered active for UI state.
+   *
+   * @param {number} progress - Scroll progress from 0 to 1.
+   * @returns {number} Index of the active scene.
+   */
+  function getActiveSceneIndex(progress) {
+    for (let index = 0; index < sceneCount; index++) {
+      if (progress >= uiBounds[index] && progress < uiBounds[index + 1]) return index;
+    }
+    return sceneCount - 1;
+  }
+
+  /**
+   * Computes local progress within a single scene's animation bounds.
+   *
+   * @param {number} progress - Overall scroll progress.
+   * @param {number} sceneIndex - Index of the scene.
+   * @returns {number} Local progress clamped between 0 and 1.
+   */
+  function getLocalProgress(progress, sceneIndex) {
+    const bounds = animationBounds[sceneIndex];
+    return Math.max(0, Math.min(1, (progress - bounds.start) / (bounds.end - bounds.start)));
+  }
+
+  /**
+   * Updates all scene transforms, opacity, and character animations
+   * based on current scroll position.
+   */
+  function updateScenes() {
     const rect = container.getBoundingClientRect();
     const containerHeight = container.offsetHeight;
     const stickyHeight = sticky.offsetHeight;
     const maxScroll = containerHeight - stickyHeight;
     const scrollProgress = Math.max(0, Math.min(1, -rect.top / maxScroll));
-    const sceneCount = scenes.length;
-    const progressPct = scrollProgress * 100;
-    const activeSceneIdx = Math.min(Math.floor(scrollProgress * sceneCount), sceneCount - 1);
+    const progressPercentage = scrollProgress * 100;
+    const activeSceneIndex = getActiveSceneIndex(scrollProgress);
 
-    if (scrollCue) { scrollCue.classList.toggle('hidden', scrollProgress > 0.03); }
-    if (progressFill) progressFill.style.width = `${progressPct}%`;
-    progressDots.forEach((d, i) => { d.classList.toggle('active', i === activeSceneIdx); });
-    if (expHeaderCompany && phases[activeSceneIdx]) { expHeaderCompany.textContent = phases[activeSceneIdx]; }
-    expHeaderDots.forEach((d, i) => { d.classList.toggle('active', i === activeSceneIdx); });
+    if (scrollCue) {
+      scrollCue.classList.toggle('hidden', scrollProgress > scrollCueHideThreshold);
+    }
+    if (progressFill) progressFill.style.width = `${progressPercentage}%`;
+
+    progressDots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === activeSceneIndex);
+    });
+
+    if (headerCompany && phases[activeSceneIndex]) {
+      headerCompany.textContent = phases[activeSceneIndex];
+    }
+
+    headerDots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === activeSceneIndex);
+    });
 
     let maxLocalProgress = -1;
     let focusedScene = null;
 
-    scenes.forEach((scene, i) => {
-      const localProgress = Math.max(0, Math.min(1, scrollProgress * sceneCount - i));
+    scenes.forEach((scene, sceneIndex) => {
+      const localProgress = getLocalProgress(scrollProgress, sceneIndex);
+      const isFirstSceneLanding = sceneIndex === 0 && scrollProgress < landingScrollThreshold;
+      const isLastSceneLanding = sceneIndex === sceneCount - 1 && scrollProgress > exitScrollThreshold;
 
       if (localProgress > maxLocalProgress && localProgress <= 1) {
         maxLocalProgress = localProgress;
         focusedScene = scene;
       }
 
-      let rotateY = 0, translateX = 0, translateZ = 0, opacity = 0;
-      let mTranslateY = 0, mScale = 1;
+      let rotateY = 0;
+      let translateX = 0;
+      let translateZ = 0;
+      let opacity = 0;
+      let mobileTranslateY = 0;
+      let mobileScale = 1;
 
-      if (localProgress > 0 && localProgress <= 1) {
-        if (localProgress < 0.20) {
-          const p = localProgress / 0.20;
-          opacity = Math.min(1, p * 2.5);
+      if (isFirstSceneLanding || isLastSceneLanding) {
+        opacity = 1;
+      } else if (localProgress > 0 && localProgress <= 1) {
+        if (localProgress < fadeInPhaseLength) {
+          const phaseProgress = localProgress / fadeInPhaseLength;
+          opacity = Math.min(1, phaseProgress * fadeInOpacityMultiplier);
           if (isMobile) {
-            mTranslateY = 50 * (1 - p);
-            mScale = 0.95 + 0.05 * p;
+            mobileTranslateY = mobileFadeInTranslateY * (1 - phaseProgress);
+            mobileScale = mobileFadeInScaleStart + (1 - mobileFadeInScaleStart) * phaseProgress;
           } else {
-            rotateY = 55 * (1 - p);
-            translateX = 55 * (1 - p);
-            translateZ = -900 * (1 - p);
+            rotateY = desktopFadeInRotateY * (1 - phaseProgress);
+            translateX = desktopFadeInTranslateX * (1 - phaseProgress);
+            translateZ = desktopFadeInTranslateZ * (1 - phaseProgress);
           }
-        } else if (localProgress < 0.80) {
+        } else if (localProgress < (1 - fadeOutPhaseLength)) {
           opacity = 1;
         } else {
-          const p = (localProgress - 0.80) / 0.20;
-          opacity = Math.max(0, 1 - p * 2.5);
+          const phaseProgress = (localProgress - (1 - fadeOutPhaseLength)) / fadeOutPhaseLength;
+          opacity = Math.max(0, 1 - phaseProgress * fadeOutOpacityMultiplier);
           if (isMobile) {
-            mTranslateY = -40 * p;
-            mScale = 1 - 0.04 * p;
+            mobileTranslateY = mobileFadeOutTranslateY * phaseProgress;
+            mobileScale = 1 - (1 - mobileFadeOutScaleEnd) * phaseProgress;
           } else {
-            rotateY = -55 * p;
-            translateX = -55 * p;
-            translateZ = -900 * p;
+            rotateY = desktopFadeOutRotateY * phaseProgress;
+            translateX = desktopFadeOutTranslateX * phaseProgress;
+            translateZ = desktopFadeOutTranslateZ * phaseProgress;
           }
         }
       }
 
       if (isMobile) {
-        scene.style.transform = `translateY(calc(-50% + ${mTranslateY}px)) scale(${mScale})`;
+        scene.style.transform = `translateY(calc(-50% + ${mobileTranslateY}px)) scale(${mobileScale})`;
       } else {
         scene.style.transform = `translateY(-50%) rotateY(${rotateY}deg) translateX(${translateX}%) translateZ(${translateZ}px)`;
       }
       scene.style.opacity = String(opacity);
 
-      const titleChars = scene.querySelectorAll('.story-company .scroll-char');
-      const roleChars = scene.querySelectorAll('.story-role .scroll-char');
+      const titleCharacters = scene.querySelectorAll('.story-company .scroll-char');
+      const roleCharacters = scene.querySelectorAll('.story-role .scroll-char');
       const label = scene.querySelector('.story-label');
-      const desc = scene.querySelector('.story-desc');
-      const cta = scene.querySelector('.story-cta');
+      const description = scene.querySelector('.story-desc');
+      const callToAction = scene.querySelector('.story-cta');
 
-      if (localProgress > 0 && localProgress <= 1) {
+      const isActive = (localProgress > 0 && localProgress <= 1) || isFirstSceneLanding || isLastSceneLanding;
+
+      if (isActive) {
         scene.classList.add('active');
 
-        if (label) label.classList.toggle('in', localProgress > 0.02);
+        if (isFirstSceneLanding || isLastSceneLanding) {
+          if (label) label.classList.add('in');
+          titleCharacters.forEach(character => character.classList.add('in'));
+          roleCharacters.forEach(character => character.classList.add('in'));
+          if (description) description.classList.add('in');
+          if (callToAction) callToAction.classList.add('in');
+        } else {
+          if (label) label.classList.toggle('in', localProgress > labelRevealThreshold);
 
-        const titleStart = 0.05, titleEnd = 0.40;
-        const titleP = Math.max(0, Math.min(1, (localProgress - titleStart) / (titleEnd - titleStart)));
-        const titleCount = Math.floor(titleP * titleChars.length);
-        titleChars.forEach((c, i) => c.classList.toggle('in', i < titleCount));
+          const titleProgress = Math.max(0, Math.min(1, (localProgress - titleStartProgress) / (titleEndProgress - titleStartProgress)));
+          const titleRevealCount = Math.floor(titleProgress * titleCharacters.length);
+          titleCharacters.forEach((character, index) => character.classList.toggle('in', index < titleRevealCount));
 
-        const roleStart = 0.30, roleEnd = 0.60;
-        const roleP = Math.max(0, Math.min(1, (localProgress - roleStart) / (roleEnd - roleStart)));
-        const roleCount = Math.floor(roleP * roleChars.length);
-        roleChars.forEach((c, i) => c.classList.toggle('in', i < roleCount));
+          const roleProgress = Math.max(0, Math.min(1, (localProgress - roleStartProgress) / (roleEndProgress - roleStartProgress)));
+          const roleRevealCount = Math.floor(roleProgress * roleCharacters.length);
+          roleCharacters.forEach((character, index) => character.classList.toggle('in', index < roleRevealCount));
 
-        if (desc) desc.classList.toggle('in', localProgress > 0.55);
-        if (cta) cta.classList.toggle('in', localProgress > 0.50);
-
+          if (description) description.classList.toggle('in', localProgress > descriptionRevealThreshold);
+          if (callToAction) callToAction.classList.toggle('in', localProgress > callToActionRevealThreshold);
+        }
       } else {
         scene.classList.remove('active');
         if (label) label.classList.remove('in');
-        titleChars.forEach(c => c.classList.remove('in'));
-        roleChars.forEach(c => c.classList.remove('in'));
-        if (desc) desc.classList.remove('in');
-        if (cta) cta.classList.remove('in');
+        titleCharacters.forEach(character => character.classList.remove('in'));
+        roleCharacters.forEach(character => character.classList.remove('in'));
+        if (description) description.classList.remove('in');
+        if (callToAction) callToAction.classList.remove('in');
       }
     });
 
-    const activeLocalProgress = Math.max(0, Math.min(1, scrollProgress * sceneCount - activeSceneIdx));
-    scenes.forEach(s => {
-      s.style.pointerEvents = (s === scenes[activeSceneIdx] && activeLocalProgress > 0.05 && activeLocalProgress < 0.95) ? 'auto' : 'none';
+    const activeLocalProgress = getLocalProgress(scrollProgress, activeSceneIndex);
+    scenes.forEach(scene => {
+      const isInteractive = scene === scenes[activeSceneIndex] &&
+        activeLocalProgress > pointerEventsLowerBound &&
+        activeLocalProgress < pointerEventsUpperBound;
+      scene.style.pointerEvents = isInteractive ? 'auto' : 'none';
     });
 
-    bgScenes.forEach((bg, i) => {
-      const localProgress = Math.max(0, Math.min(1, scrollProgress * sceneCount - i));
+    backgroundScenes.forEach((background, index) => {
+      const localProgress = getLocalProgress(scrollProgress, index);
       if (localProgress > 0 && localProgress <= 1) {
-        bg.classList.add('active');
+        background.classList.add('active');
       } else {
-        bg.classList.remove('active');
+        background.classList.remove('active');
       }
     });
 
     document.querySelectorAll('.story-bg .shape, .story-bg .cat-silhouette').forEach(shape => {
       const depth = parseFloat(shape.dataset.depth || '0');
-      const bgScene = shape.closest('.story-bg-scene');
-      if (!bgScene) return;
-      const sceneIdx = parseInt(bgScene.dataset.scene);
-      const localProgress = Math.max(0, Math.min(1, scrollProgress * sceneCount - sceneIdx));
+      const backgroundScene = shape.closest('.story-bg-scene');
+      if (!backgroundScene) return;
+      const sceneIndex = parseInt(backgroundScene.dataset.scene);
+      const localProgress = getLocalProgress(scrollProgress, sceneIndex);
 
       if (localProgress > 0 && localProgress <= 1) {
-        const parallaxX = (localProgress - 0.5) * depth * 0.3;
+        const parallaxX = (localProgress - 0.5) * depth * parallaxDepthMultiplier;
         shape.style.setProperty('--parallax-x', `${parallaxX}px`);
       }
     });
   }
 
-  let ticking = false;
-  function onScroll() {
-    if (!ticking) {
+  let isTicking = false;
+
+  function handleScroll() {
+    if (!isTicking) {
       requestAnimationFrame(() => {
-        update();
-        ticking = false;
+        updateScenes();
+        isTicking = false;
       });
-      ticking = true;
+      isTicking = true;
     }
   }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  update();
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  updateScenes();
 }

@@ -1,24 +1,47 @@
-export const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/**
+ * Utility functions for text animations and shared state.
+ * @module utils
+ */
 
-const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-+';
+export const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-export function scramble(el, target, duration, delay) {
-  if (reduced) { el.textContent = target; return; }
-  const frames = Math.round(duration / 16);
-  let f = 0;
+const scrambleAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-+';
+const frameIntervalMilliseconds = 16;
+
+/**
+ * Scrambles an element's text content through random characters before resolving
+ * to the target string.
+ *
+ * @param {HTMLElement} element - The DOM element whose text will be scrambled.
+ * @param {string} target - The final text to display.
+ * @param {number} duration - Total scramble duration in milliseconds.
+ * @param {number} delay - Delay before starting the scramble in milliseconds.
+ */
+export function scramble(element, target, duration, delay) {
+  if (prefersReducedMotion) {
+    element.textContent = target;
+    return;
+  }
+
+  const totalFrames = Math.round(duration / frameIntervalMilliseconds);
+  let currentFrame = 0;
+
   setTimeout(() => {
     (function tick() {
-      let out = '';
-      for (let i = 0; i < target.length; i++) {
-        const revealAt = (i / target.length) * frames * 0.6;
-        out += f >= revealAt
-          ? target[i]
-          : target[i] === ' ' ? ' ' : CHARS[Math.floor(Math.random() * CHARS.length)];
+      let output = '';
+      for (let characterIndex = 0; characterIndex < target.length; characterIndex++) {
+        const revealAt = (characterIndex / target.length) * totalFrames * 0.6;
+        output += currentFrame >= revealAt
+          ? target[characterIndex]
+          : target[characterIndex] === ' ' ? ' ' : scrambleAlphabet[Math.floor(Math.random() * scrambleAlphabet.length)];
       }
-      el.textContent = out;
-      f++;
-      if (f <= frames) requestAnimationFrame(tick);
-      else el.textContent = target;
+      element.textContent = output;
+      currentFrame++;
+      if (currentFrame <= totalFrames) {
+        requestAnimationFrame(tick);
+      } else {
+        element.textContent = target;
+      }
     })();
   }, delay);
 }

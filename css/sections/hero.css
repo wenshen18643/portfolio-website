@@ -1,4 +1,3 @@
-﻿
 #heroCanvas {
   position: absolute;
   inset: 0;
@@ -16,37 +15,31 @@
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-}
-
-#hero::before {
-  content: '';
-  position: absolute;
-  top: -10%;
-  right: -5%;
-  width: 60%;
-  height: 80%;
-  background: radial-gradient(ellipse, oklch(0.94 0.03 100 / 0.40), transparent 65%);
-  pointer-events: none;
+  background: var(--bg);
 }
 
 .hero-status {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   font-family: var(--font-mono);
   font-size: 0.78rem;
-  color: var(--muted);
+  color: var(--text);
   letter-spacing: 0.05em;
   margin-bottom: 3rem;
   position: relative;
   z-index: 1;
+  width: fit-content;
+  border: 1px solid var(--text);
+  border-radius: 100px;
+  padding: 0.45rem 1rem;
 }
 
 .status-dot {
   display: inline-block;
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--text);
   animation: pulse 2.2s ease-in-out infinite;
   flex-shrink: 0;
 }
@@ -59,46 +52,62 @@
 .hero-content { position: relative; z-index: 1; }
 
 .hero-name {
-  font-family: var(--font-display);
-  font-size: clamp(4rem, 13vw, 11rem);
-  font-weight: 700;
-  line-height: 0.86;
-  letter-spacing: -0.045em;
-  display: block;
-  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3rem;
+  color: var(--text);
 }
-.name-first { display: block; color: var(--text); }
-.name-last  { display: block; color: var(--accent); }
+
+.name-first {
+  display: block;
+  font-size: clamp(5.5rem, 30vw, 24rem);
+  line-height: 0.78;
+  will-change: transform;
+}
+
+.name-last {
+  display: block;
+  font-size: clamp(2.6rem, 12vw, 9.5rem);
+  line-height: 0.88;
+  color: transparent;
+  -webkit-text-stroke: 0.022em var(--ink);
+  will-change: transform;
+}
+
+.hero-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 1rem 2.5rem;
+}
 
 .hero-role {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  margin-bottom: 1.5rem;
   min-height: 2rem;
 }
 
 .role-plus {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 700;
-  color: var(--accent);
+  font-weight: 800;
+  color: var(--text);
   line-height: 1;
 }
 
 .role-typewriter {
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: -0.02em;
-  line-height: 1;
+  font-family: var(--font-mono);
+  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+  font-weight: 500;
+  color: var(--text-dim);
+  line-height: 1.2;
 }
 
 .tw-cursor {
   font-family: var(--font-mono);
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  color: var(--accent);
+  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+  color: var(--text);
   line-height: 1;
   animation: tw-blink 0.9s step-end infinite;
 }
@@ -109,22 +118,60 @@
 }
 
 .hero-tagline {
-  font-size: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
   color: var(--muted);
+  letter-spacing: 0.04em;
   line-height: 1.65;
   max-width: 38ch;
+}
+
+.hero-badge {
+  position: absolute;
+  right: 7vw;
+  top: 16%;
+  width: clamp(120px, 14vw, 190px);
+  aspect-ratio: 1;
+  z-index: 2;
+  animation: badge-spin 26s linear infinite;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.hero-badge svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.hero-badge-text {
+  font-family: var(--font-mono);
+  font-size: 19.5px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  fill: var(--ink);
+}
+
+.hero-badge-bolt {
+  font-size: 44px;
+}
+
+@keyframes badge-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 .contact-plead {
   display: block;
   width: auto;
   max-width: 100%;
-  height: 100%;
+  height: auto;
+  max-height: 320px;
   object-fit: contain;
   border-radius: 16px;
   opacity: 0.92;
   transition: transform 0.35s var(--ease-quart), opacity 0.35s;
-  align-self: stretch;
+  align-self: center;
 }
 
 .contact-plead:hover {
@@ -134,11 +181,11 @@
 
 .scroll-hint {
   position: absolute;
-  bottom: 2.5rem;
+  bottom: calc(var(--seam) + 1.5rem);
   right: 6vw;
   font-family: var(--font-mono);
   font-size: 0.78rem;
-  color: var(--muted);
+  color: var(--text-dim);
   letter-spacing: 0.05em;
   animation: hint-bob 2.8s ease-in-out infinite;
   z-index: 1;

@@ -1,6 +1,5 @@
-﻿
 #about {
-  background: var(--surface);
+  background: var(--bg);
   min-height: 140vh;
   padding: 10rem 6vw;
   position: relative;
@@ -27,10 +26,10 @@
 }
 .about-orb.is-visible { opacity: 1; }
 
-.orb-a { width: 320px; height: 320px; background: oklch(0.35 0.14 145 / 0.11); top: 5%; left: -5%; animation: orbDriftA 26s ease-in-out infinite; }
-.orb-b { width: 240px; height: 240px; background: oklch(0.45 0.10 85 / 0.10); top: 50%; right: -4%; animation: orbDriftB 30s ease-in-out infinite; }
-.orb-c { width: 180px; height: 180px; background: oklch(0.35 0.14 145 / 0.09); bottom: 5%; left: 25%; animation: orbDriftC 22s ease-in-out infinite; }
-.orb-d { width: 280px; height: 280px; background: oklch(0.50 0.08 90 / 0.07); top: 20%; right: 12%; animation: orbDriftD 28s ease-in-out infinite; }
+.orb-a { width: 320px; height: 320px; background: oklch(0.86 0.16 128 / 0.40); top: 5%; left: -5%; animation: orbDriftA 26s ease-in-out infinite; }
+.orb-b { width: 240px; height: 240px; background: oklch(0.90 0.10 110 / 0.40); top: 50%; right: -4%; animation: orbDriftB 30s ease-in-out infinite; }
+.orb-c { width: 180px; height: 180px; background: oklch(0.80 0.15 135 / 0.30); bottom: 5%; left: 25%; animation: orbDriftC 22s ease-in-out infinite; }
+.orb-d { width: 280px; height: 280px; background: oklch(0.92 0.12 120 / 0.35); top: 20%; right: 12%; animation: orbDriftD 28s ease-in-out infinite; }
 
 @keyframes orbDriftA {
   0%, 100% { transform: translate(0, 0); }
@@ -51,13 +50,15 @@
 
 .about-quote {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 9vw, 4.5rem);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: 0.01em;
-  word-spacing: 0.15em;
+  font-stretch: 110%;
+  font-size: clamp(2rem, 7.5vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
   color: var(--text);
   margin-bottom: 2.5rem;
+  max-width: 16ch;
+  text-wrap: balance;
 }
 
 .magnetic-char {
@@ -88,8 +89,9 @@
 
 .stat-n {
   font-family: var(--font-display);
+  font-stretch: 118%;
   font-size: 3.5rem;
-  font-weight: 700;
+  font-weight: 850;
   color: var(--accent);
   letter-spacing: -0.03em;
   line-height: 1;
