@@ -10,6 +10,42 @@ function createElement(tag, className, text) {
 
 /** Displays supplied media or a quiet placeholder for a future recording. */
 function renderMedia(media) {
+  if (media.images) {
+    const gallery = createElement(
+      "div",
+      `case-media case-gallery case-gallery-${media.layout}`,
+    );
+    media.images.forEach((shot) => {
+      const item = createElement("figure", "case-shot");
+      const link = createElement("a", "case-shot-link");
+      link.href = shot.src;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.setAttribute(
+        "aria-label",
+        `${shot.label} — open full-size image in a new tab`,
+      );
+      const image = document.createElement("img");
+      image.src = shot.src;
+      image.alt = shot.label;
+      image.width = shot.width;
+      image.height = shot.height;
+      image.loading = "lazy";
+      image.decoding = "async";
+      link.append(
+        image,
+        createElement("span", "case-shot-open", "View full size ↗"),
+      );
+      const caption = createElement("figcaption", "");
+      caption.append(
+        createElement("strong", "", shot.label),
+        createElement("p", "", shot.caption),
+      );
+      item.append(link, caption);
+      gallery.append(item);
+    });
+    return gallery;
+  }
   const figure = createElement("figure", "case-media");
   if (media.videos) {
     figure.classList.add("case-video-pair");

@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 for (const [id, title, count] of [
-  ["beyond", "Beyond Photography", 4],
+  ["beyond", "Beyond Photography", 5],
   ["monash", "Monash Engineering Club", 3],
   ["headspace", "HeadSpace SS15", 2],
   ["roblox", "Roblox", 1],
@@ -60,7 +60,7 @@ test("mobile case studies fit and placeholders do not pretend to be videos", asy
       (element) => element.scrollWidth <= element.clientWidth,
     ),
   ).toBe(true);
-  await expect(page.locator(".case-video-placeholder")).toHaveCount(3);
+  await expect(page.locator(".case-video-placeholder")).toHaveCount(0);
   await expect(
     page.locator(
       ".case-video-placeholder button, .case-video-placeholder video",
@@ -91,4 +91,41 @@ test("Roblox is a personal project inside experience and no AI calls are made", 
   await expect(page.locator(".case-roles")).toContainText("Personal project");
   await expect(page.getByRole("textbox")).toHaveCount(0);
   expect(apiCalls).toEqual([]);
+});
+
+test("Mei screenshots follow the customer journey and end with private Codex controls", async ({
+  page,
+}) => {
+  await page.locator('[data-exp="beyond"]').click();
+  const images = page.locator(".case-shot img");
+  await expect(images).toHaveCount(8);
+  const names = [
+    "onboarding-profile",
+    "onboarding-confirmation",
+    "strategy-marketplace-redacted",
+    "market-analysis",
+    "trade-execution",
+    "trade-updates",
+    "codex-work",
+    "codex-controls",
+  ];
+  for (let i = 0; i < names.length; i++) {
+    const shot = images.nth(i);
+    await expect(shot).toHaveAttribute("src", new RegExp(names[i]));
+    await shot.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        shot.evaluate((image) => image.complete && image.naturalWidth > 0),
+      )
+      .toBe(true);
+    await expect(shot).toHaveCSS("max-height", "none");
+    const link = page.locator(".case-shot-link").nth(i);
+    await expect(link).toHaveAttribute("href", await shot.getAttribute("src"));
+    await expect(link).toHaveAttribute("target", "_blank");
+  }
+  await expect(page.locator(".case-shot").last()).toContainText(
+    "/model gpt-5.6-sol medium",
+  );
+  await expect(page.locator(".case-shot").last()).toContainText("/exit");
+  await expect(page.locator(".case-video-placeholder")).toHaveCount(0);
 });

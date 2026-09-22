@@ -12,36 +12,134 @@ export const experienceData = {
       {
         title: "It started in WhatsApp.",
         paragraphs: [
-          "The first job was helping customers get from a first message to a completed onboarding flow. Mei asks for the details it needs one question at a time, remembers the conversation, and guides customers towards the strategy marketplace.",
-          "Answering questions meant working with the information behind the chat. I built retrieval workflows for text, images, and voice, and worked through the boundaries between useful source material and prompt-injection attempts. A retrieved document should inform an answer, not rewrite the bot’s instructions.",
+          "The first job was helping customers get from a first message to a completed profile. Mei gathers their language, experience, preferred markets, trading style, and risk appetite through a conversation, then guides them towards the strategy marketplace.",
+          "Behind the chat, I built retrieval workflows for text, images, and voice, and worked through prompt-injection boundaries. Source material should help answer a question without becoming a new set of instructions for the bot.",
         ],
         media: {
-          label: "Customer onboarding, the strategy marketplace, and retrieval",
-          caption:
-            "A recorded walkthrough will show the actual customer journey and how the bot handles questions.",
+          layout: "sequence",
+          images: [
+            {
+              src: new URL(
+                "../../Images/Mei/onboarding-profile.png",
+                import.meta.url,
+              ).href,
+              width: 905,
+              height: 1041,
+              label: "Getting to know the customer",
+              caption:
+                "Mei asks one question at a time, building the context needed for later conversations. This exchange captures a first-time user choosing a language and describing how they trade.",
+            },
+            {
+              src: new URL(
+                "../../Images/Mei/onboarding-confirmation.png",
+                import.meta.url,
+              ).href,
+              width: 897,
+              height: 619,
+              label: "Completing the profile",
+              caption:
+                "The original onboarding continues with trading size, broker and account details, followed by explicit acknowledgement of the risk disclaimer. The user can see what is being requested before moving on.",
+            },
+          ],
+        },
+      },
+      {
+        title: "From onboarding to the strategy market.",
+        paragraphs: [
+          "The next step connects the conversation to the strategy website. A customer can ask for strategies, compare the available options, and choose one without having to restart the conversation elsewhere.",
+        ],
+        media: {
+          layout: "sequence",
+          images: [
+            {
+              src: new URL(
+                "../../Images/Mei/strategy-marketplace-redacted.png",
+                import.meta.url,
+              ).href,
+              width: 1165,
+              height: 1350,
+              label: "Choosing and setting up a strategy",
+              caption:
+                "Mei checks existing strategy context, asks for confirmation, and guides the user through marketplace registration and email verification. The final message reports that the strategy has been set up. Registration credentials are redacted; this image was edited for privacy.",
+            },
+          ],
         },
       },
       {
         title: "Then the agent needed tools.",
         paragraphs: [
-          "The trading work moved beyond answering a question. I built a custom harness around the model so it could work with account context, inspect market information, and call structured tools.",
-          "The surrounding system matters as much as the model: identifying the right account, validating an action, handling a failed request, and reporting what actually happened. A proposed trade and an executed trade need to remain distinguishable.",
+          "I built a custom trading harness so Mei could move from answering questions to inspecting markets and taking actions. The workflow connects a request to structured tools, then brings the result back into the same chat.",
+          "These examples show the sequence: inspect the market, confirm an order, and follow what the system actually did. A proposed action and a completed trade have different messages.",
         ],
         media: {
-          label: "The custom trading harness",
-          caption:
-            "Recording to follow: a request, the tool workflow, and the resulting account state.",
+          layout: "sequence",
+          images: [
+            {
+              src: new URL(
+                "../../Images/Mei/market-analysis.png",
+                import.meta.url,
+              ).href,
+              width: 952,
+              height: 1030,
+              label: "01 · See the market",
+              caption:
+                "A request for gold charts returns M5, M15, H1, H4 and D1 views with a written breakdown of indicators and market context. The customer can compare timeframes from one conversation.",
+            },
+            {
+              src: new URL(
+                "../../Images/Mei/trade-execution.png",
+                import.meta.url,
+              ).href,
+              width: 951,
+              height: 1033,
+              label: "02 · Confirm, execute, manage",
+              caption:
+                "Mei asks for missing order details and an explicit YES before submitting the trade. The conversation then shows a fill receipt, a position check, and a confirmed partial close of 0.05 lots from a 0.1-lot position.",
+            },
+            {
+              src: new URL(
+                "../../Images/Mei/trade-updates.png",
+                import.meta.url,
+              ).href,
+              width: 910,
+              height: 995,
+              label: "03 · Follow the automation",
+              caption:
+                "When a strategy acts, Mei sends updates with its task name, trade size, position references and stated reason. These messages give the user a record of execution without having to ask for every update.",
+            },
+          ],
         },
       },
       {
-        title: "A workspace of my own.",
+        title: "A coding workspace inside WhatsApp.",
         paragraphs: [
-          "My personal Codex mode takes the same interest in useful agents into a workspace meant for me. It brings my own context and tools into the way I work, with a different boundary from the customer-facing bot.",
-          "The recording will walk through that personal workflow rather than expose the private workspace itself.",
+          "I added a private /codex mode for my own development work. Sending /codex starts a coding session, so I can pass in a request, screenshot or document from WhatsApp and follow the work there.",
+          "The session exposes explicit controls: /status checks progress, /cancel stops work, and /exit leaves Codex mode. Model selection uses /model with the full model identifier and an optional reasoning effort.",
         ],
         media: {
-          label: "Personal Codex mode",
-          caption: "Personal workflow recording coming soon.",
+          layout: "wide",
+          images: [
+            {
+              src: new URL("../../Images/Mei/codex-work.png", import.meta.url)
+                .href,
+              width: 1477,
+              height: 985,
+              label: "A bug report becomes a coding task",
+              caption:
+                "I forward two bugs into a new /codex session. The agent traces the relevant code, preserves existing changes, reports progress and sends a verification file. It also distinguishes the tested account fix from the website issue that still needs more information.",
+            },
+            {
+              src: new URL(
+                "../../Images/Mei/codex-controls.png",
+                import.meta.url,
+              ).href,
+              width: 1475,
+              height: 981,
+              label: "Precise commands, a clear way out",
+              caption:
+                "The short model name is rejected; /model gpt-5.6-sol medium succeeds while preserving the conversation. /exit stops pending coding work, keeps existing edits and returns to the regular Mei chat. The next /codex starts a fresh session.",
+            },
+          ],
         },
       },
       {

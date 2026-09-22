@@ -9,6 +9,8 @@ npm ci
 npm run dev
 ```
 
+Screenshots for the Mei case study live in `Images/Mei/`, ordered from onboarding through trading to personal Codex mode. Each `media.images` entry includes a label, caption and intrinsic dimensions to reserve space while loading. Images link to their full-size version. The marketplace image is privacy-edited; never replace it with the unredacted registration screenshot.
+
 ## Adding the recordings
 
 Content lives in `js/data/experience.js`. Add a recording under `videos/`, then set the corresponding section’s `media.video` to `new URL('../../videos/your-recording.mp4', import.meta.url).href`. Keep `label` as the accessible description and `caption` as the explanation below it. Missing recordings show a simple placeholder without fake playback controls. Existing video elements use native controls and do not autoplay.
