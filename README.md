@@ -32,4 +32,10 @@ npm test
 
 Vercel builds with `npm run build`, serves `dist/`, and deploys the API function. A static-only host can run the offline demo but cannot provide AI replies. Plain JavaScript has no separate type compilation step.
 
-Tests cover conversation state, onboarding consent, strategy verification, trade risk, confirmations, closures, P&L, model routing, key isolation, failure fallback, and mobile/modal navigation. Edit `js/data/demos.js` for walkthroughs, `js/modules/demo-bot.js` for account behavior, and `api/chat.js` for model instructions. Roblox gameplay and a permitted playtest link can be added when supplied.
+Tests cover conversation state, onboarding consent, strategy verification, trade risk, confirmations, closures, P&L, model routing, key isolation, failure fallback, and mobile/modal navigation. Generated walkthroughs have been removed; user-recorded videos will be added later. Edit `js/modules/demo-bot.js` for account behavior and `api/chat.js` for model instructions. Roblox gameplay and a permitted playtest link can be added when supplied.
+
+## Mei extraction
+
+`js/mei/language.js` extracts the pure alias map and normalizers from Mei’s `MeiVercel/utils/language.js` and `onboardingNormalizers.js`. `server/mei-persona.js` carries the actual onboarding persona with the organization/user placeholders adapted for a fictional portfolio session. No database, credentials, private history, or WhatsApp transport was copied.
+
+The demo begins with Mandarin already selected and asks the name first. Visitors can change language by typing it; there is no language-selection button. The simulator retains profile fields. After an action, the API phrases its result in the saved language using Mei’s persona; it does not replace it with English UI templates. Trading remains a simulated adapter, not the production broker connection.

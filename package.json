@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "lint:fix": "eslint api js tests *.config.js --fix",
-    "lint": "eslint api js tests *.config.js --max-warnings 0",
-    "format": "prettier --write api js/data/demos.js js/modules/demos.js js/modules/demo-bot.js css/components/demos.css tests package.json *.config.js",
-    "format:check": "prettier --check api js/data/demos.js js/modules/demos.js js/modules/demo-bot.js css/components/demos.css tests package.json *.config.js",
+    "lint:fix": "eslint server api js tests *.config.js --fix",
+    "lint": "eslint server api js tests *.config.js --max-warnings 0",
+    "format": "prettier --write server api js/mei js/modules/demos.js js/modules/demo-bot.js css/components/demos.css tests package.json *.config.js",
+    "format:check": "prettier --check server api js/mei js/modules/demos.js js/modules/demo-bot.js css/components/demos.css tests package.json *.config.js",
     "test": "playwright test"
   },
   "devDependencies": {

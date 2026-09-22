@@ -1,3 +1,4 @@
+import { onboardingPersona } from "../server/mei-persona.js";
 const requests = new Map();
 const systemPrompt = `You are Mei in Wen-Shen's interactive portfolio, a friendly trading assistant. This is a simulated MT5 account with fictional quotes, never a broker. Reply briefly, naturally, one question at a time. Return ONLY JSON with either {"command":"..."} or {"reply":"..."}.
 Use command to normalize the user's intent for a deterministic account engine. Supported commands:
@@ -59,6 +60,12 @@ export default async function handler(req, res) {
   } catch {
     return respond(res, 400, { error: "Invalid message." });
   }
+  const renderReply = body.phase === "render";
+  const language =
+    typeof body.context?.profile?.language === "string"
+      ? body.context.profile.language.slice(0, 40)
+      : "Mandarin";
+  const responsePrompt = `You are Mei. Speak in ${language}; Mandarin means Simplified Chinese. This language stays selected even if the user gives an English name or types an English command. Return JSON {"reply":"..."}. Write a short, natural response using the supplied toolResult as the source of truth. Preserve every number, symbol, ticket, confirmation requirement and action status. Never claim success for pending or failed actions. Translate explanations; do not translate identifiers. For onboarding, ask only the next question indicated by the tool result and saved profile. Never ask for language when it is already saved. Use this extracted onboarding persona for tone and flow: ${onboardingPersona}`;
   const history = Array.isArray(body.history)
     ? body.history
         .slice(-12)
@@ -89,7 +96,12 @@ export default async function handler(req, res) {
           temperature: 0.2,
           response_format: { type: "json_object" },
           messages: [
-            { role: "system", content: systemPrompt },
+            {
+              role: "system",
+              content: renderReply
+                ? responsePrompt
+                : `${systemPrompt}\nSelected language: ${language}. All conversational replies must use this language. During onboarding preserve the raw answer as command (including Chinese) rather than answering the next question yourself. The saved language is already provided; start onboarding at the name question. Chinese accept/decline must remain raw. Never translate a language choice into a different language choice.`,
+            },
             ...history,
             {
               role: "user",
@@ -97,6 +109,7 @@ export default async function handler(req, res) {
                 mode: body.mode === "personal" ? "personal" : "customer",
                 context: body.context,
                 message: body.message,
+                ...(renderReply ? { toolResult: body.toolResult } : {}),
               }),
             },
           ],
@@ -113,11 +126,12 @@ export default async function handler(req, res) {
     if (
       typeof output.command === "string" &&
       output.command.length <= 500 &&
-      body.mode !== "personal"
+      body.mode !== "personal" &&
+      !renderReply
     ) {
       if (
         /^(yes|confirm)$/i.test(output.command.trim()) &&
-        !/^(yes|yep|yeah|confirm|go ahead|do it|yes please|place it|confirm demo order)[.!\s]*$/i.test(
+        !/^(yes|yep|yeah|confirm|go ahead|do it|yes please|place it|confirm demo order|确认|是|好的|执行|确认下单)[.!\s]*$/i.test(
           body.message.trim(),
         )
       )

@@ -1,3 +1,4 @@
+import { normalizeLanguage } from "../mei/language.js";
 const markets = {
   XAUUSD: { price: 2400, contract: 100, move: 2, label: "gold" },
   BTCUSD: { price: 60000, contract: 1, move: 100, label: "bitcoin" },
@@ -5,10 +6,7 @@ const markets = {
 };
 const strategies = ["Trend Follow", "Gold Intraday", "Reversal Watch"];
 const questions = [
-  [
-    "What language would you prefer? This preview replies in English.",
-    ["English"],
-  ],
+  ["Which language would you like to use?", ["English"]],
   ["What should I call you? Use a fictional name.", ["Alex", "Sam"]],
   ["What’s your trading experience?", ["Beginner", "Intermediate", "Advanced"]],
   ["Which markets interest you?", ["Gold", "Bitcoin", "Forex"]],
@@ -45,7 +43,7 @@ export function createDemoBot() {
     pending: null,
     draft: null,
     onboarding: -1,
-    profile: {},
+    profile: { language: "Mandarin" },
     registered: false,
     verified: false,
     registration: null,
@@ -82,12 +80,25 @@ export function createDemoBot() {
 
   /** Packages one assistant turn and its optional quick replies. */
   function reply(text, choices = []) {
-    suggestions = choices;
+    suggestions = state.profile.language === "Mandarin" ? [] : choices;
     return { text, suggestions, account: snapshot() };
   }
 
   /** Asks the next profile question without losing interrupted onboarding. */
   function askProfile() {
+    if (state.profile.language === "Mandarin")
+      return reply(
+        [
+          "你想用什么语言聊天？",
+          "请问怎么称呼你？演示中可以使用化名。",
+          "你有多少交易经验？是新手、中级、高级，还是专业交易者？",
+          "你主要关注哪些市场？例如黄金、外汇或加密货币。",
+          "你偏好哪种交易风格：短线、日内，还是波段？",
+          "你的风险偏好是低、中，还是高？",
+          "这次演示使用模拟 MT5 账户 880042，可以吗？",
+          "交易存在亏损风险。你是否接受这份演示风险声明？",
+        ][state.onboarding],
+      );
     return reply(
       questions[state.onboarding][0],
       questions[state.onboarding][1],
@@ -216,6 +227,17 @@ export function createDemoBot() {
   /** Handles one message, preserving conversation and confirmation boundaries. */
   function send(raw) {
     const text = raw.trim().slice(0, 500);
+    const language = normalizeLanguage(text, {});
+    if (language) {
+      state.profile.language = language.value;
+      return state.onboarding >= 0
+        ? askProfile()
+        : reply(
+            language.value === "Mandarin"
+              ? "好的，我们用中文聊。有什么需要我帮你查看？"
+              : `We’ll continue in ${language.value}. How can I help?`,
+          );
+    }
     if (!text) return reply("What would you like to check?", suggestions);
     if (
       /ignore.{0,40}instruction|reveal.{0,40}(prompt|customer|secret)|bypass|system prompt/i.test(
@@ -462,15 +484,17 @@ export function createDemoBot() {
       return updateOrder(text);
     }
     if (/onboard|sign up|start onboarding|restart onboarding/i.test(text)) {
-      state.onboarding = 0;
+      state.onboarding = 1;
       return askProfile();
     }
     if (state.onboarding >= 0) {
       if (state.onboarding === 7) {
         if (
-          !/^(i accept|accept|agree|i agree|accept disclaimer)$/i.test(text)
+          !/^(i accept|accept|agree|i agree|accept disclaimer|接受|我接受|同意|我同意)$/i.test(
+            text,
+          )
         ) {
-          if (/decline|no/i.test(text)) {
+          if (/decline|no|拒绝|不同意/i.test(text)) {
             state.onboarding = -1;
             return reply(
               "No account submitted. Come back whenever you’re ready.",
@@ -488,7 +512,17 @@ export function createDemoBot() {
           ["Check strategies for gold", "Show balance"],
         );
       }
-      if (state.onboarding === 1) state.profile.name = text;
+      const field = [
+        null,
+        "name",
+        "tradingExperience",
+        "markets",
+        "tradingStyle",
+        "riskAppetite",
+        "mt5Account",
+      ][state.onboarding];
+      if (field)
+        state.profile[field] = state.onboarding === 6 ? "880042" : text;
       state.onboarding++;
       return askProfile();
     }
@@ -514,6 +548,10 @@ export function createDemoBot() {
   return {
     send,
     snapshot,
+    currentQuestion: askProfile,
+    leaveOnboarding: () => {
+      state.onboarding = -1;
+    },
     context: () => ({
       ...snapshot(),
       pending: state.pending,

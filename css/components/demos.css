@@ -527,3 +527,48 @@
     flex-basis: 300px;
   }
 }
+
+.has-demo .overlay-left {
+  margin-bottom: 1rem;
+}
+.has-demo .ov-company {
+  margin-bottom: 0.6rem;
+}
+.has-demo .ov-roles {
+  margin: 0;
+}
+.has-demo .ov-role-line {
+  margin-bottom: 0.2rem;
+}
+.has-demo .demo-player {
+  padding: 0;
+  background: transparent;
+}
+.has-demo .chapter-tabs button {
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+}
+.has-demo .demo-stage {
+  margin-top: 0.8rem;
+  max-width: none;
+}
+.has-demo .demo-feed {
+  height: clamp(280px, 42vh, 480px);
+  flex-basis: auto;
+  max-height: none;
+}
+.has-demo .demo-composer {
+  padding-top: 1rem;
+}
+.typing-message {
+  opacity: 0.6;
+}
+.treasury-evolution {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.treasury-evolution strong {
+  display: block;
+  margin-bottom: 0.4rem;
+}
