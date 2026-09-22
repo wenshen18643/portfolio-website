@@ -8,10 +8,8 @@ import { prefersReducedMotion } from './utils.js';
 const landingScrollThreshold = 0.15;
 const exitScrollThreshold = 0.85;
 
-const fadeInPhaseLength = 0.12;
-const fadeOutPhaseLength = 0.12;
-const fadeInOpacityMultiplier = 1.8;
-const fadeOutOpacityMultiplier = 2.0;
+const fadeInPhaseLength = 0.22;
+const fadeOutPhaseLength = 0.22;
 
 const mobileFadeInTranslateY = 40;
 const mobileFadeInScaleStart = 0.96;
@@ -175,7 +173,7 @@ export function initializeStoryScroll() {
       } else if (localProgress > 0 && localProgress <= 1) {
         if (localProgress < fadeInPhaseLength) {
           const phaseProgress = localProgress / fadeInPhaseLength;
-          opacity = Math.min(1, phaseProgress * fadeInOpacityMultiplier);
+          opacity = phaseProgress;
           if (isMobile) {
             mobileTranslateY = mobileFadeInTranslateY * (1 - phaseProgress);
             mobileScale = mobileFadeInScaleStart + (1 - mobileFadeInScaleStart) * phaseProgress;
@@ -188,7 +186,7 @@ export function initializeStoryScroll() {
           opacity = 1;
         } else {
           const phaseProgress = (localProgress - (1 - fadeOutPhaseLength)) / fadeOutPhaseLength;
-          opacity = Math.max(0, 1 - phaseProgress * fadeOutOpacityMultiplier);
+          opacity = 1 - phaseProgress;
           if (isMobile) {
             mobileTranslateY = mobileFadeOutTranslateY * phaseProgress;
             mobileScale = 1 - (1 - mobileFadeOutScaleEnd) * phaseProgress;

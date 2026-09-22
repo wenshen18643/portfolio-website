@@ -239,20 +239,143 @@ export const experienceData = {
     ],
   },
   roblox: {
-    company: "Roblox",
+    company: "McFatty's",
     intro:
-      "A Roblox game I’m building in my spare time. It is still in development, so I’m using real Studio screenshots to show the game and the systems behind it as they take shape.",
-    roles: [{ title: "Personal project" }],
+      "A Roblox restaurant-management game built around a deliberately silly loop: merge food, eat it, grow, refill the tray, and turn that momentum into a bigger restaurant. I designed and built the gameplay systems, server logic, NPC workers, progression, and interface as a personal project.",
+    roles: [{ title: "Game designer & developer" }],
     sections: [
       {
-        title: "Still building it.",
+        title: "A restaurant that grows with you.",
+        nav: "Game overview",
         paragraphs: [
-          "The screenshots will start with the core game loop, then show the systems that make it work and one problem that forced me to rethink the design. Each image only needs to explain what is happening, what I built, and why it matters.",
-          "The game is not open for playtesting yet. I’ll add the public link when there is enough there for someone to have a proper session instead of landing in a half-finished build.",
+          "Players start with a small tray of food inside their own McFatty’s. Eating raises weight, the restaurant earns cash over time, and both systems feed a longer progression loop of menu discoveries, upgrades, agents, perks, and rebirths.",
+          "I chose a ring of twenty restaurant plots around a shared garden district so every player gets a readable home base without losing the feeling of a larger multiplayer place. The repeated architecture also gave me a consistent template for stations, seating, doors, and decoration.",
         ],
         deepDive: [
-          "The technical deep dive will stay tied to the live Studio project: how the game loop is split up, what runs on the server, what the client is allowed to request, and how the main systems share state. I’ll add the exact architecture with screenshots once the Roblox Studio connection is available in this task.",
+          "Each plot is assembled from the same restaurant contract, but ownership and progression state are assigned at runtime. PlotService binds the player to a restaurant; StationService, SeatingService, WorkerService, and RestaurantDecor then attach their own behaviour without one enormous script owning the whole place.",
         ],
+        media: {
+          layout: "wide",
+          images: [
+            {
+              src: new URL(
+                "../../Images/Roblox/01-game-overview.jpg",
+                import.meta.url,
+              ).href,
+              width: 1452,
+              height: 793,
+              label: "01 · Game overview",
+              caption:
+                "The shared restaurant district in Roblox Studio. I built the twenty-plot layout, reusable restaurant shell, roads, and central garden to make each player’s space easy to recognise while keeping the world cohesive. The next step is giving the garden district more reasons for players to cross paths.",
+            },
+          ],
+        },
+      },
+      {
+        title: "Merge. Eat. Refill. Sell.",
+        nav: "Main mechanic",
+        paragraphs: [
+          "The main interaction is intentionally physical: drag matching foods together to raise their tier, move a meal to the table, then hold to eat it. That gives the idle economy a hands-on decision instead of reducing the game to waiting for a number to increase.",
+          "I built the tray, drag-and-drop merge rules, food tiers, eating cadence, weight gain, and the tutorial that introduces the loop one action at a time. The same input path supports mouse, touch, and gamepad.",
+        ],
+        deepDive: [
+          "The client owns immediate presentation—dragging, shrinking bites, animation, and screen-clamped prompts—while the server validates the action and returns the authoritative state. That split keeps the loop responsive without letting a client award itself food, weight, or cash.",
+        ],
+        media: {
+          layout: "wide",
+          images: [
+            {
+              src: new URL(
+                "../../Images/Roblox/02-main-mechanic.jpg",
+                import.meta.url,
+              ).href,
+              width: 1736,
+              height: 793,
+              label: "02 · The merge loop",
+              caption:
+                "The first playable tutorial asks the player to combine matching food directly on the tray. I implemented the drag interaction and staged coach marks instead of explaining the loop in a wall of text. It solves the hardest onboarding question—what do I touch first?—and I would next test how quickly a new player reaches their first higher-tier meal without help.",
+            },
+          ],
+        },
+      },
+      {
+        title: "One state, several systems.",
+        nav: "System design",
+        paragraphs: [
+          "Agents are not just collectible cards. A hired agent occupies a station in the restaurant, carries level and rarity data, produces food, and has a client-side animated rig that reflects the server’s worker state.",
+          "I kept definitions for workers, food, stations, upgrades, perks, achievements, and restaurant tiers in shared configuration modules. UI panels and world objects read the same definitions, which stops display copy, prices, and behaviour from drifting apart as the game grows.",
+        ],
+        deepDive: [
+          "WorkerService creates and reconciles server-owned worker models. It replicates only compact attributes such as agent ID, station, scale, and frenzy state; AgentAnimator owns the limb poses on each client. Inspect prompts are enabled only for the restaurant owner, and missing character art falls back to a block rig so production logic never depends on a cosmetic asset.",
+        ],
+        media: {
+          layout: "wide",
+          images: [
+            {
+              src: new URL("../../Images/Roblox/03-system.jpg", import.meta.url)
+                .href,
+              width: 1736,
+              height: 793,
+              label: "03 · The agent system",
+              caption:
+                "The agent collection is the front end of a data-driven worker system. I implemented the shared definitions, unlock state, station assignment, rarity treatment, and matching in-world rigs. Centralising that data made it possible to add a worker without rewriting the panel and the restaurant separately; next I would add clearer previews of each agent’s effect before unlock.",
+            },
+          ],
+        },
+      },
+      {
+        title: "The expensive part was invisible.",
+        nav: "Hard problem",
+        paragraphs: [
+          "Twenty plots can each contain stations, prompts, food props, cash bubbles, and animated workers. My first instinct was to update everything continuously from the server. That worked in a small test and became wasteful as the world filled out.",
+          "I changed the boundary: the server owns outcomes and coarse state, while clients handle visual motion. Reconciliation runs once per second, animation state is sampled at ten hertz, scale is quantised before replication, and station requests are distance-checked and rate-limited.",
+        ],
+        deepDive: [
+          "Quantising worker scale avoids replicating fourth-decimal changes nobody can see. Cash interactions have per-player request budgets and a maximum world distance. The worker service tags a fully assembled rig only after it is ready, so clients never animate a half-built model. Together, those choices reduce network churn and close obvious exploit paths without making the game feel delayed.",
+        ],
+        media: {
+          layout: "wide",
+          images: [
+            {
+              src: new URL(
+                "../../Images/Roblox/04-difficult-problem.jpg",
+                import.meta.url,
+              ).href,
+              width: 1452,
+              height: 793,
+              label: "04 · Designing for twenty plots",
+              caption:
+                "The full plot ring made the scaling problem visible: every restaurant repeats the same interactive systems. I moved cosmetic animation to clients, reduced replicated precision, and rate-limited server actions so adding plots did not multiply unnecessary work. I would next profile a full public server with Roblox’s MicroProfiler rather than relying on single-player Studio measurements.",
+            },
+          ],
+        },
+      },
+      {
+        title: "Testing changed the interface.",
+        nav: "Improved result",
+        paragraphs: [
+          "Early builds treated the tray, eating prompt, shop, and stats as separate widgets. In play they competed for attention and the intended loop was easy to lose. I consolidated the important actions around the tray, kept progression stats readable at a glance, and made world prompts point to the actual control the player should use.",
+          "The current result is calmer: the tray mirrors authoritative inventory, food art changes with tier, eating works anywhere outside another UI action, and the side rail keeps deeper systems available without covering the restaurant.",
+        ],
+        deepDive: [
+          "The final pass also fixed input edge cases: processed UI clicks no longer trigger a bite, mouse release outside the window stops hold-to-eat, prompts share the same scaled GUI coordinate space, and tray visuals update only when a slot actually changes. Those are small details, but together they make the mechanic feel intentional rather than brittle.",
+        ],
+        media: {
+          layout: "wide",
+          images: [
+            {
+              src: new URL(
+                "../../Images/Roblox/05-improved-result.jpg",
+                import.meta.url,
+              ).href,
+              width: 1736,
+              height: 793,
+              label: "05 · The tested interface",
+              caption:
+                "The revised HUD keeps food, fill, bag, weight, calories, and cash in one readable loop while leaving the restaurant visible. I implemented the responsive tray, tier-specific food models, input guards, and screen-clamped prompts after playtesting exposed competing controls. Next I would test the hierarchy on small phones and reduce the remaining Studio-only debug controls before release.",
+            },
+          ],
+        },
       },
     ],
   },

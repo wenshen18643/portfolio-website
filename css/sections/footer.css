@@ -15,13 +15,6 @@
   gap: 1.25rem 3rem;
 }
 
-.footer-note {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--muted);
-  letter-spacing: 0.04em;
-}
-
 .footer-top {
   font-family: var(--font-mono);
   font-size: 0.78rem;

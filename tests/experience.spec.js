@@ -9,7 +9,7 @@ for (const [id, title, count] of [
   ["beyond", "Beyond Photography", 3],
   ["monash", "Monash Engineering Club", 2],
   ["headspace", "HeadSpace SS15", 2],
-  ["roblox", "Roblox", 1],
+  ["roblox", "McFatty's", 5],
 ]) {
   test(`${id} opens a case study with explanation and media`, async ({
     page,
@@ -108,13 +108,122 @@ test("Roblox is the fourth scene in Experience and no AI calls are made", async 
   await expect(page.locator("#projects")).toHaveCount(0);
   await scenes.nth(3).locator('[data-exp="roblox"]').click();
   await expect(page.locator(".case-intro")).toContainText(
-    "Roblox game I’m building",
+    "Roblox restaurant-management game",
   );
   await expect(page.getByRole("textbox")).toHaveCount(0);
   await expect(
     page.locator(".case-video-placeholder, .case-media video"),
   ).toHaveCount(0);
+  await expect(page.locator(".case-section")).toHaveCount(5);
+  await expect(page.locator(".case-shot img")).toHaveCount(5);
+  await expect(page.locator(".case-index button")).toHaveText([
+    "Game overview",
+    "Main mechanic",
+    "System design",
+    "Hard problem",
+    "Improved result",
+  ]);
+  for (const image of await page.locator(".case-shot img").all()) {
+    const response = await page.request.get(await image.getAttribute("src"));
+    expect(response.ok()).toBe(true);
+  }
   expect(apiCalls).toEqual([]);
+});
+
+test("experience transitions linger and project actions stand out", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.reload();
+
+  const experience = page.locator(".story-scroll-container");
+  const secondScene = page.locator(".story-scene").nth(1);
+  const transitionProgress = 0.175 + 0.4 * 0.11;
+  await experience.evaluate((element, progress) => {
+    const sticky = element.querySelector(".story-sticky");
+    const maxScroll = element.offsetHeight - sticky.offsetHeight;
+    const top = element.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo(0, top + maxScroll * progress);
+  }, transitionProgress);
+
+  await expect
+    .poll(async () =>
+      Number(await secondScene.evaluate((element) => element.style.opacity)),
+    )
+    .toBeGreaterThan(0.4);
+  await expect
+    .poll(async () =>
+      Number(await secondScene.evaluate((element) => element.style.opacity)),
+    )
+    .toBeLessThan(0.6);
+
+  await experience.evaluate((element) => {
+    const sticky = element.querySelector(".story-sticky");
+    const maxScroll = element.offsetHeight - sticky.offsetHeight;
+    const top = element.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo(0, top + maxScroll * 0.375);
+  });
+  const action = page.locator('[data-exp="beyond"]');
+  await expect(action).toHaveClass(/in/);
+  await expect(action).toHaveCSS("background-color", "oklch(0.92 0.22 127)");
+  await expect(action).not.toHaveCSS("box-shadow", "none");
+  await expect(action).toHaveCSS("text-transform", "uppercase");
+  await expect(action).toHaveCSS("outline-style", "solid");
+  await expect(action).toHaveCSS("animation-name", "cta-beacon");
+});
+
+test("footer omits the implementation note", async ({ page }) => {
+  await expect(
+    page.getByText(
+      "Handwritten HTML, CSS and JS. Zero frameworks, zero templates.",
+    ),
+  ).toHaveCount(0);
+  await expect(page.locator(".footer-copyright")).toBeVisible();
+  await expect(page.getByRole("link", { name: /Back to top/ })).toBeVisible();
+});
+
+test("case study headings, captions, and screenshot tabs align to their columns", async ({
+  page,
+}) => {
+  await page.locator('[data-exp="roblox"]').click();
+  const chapterTabs = page
+    .getByRole("tablist", { name: "Case study chapters" })
+    .getByRole("tab");
+  const tabWidths = await chapterTabs.evaluateAll((tabs) =>
+    tabs.map((tab) => tab.getBoundingClientRect().width),
+  );
+  expect(Math.max(...tabWidths) - Math.min(...tabWidths)).toBeLessThan(1);
+
+  for (const tab of await chapterTabs.all()) {
+    await tab.click();
+    const heading = page.locator(".case-section:visible h3");
+    const caption = page.locator(".case-section:visible figcaption");
+    await expect(tab).toHaveCSS("text-align", "center");
+    await expect(heading).toHaveCSS("align-self", "center");
+    await expect(heading).toHaveCSS("text-align", "center");
+    await expect(caption).toHaveCSS("display", "block");
+    await expect(caption).toHaveCSS("max-width", "1000px");
+    await expect(caption.locator("p")).toHaveCSS("text-align", "left");
+    const alignment = await caption.evaluate((element) => {
+      const captionRect = element.getBoundingClientRect();
+      const imageRect = element.nextElementSibling.getBoundingClientRect();
+      return {
+        left: Math.abs(captionRect.left - imageRect.left),
+        right: Math.abs(captionRect.right - imageRect.right),
+        width: Math.abs(captionRect.width - imageRect.width),
+      };
+    });
+    expect(alignment.left).toBeLessThan(1);
+    expect(alignment.right).toBeLessThan(1);
+    expect(alignment.width).toBeLessThan(1);
+  }
+
+  await page.keyboard.press("Escape");
+  await page.locator('[data-exp="beyond"]').click();
+  await expect(page.locator(".case-step").first()).toHaveCSS(
+    "text-align",
+    "center",
+  );
 });
 
 test("Mei screenshots follow the customer journey and end with private Codex controls", async ({
