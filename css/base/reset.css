@@ -21,6 +21,7 @@ button { font: inherit; border: none; background: none; cursor: pointer; }
 .hero-name,
 .story-company,
 .projects-section-title,
+.side-projects-heading,
 .project-title,
 .contact-heading,
 .ov-company,
@@ -37,7 +38,7 @@ button { font: inherit; border: none; background: none; cursor: pointer; }
  * rounded top edge and pulls up over the previous surface, so tonal shifts
  * read as sheets sliding over one another instead of hard cuts.
  */
-#about, #experience, #projects, #contact {
+#about, #experience, #projects, #side-projects, #contact {
   position: relative;
   border-radius: var(--seam) var(--seam) 0 0;
   margin-top: calc(-1 * var(--seam));

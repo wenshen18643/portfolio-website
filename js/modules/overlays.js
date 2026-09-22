@@ -194,12 +194,6 @@ function renderCase(container, id) {
     container.append(article);
   });
   selectChapter(0);
-  const footer = createElement("footer", "case-footer");
-  const close = createElement("button", "", "Back to the portfolio ↑");
-  close.type = "button";
-  close.dataset.closeCase = "";
-  footer.append(close);
-  container.append(footer);
 }
 
 /** Opens case studies with one scroll container and keyboard focus containment. */

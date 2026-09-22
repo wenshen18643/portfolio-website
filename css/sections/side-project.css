@@ -1,100 +1,116 @@
-.demo-eyebrow {
+#side-projects {
+  --bg: var(--ink-deep);
+  --surface: var(--ink);
+  --text: var(--cream);
+  --text-dim: oklch(0.87 0.04 130);
+  --muted: oklch(0.73 0.06 135);
+  --accent: var(--lime-bright);
+  --border: oklch(0.36 0.06 148);
+  min-height: 100vh;
+  padding: clamp(5rem, 10vw, 9rem) 6vw calc(var(--seam) + 6rem);
+  color: var(--text);
+  background: var(--bg);
+}
+
+.side-projects-heading-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(14rem, 1fr);
+  align-items: end;
+  gap: 3rem;
+  padding-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+.side-projects-heading {
+  font: 880 clamp(4rem, 9vw, 8rem)/0.82 var(--font-display);
+  font-stretch: var(--display-stretch);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.side-projects-heading-wrap p {
+  max-width: 24ch;
+  color: var(--text-dim);
+  font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+  line-height: 1.55;
+}
+
+.side-project-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
+  gap: 3rem;
+  align-items: end;
+  padding: clamp(2.5rem, 5vw, 4.5rem) 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.side-project-name span {
   display: block;
-  font: 0.7rem/1.7 var(--font-mono);
+  margin-bottom: 1rem;
+  color: var(--accent);
+  font: 500 0.75rem/1.4 var(--font-mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--accent);
 }
-.roblox-project {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-  border-top: 1px solid var(--border);
-  padding: 3rem 0;
-  color: var(--text);
+
+.side-project-name h3 {
+  font: 880 clamp(4rem, 10vw, 8rem)/0.85 var(--font-display);
+  font-stretch: var(--display-stretch);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
 }
-.roblox-project h3 {
-  font: 600 clamp(2rem, 4vw, 3.5rem)/1.08 var(--font-body);
-  letter-spacing: -0.04em;
-  margin: 1.2rem 0;
-}
-.roblox-project p {
+
+.side-project-summary p {
+  max-width: 56ch;
   color: var(--text-dim);
-  max-width: 460px;
-  font-size: 0.95rem;
+  font-size: 1.125rem;
+  line-height: 1.75;
 }
-.development-note {
-  display: block;
-  margin-top: 1.8rem;
-  color: var(--muted);
-  font: 0.65rem/1.8 var(--font-mono);
-}
-.roblox-art {
-  height: 320px;
-  position: relative;
-  overflow: hidden;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 40px 40px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-}
-.roblox-art span {
-  position: absolute;
-  bottom: 1.2rem;
-  left: 1.2rem;
-  font: 0.6rem var(--font-mono);
-  color: var(--muted);
-}
-.build-block {
-  position: absolute;
-  width: 90px;
-  height: 90px;
-  background: var(--surface);
+
+.side-project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  padding: 0.85rem 1.25rem;
   border: 1px solid var(--accent);
-  transform: rotate(-25deg) skew(10deg, 10deg);
-  box-shadow: -15px 15px 0 var(--accent-soft);
+  border-radius: 100px;
+  color: var(--accent);
+  font: 500 0.8rem/1 var(--font-mono);
+  transition:
+    color 180ms var(--ease-quart),
+    background-color 180ms var(--ease-quart);
 }
-.block-one {
-  top: 100px;
-  left: 22%;
+
+.side-project-link:hover {
+  color: var(--bg);
+  background: var(--accent);
 }
-.block-two {
-  top: 60px;
-  left: 48%;
-}
-.block-three {
-  top: 155px;
-  left: 53%;
-  width: 65px;
-  height: 65px;
+
+.side-project-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
 }
 
 @media (max-width: 760px) {
-  .roblox-project {
-    grid-template-columns: 1fr;
+  #side-projects {
+    min-height: auto;
+    padding-inline: 1.5rem;
+  }
+
+  .side-projects-heading-wrap,
+  .side-project-entry {
+    grid-template-columns: minmax(0, 1fr);
     gap: 2rem;
   }
-}
 
-.experience-project {
-  margin: 0 6vw;
-  padding-bottom: calc(var(--seam) + 4rem);
-}
-.project-case-link {
-  display: inline-block;
-  margin-top: 1.5rem;
-  color: var(--text);
-  border: 1px solid var(--border);
-  padding: 0.8rem 1.3rem;
-  border-radius: 100px;
-  background: transparent;
-  cursor: pointer;
-  font: 0.75rem var(--font-mono);
-}
-.project-case-link:hover {
-  color: var(--bg);
-  background: var(--accent);
+  .side-projects-heading-wrap p {
+    max-width: 32ch;
+  }
+
+  .side-projects-heading,
+  .side-project-name h3 {
+    font-size: 13vw;
+    overflow-wrap: normal;
+  }
 }

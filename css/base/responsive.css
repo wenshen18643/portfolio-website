@@ -5,7 +5,7 @@
 }
 
 @media (max-width: 768px) {
-  #hero, #about, #projects, #experience, #contact {
+  #hero, #about, #projects, #experience, #side-projects, #contact {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
