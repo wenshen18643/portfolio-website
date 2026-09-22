@@ -3,7 +3,7 @@ export const experienceData = {
   beyond: {
     company: "Beyond Photography",
     intro:
-      "Mei started as a WhatsApp customer-service bot. It grew into a system that can manage customer state, connect people to trading strategies, work with live trading tools, and switch into MeiCodex when I need to fix something myself.",
+      "Mei started as a WhatsApp customer-service bot. It grew into a system that can manage customer state, connect people to trading strategies, work with live trading tools, and switch into DevMode when I need to fix something myself.",
     roles: [
       { title: "Part-time AI Engineer" },
       { title: "AI Engineer Intern" },
@@ -114,16 +114,16 @@ export const experienceData = {
         },
       },
       {
-        title: "MeiCodex.",
-        nav: "MeiCodex",
+        title: "DevMode.",
+        nav: "DevMode",
         paragraphs: [
-          "MeiCodex is the private mode I use when something needs fixing and I am away from my computer. I can start a session from WhatsApp, send a request, screenshot, or document, and follow the work from the same chat.",
+          "DevMode is the private mode I use when something needs fixing and I am away from my computer. I can start a session from WhatsApp, send a request, screenshot, or document, and follow the work from the same chat.",
           "The commands stay simple: /status checks the task, /cancel stops it, /model changes the model used for the next request, and /exit returns Mei to the normal assistant.",
         ],
         deepDive: [
-          "MeiCodex keeps coding sessions separate from normal chat. /codex creates a fresh work session, while later messages are routed into that session with their attachments and conversation context. Progress updates come back through WhatsApp without exposing the shell as a general public interface.",
+          "DevMode keeps coding sessions separate from normal chat. /codex creates a fresh work session, while later messages are routed into that session with their attachments and conversation context. Progress updates come back through WhatsApp without exposing the shell as a general public interface.",
           "Command parsing happens before ordinary assistant routing, so session controls are deterministic. Model changes require a valid full model ID and optional reasoning effort; invalid shortcuts are rejected without changing the current configuration.",
-          "Stopping and leaving are different operations. /cancel interrupts the current job, while /exit disables MeiCodex, stops pending coding work, keeps completed edits, and ensures the next /codex begins with a clean session.",
+          "Stopping and leaving are different operations. /cancel interrupts the current job, while /exit disables DevMode, stops pending coding work, keeps completed edits, and ensures the next /codex begins with a clean session.",
         ],
         media: {
           layout: "wide",

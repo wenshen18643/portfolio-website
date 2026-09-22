@@ -165,7 +165,7 @@ test("Beyond keeps the casual overview separate from the technical detail", asyn
   await expect(page.locator(".case-index button")).toHaveText([
     "Customer service",
     "Trading bot",
-    "MeiCodex",
+    "DevMode",
   ]);
   await expect(page.locator(".case-deep-dive")).toHaveCount(3);
   await expect(page.locator(".case-deep-dive").first()).not.toHaveAttribute(
@@ -225,9 +225,7 @@ test("chapter tabs replace the visible section and omit employment dates", async
     .evaluate((e) => e.scrollTop);
   await tabs.last().click();
   await expect(page.locator(".case-section:visible")).toHaveCount(1);
-  await expect(page.locator(".case-section:visible h3")).toHaveText(
-    "MeiCodex.",
-  );
+  await expect(page.locator(".case-section:visible h3")).toHaveText("DevMode.");
   expect(await page.locator(".case-scroll").evaluate((e) => e.scrollTop)).toBe(
     initialScroll,
   );
