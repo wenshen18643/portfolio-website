@@ -188,6 +188,16 @@ function renderCase(container, id) {
     section.paragraphs.forEach((paragraph) =>
       body.append(createElement("p", "", paragraph)),
     );
+    if (section.deepDive?.length) {
+      const deepDive = createElement("details", "case-deep-dive");
+      deepDive.append(createElement("summary", "", "Technical deep dive"));
+      const deepDiveBody = createElement("div", "case-deep-dive-body");
+      section.deepDive.forEach((paragraph) =>
+        deepDiveBody.append(createElement("p", "", paragraph)),
+      );
+      deepDive.append(deepDiveBody);
+      body.append(deepDive);
+    }
     text.append(body);
     article.append(text);
     if (section.media) article.append(renderMedia(section.media, title.id));
@@ -240,7 +250,7 @@ export function initializeOverlay() {
     if (event.key === "Escape") closeCase();
     if (event.key !== "Tab") return;
     const controls = [
-      ...overlay.querySelectorAll("button, a, video[controls]"),
+      ...overlay.querySelectorAll("button, a, summary, video[controls]"),
     ].filter(
       (element) => element.getClientRects().length && element.tabIndex !== -1,
     );

@@ -3,18 +3,24 @@ export const experienceData = {
   beyond: {
     company: "Beyond Photography",
     intro:
-      "I joined as an AI Engineer Intern and continued part-time. The work started with a WhatsApp customer-service bot, then grew into trading tools, retrieval pipelines, a private coding mode I use for my own work.",
+      "Mei started as a WhatsApp customer-service bot. It grew into a system that can manage customer state, connect people to trading strategies, work with live trading tools, and switch into MeiCodex when I need to fix something myself.",
     roles: [
       { title: "Part-time AI Engineer" },
       { title: "AI Engineer Intern" },
     ],
     sections: [
       {
-        title: "It started in WhatsApp.",
-        nav: "Onboarding",
+        title: "Customer service, end to end.",
+        nav: "Customer service",
         paragraphs: [
-          "The first job was helping customers get from a first message to a completed profile. Mei gathers their language, experience, preferred markets, trading style, and risk appetite through a conversation, then guides them towards the strategy marketplace.",
-          "Behind the chat, I built retrieval workflows for text, images, and voice, and worked through prompt-injection boundaries. Source material should help answer a question without becoming a new set of instructions for the bot.",
+          "Mei takes a new customer from their first message to a usable profile, remembers where they stopped, and carries that context into the strategy marketplace. They can compare a strategy, register, verify their email, and finish setup without starting over on another channel.",
+          "It also answers questions from company material across text, images, and voice. The useful part is not just finding a similar passage; it is keeping that material grounded as evidence instead of letting it quietly rewrite how the bot behaves.",
+        ],
+        deepDive: [
+          "Onboarding is backed by stored profile state rather than a long prompt pretending to remember. Answers are normalised, written to the database, read back on every turn, and used to choose the next missing question. That makes the flow resumable and stops an older chat message from overwriting a field that is already saved.",
+          "The marketplace handoff uses a separate API layer with input validation, broker mapping, active-account checks, task limits, a 24-hour registration session, and email verification. A selected strategy can ride along with signup and is only claimed after the customer verifies the account.",
+          "For retrieval, Mei embeds the question, normalises the vectors, ranks chunks by cosine similarity, applies a relevance threshold, and returns only the strongest matches. Bad files, malformed vectors, low-confidence results, and unavailable embedding calls fail closed instead of being passed to the model as if they were trustworthy context.",
+          "Prompt injection is handled as a boundary problem. Retrieved passages remain untrusted reference material, while system rules, identity checks, tool schemas, and approval gates stay outside that content. Even if a document tells Mei to ignore its rules, the document does not gain permission to call tools, change customer records, or place a trade.",
         ],
         media: {
           layout: "sequence",
@@ -41,18 +47,6 @@ export const experienceData = {
               caption:
                 "The original onboarding continues with trading size, broker and account details, followed by explicit acknowledgement of the risk disclaimer. The user can see what is being requested before moving on.",
             },
-          ],
-        },
-      },
-      {
-        title: "From onboarding to the strategy market.",
-        nav: "Strategy market",
-        paragraphs: [
-          "The next step connects the conversation to the strategy website. A customer can ask for strategies, compare the available options, and choose one without having to restart the conversation elsewhere.",
-        ],
-        media: {
-          layout: "sequence",
-          images: [
             {
               src: new URL(
                 "../../Images/Mei/strategy-marketplace-redacted.png",
@@ -68,11 +62,17 @@ export const experienceData = {
         },
       },
       {
-        title: "Then the agent needed tools.",
-        nav: "Trading harness",
+        title: "Trading from chat.",
+        nav: "Trading bot",
         paragraphs: [
-          "I built a custom trading harness so Mei could move from answering questions to inspecting markets and taking actions. The workflow connects a request to structured tools, then brings the result back into the same chat.",
-          "These examples show the sequence: inspect the market, confirm an order, and follow what the system actually did. A proposed action and a completed trade have different messages.",
+          "I built the trading layer so Mei could inspect a market, explain what it sees, and manage a real position from the same conversation. It can read indicators or charts, ask for anything missing, confirm the exact action, and report what the broker actually did.",
+          "That last part matters. A suggested trade, an order waiting for approval, a broker fill, and an open position are four different states, so Mei treats them differently instead of replying with a vague ‘done.’",
+        ],
+        deepDive: [
+          "A message is routed into typed tools for account data, prices, technical analysis, chart vision, orders, positions, and trade management. Indicator analysis and visual chart analysis stay separate and are attributed separately, so conflicting signals are shown rather than blended into a confident answer.",
+          "Before execution, the harness checks that the MT5 account belongs to the caller, fills in the active account from stored context, validates order details, caps lot size against the account balance, checks margin, and queues the exact tool call for approval. Ambiguous replies cancel; a clear confirmation resumes the queued action without asking the model to invent it again.",
+          "Orders go through a broker adapter that resolves the account’s symbol format and submits once. If the network fails after submission, Mei reconciles against live broker state before deciding whether anything opened. Unknown outcomes are never retried blindly, which avoids turning a timeout into a duplicate trade.",
+          "Confirmed fills are recorded with deal and position IDs, then synced against live MT5 positions. Partial closes update the remaining volume, automated trades keep their task source, and failures remain visible instead of being rewritten as success.",
         ],
         media: {
           layout: "sequence",
@@ -114,11 +114,16 @@ export const experienceData = {
         },
       },
       {
-        title: "A coding workspace inside WhatsApp.",
-        nav: "Personal Codex",
+        title: "MeiCodex.",
+        nav: "MeiCodex",
         paragraphs: [
-          "I added a private /codex mode for my own development work. Sending /codex starts a coding session, so I can pass in a request, screenshot or document from WhatsApp and follow the work there.",
-          "The session exposes explicit controls: /status checks progress, /cancel stops work, and /exit leaves Codex mode. Model selection uses /model with the full model identifier and an optional reasoning effort.",
+          "MeiCodex is the private mode I use when something needs fixing and I am away from my computer. I can start a session from WhatsApp, send a request, screenshot, or document, and follow the work from the same chat.",
+          "The commands stay simple: /status checks the task, /cancel stops it, /model changes the model used for the next request, and /exit returns Mei to the normal assistant.",
+        ],
+        deepDive: [
+          "MeiCodex keeps coding sessions separate from normal chat. /codex creates a fresh work session, while later messages are routed into that session with their attachments and conversation context. Progress updates come back through WhatsApp without exposing the shell as a general public interface.",
+          "Command parsing happens before ordinary assistant routing, so session controls are deterministic. Model changes require a valid full model ID and optional reasoning effort; invalid shortcuts are rejected without changing the current configuration.",
+          "Stopping and leaving are different operations. /cancel interrupts the current job, while /exit disables MeiCodex, stops pending coding work, keeps completed edits, and ensures the next /codex begins with a clean session.",
         ],
         media: {
           layout: "wide",
@@ -236,14 +241,17 @@ export const experienceData = {
   roblox: {
     company: "Roblox",
     intro:
-      "A personal game project in development. This case study will use screenshots to explain the game, the systems behind it, and what I learned while building it.",
+      "A Roblox game I’m building in my spare time. It is still in development, so I’m using real Studio screenshots to show the game and the systems behind it as they take shape.",
     roles: [{ title: "Personal project" }],
     sections: [
       {
-        title: "Building the game.",
+        title: "Still building it.",
         paragraphs: [
-          "The final case study will begin with the game’s core idea, then show the mechanic I built, the Roblox Studio systems behind it, and one problem that changed how I approached the design.",
-          "Each screenshot will explain what the viewer is looking at, what I personally contributed, and why that part mattered. Playtesting will open when the game is ready to share.",
+          "The screenshots will start with the core game loop, then show the systems that make it work and one problem that forced me to rethink the design. Each image only needs to explain what is happening, what I built, and why it matters.",
+          "The game is not open for playtesting yet. I’ll add the public link when there is enough there for someone to have a proper session instead of landing in a half-finished build.",
+        ],
+        deepDive: [
+          "The technical deep dive will stay tied to the live Studio project: how the game loop is split up, what runs on the server, what the client is allowed to request, and how the main systems share state. I’ll add the exact architecture with screenshots once the Roblox Studio connection is available in this task.",
         ],
       },
     ],

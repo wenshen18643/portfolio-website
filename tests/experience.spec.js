@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 for (const [id, title, count] of [
-  ["beyond", "Beyond Photography", 4],
+  ["beyond", "Beyond Photography", 3],
   ["monash", "Monash Engineering Club", 2],
   ["headspace", "HeadSpace SS15", 2],
   ["roblox", "Roblox", 1],
@@ -108,7 +108,7 @@ test("Roblox is the fourth scene in Experience and no AI calls are made", async 
   await expect(page.locator("#projects")).toHaveCount(0);
   await scenes.nth(3).locator('[data-exp="roblox"]').click();
   await expect(page.locator(".case-intro")).toContainText(
-    "personal game project",
+    "Roblox game I’m building",
   );
   await expect(page.getByRole("textbox")).toHaveCount(0);
   await expect(
@@ -158,6 +158,33 @@ test("Mei screenshots follow the customer journey and end with private Codex con
   await expect(page.locator(".case-video-placeholder")).toHaveCount(0);
 });
 
+test("Beyond keeps the casual overview separate from the technical detail", async ({
+  page,
+}) => {
+  await page.locator('[data-exp="beyond"]').click();
+  await expect(page.locator(".case-index button")).toHaveText([
+    "Customer service",
+    "Trading bot",
+    "MeiCodex",
+  ]);
+  await expect(page.locator(".case-deep-dive")).toHaveCount(3);
+  await expect(page.locator(".case-deep-dive").first()).not.toHaveAttribute(
+    "open",
+    "",
+  );
+  await page.locator(".case-deep-dive summary").first().click();
+  await expect(page.locator(".case-deep-dive").first()).toHaveAttribute(
+    "open",
+    "",
+  );
+  await expect(page.locator(".case-deep-dive").first()).toContainText(
+    "cosine similarity",
+  );
+  await expect(page.locator(".case-deep-dive").first()).toContainText(
+    "Prompt injection",
+  );
+});
+
 test("workflow tabs support keyboard navigation without image links", async ({
   page,
 }) => {
@@ -181,7 +208,7 @@ test("workflow tabs support keyboard navigation without image links", async ({
   );
   await expect(
     page.getByRole("tablist", { name: "Case study chapters" }).getByRole("tab"),
-  ).toHaveCount(4);
+  ).toHaveCount(3);
 });
 
 test("chapter tabs replace the visible section and omit employment dates", async ({
@@ -199,7 +226,7 @@ test("chapter tabs replace the visible section and omit employment dates", async
   await tabs.last().click();
   await expect(page.locator(".case-section:visible")).toHaveCount(1);
   await expect(page.locator(".case-section:visible h3")).toHaveText(
-    "A coding workspace inside WhatsApp.",
+    "MeiCodex.",
   );
   expect(await page.locator(".case-scroll").evaluate((e) => e.scrollTop)).toBe(
     initialScroll,
@@ -207,6 +234,6 @@ test("chapter tabs replace the visible section and omit employment dates", async
   await page.keyboard.press("Home");
   await expect(tabs.first()).toBeFocused();
   await expect(page.locator(".case-section:visible h3")).toHaveText(
-    "It started in WhatsApp.",
+    "Customer service, end to end.",
   );
 });

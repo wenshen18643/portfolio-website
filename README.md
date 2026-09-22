@@ -2,7 +2,7 @@
 
 A static HTML, CSS and JavaScript portfolio. The home page retains its original design. Experience buttons open scrollable case studies: an introduction, explanations of the work, and supporting images or video.
 
-The Experience sequence moves through HeadSpace, Beyond Photography, MUMEC, and Side Projects as four scenes in one continuous scroll story. Beyond covers the customer bot, trading harness, and personal coding mode. MUMEC follows code → AI-assisted work → scheduled work, retaining the original before/after recordings. Roblox opens from the fourth scene as a clearly labelled personal project.
+The Experience sequence moves through HeadSpace, Beyond Photography, MUMEC, and Side Projects as four scenes in one continuous scroll story. Beyond combines onboarding and the strategy marketplace into one customer-service chapter, then covers the trading system and MeiCodex. Each chapter keeps the overview short and places the architecture in an optional technical deep dive. MUMEC follows code → AI-assisted work → scheduled work, retaining the original before/after recordings. Roblox opens from the fourth scene as a clearly labelled personal project.
 
 ```sh
 npm ci

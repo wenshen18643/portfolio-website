@@ -50,4 +50,5 @@ The grouped poster rule lives in `css/base/reset.css` (`.hero-name, .bridge-text
 - **Agent terminal**: `--ink-deep` panel, lime prompt, cream agent lines, amber tool lines.
 - **Pills over chips**: tags, status, CTAs use 100px-radius pill shapes.
 - **Overlay (experience detail)**: full per-company theme worlds in `css/components/overlay-themes.css`, switched via `theme-<id>` classes and a decor layer. Beyond = darkroom (near-black, red safelight, content develops in from blur/sepia). Monash = ledger (ruled paper, numbered entry rows, "Audited ✓" stamp slam). HeadSpace = scrapbook (warm paper, taped polaroid proof, rotated sticky notes, Caveat handwriting accents).
+- **Technical deep dive**: a native disclosure inside a case-study chapter. The casual explanation stays visible; architecture and safeguards remain collapsed until an interviewer asks for the detail. It uses one repeated label and paragraph copy rather than extra heading levels.
 - **Side Projects scene**: the fourth scene in the Experience story, after HeadSpace, Beyond Photography, and MUMEC. It uses the same cinematic transition and opens the Roblox case study from the same interaction pattern.

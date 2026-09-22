@@ -114,6 +114,26 @@
   font: 1.125rem/1.8 var(--font-body);
   margin: 0 0 1rem;
 }
+.case-deep-dive {
+  margin-top: 2rem;
+  border-block: 1px solid var(--border);
+}
+.case-deep-dive summary {
+  padding: 1.15rem 0;
+  color: var(--text);
+  font: 600 1.05rem/1.5 var(--font-body);
+  cursor: pointer;
+}
+.case-deep-dive summary:hover {
+  color: var(--accent);
+}
+.case-deep-dive-body {
+  padding-bottom: 0.5rem;
+}
+.case-deep-dive-body p {
+  font-size: 1rem;
+  line-height: 1.75;
+}
 .case-media {
   margin: 2rem 0 0;
 }
