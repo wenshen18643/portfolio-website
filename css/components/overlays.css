@@ -329,10 +329,10 @@
 }
 .exp-overlay[data-case="roblox"] .case-copy h3 {
   align-self: center;
-  justify-self: center;
+  justify-self: start;
   max-width: 12ch;
   margin-bottom: 0;
-  text-align: center;
+  text-align: left;
 }
 .exp-overlay[data-case="roblox"] .case-shot figcaption {
   display: block;

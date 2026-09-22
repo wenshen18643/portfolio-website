@@ -200,7 +200,8 @@ test("case study headings, captions, and screenshot tabs align to their columns"
     const caption = page.locator(".case-section:visible figcaption");
     await expect(tab).toHaveCSS("text-align", "center");
     await expect(heading).toHaveCSS("align-self", "center");
-    await expect(heading).toHaveCSS("text-align", "center");
+    await expect(heading).toHaveCSS("justify-self", "start");
+    await expect(heading).toHaveCSS("text-align", "left");
     await expect(caption).toHaveCSS("display", "block");
     await expect(caption).toHaveCSS("max-width", "1000px");
     await expect(caption.locator("p")).toHaveCSS("text-align", "left");
