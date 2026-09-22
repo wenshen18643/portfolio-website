@@ -33,8 +33,8 @@ export const experienceData = {
       'Still treasurer because nobody else wants to deal with spreadsheets. Can\'t blame them.',
     ],
     people: [],
-    proofVideo: 'videos/monash-after-60s.mp4',
-    beforeVideo: 'videos/monash-before-60s.mp4',
+    proofVideo: new URL('../../videos/monash-after-60s.mp4', import.meta.url).href,
+    beforeVideo: new URL('../../videos/monash-before-60s.mp4', import.meta.url).href,
   },
   headspace: {
     company: 'HeadSpace SS15',
@@ -50,7 +50,7 @@ export const experienceData = {
       'Coordinated 5+ community events. Respect to people who do this full-time cause it dam hard.',
     ],
     firstJobNote: 'My first real job. Not exactly related to Software Engineering, but everyone starts somewhere.',
-    proofImage: 'Images/Headspace/headspace_bg.jpeg',
+    proofImage: new URL('../../Images/Headspace/headspace_bg.jpeg', import.meta.url).href,
     people: [],
   },
 };

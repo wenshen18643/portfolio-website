@@ -11,7 +11,7 @@ import { initializeDotNavigation } from './modules/dot-nav.js';
 import { initializeCountUp } from './modules/count-up.js';
 import { initializeOverlay } from './modules/overlays.js';
 import { initializeStoryScroll } from './modules/story-scroll.js';
-import { initializeProjectsScroll } from './modules/projects-scroll.js';
+import { initializeDemos } from './modules/demos.js';
 import { initializeAboutOrbs, initializeMagneticQuote, initializeStatHoverScramble } from './modules/about-effects.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeCountUp();
   initializeOverlay();
   initializeStoryScroll();
-  initializeProjectsScroll();
+  initializeDemos();
   initializeAboutOrbs();
   initializeMagneticQuote();
   initializeStatHoverScramble();

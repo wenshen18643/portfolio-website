@@ -19,7 +19,6 @@ nginx.conf
 
 # Node (if you ever add it)
 node_modules/
-package-lock.json
 yarn.lock
 
 # OS
@@ -32,3 +31,8 @@ Thumbs.db
 *.swp
 *.swo
 PRODUCT.md
+
+# Generated output
+dist/
+test-results/
+playwright-report/

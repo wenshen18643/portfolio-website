@@ -1,0 +1,449 @@
+.demo-section {
+  padding: 8rem 6vw;
+  background: var(--bg);
+  color: var(--text);
+}
+.work-intro {
+  max-width: 1100px;
+  margin: 0 auto 4rem;
+}
+.demo-eyebrow {
+  display: block;
+  font: 0.7rem/1.7 var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.work-intro h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.8rem, 6.5vw, 6.5rem);
+  letter-spacing: -0.055em;
+  line-height: 1.02;
+  margin: 1.2rem 0 1.5rem;
+}
+.work-intro > p {
+  max-width: 560px;
+  color: var(--text-dim);
+  font-size: 1.05rem;
+}
+.demo-player {
+  max-width: 1100px;
+  margin: auto;
+}
+.chapter-tabs {
+  display: flex;
+  gap: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.demo-player button,
+.treasury-proof summary {
+  cursor: pointer;
+}
+.chapter-tabs button {
+  padding: 1rem 0;
+  color: var(--muted);
+  font: 0.78rem/1.5 var(--font-mono);
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+}
+.chapter-tabs button[aria-pressed="true"] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+.demo-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  padding: 2.3rem 0;
+  align-items: baseline;
+}
+.demo-heading h3 {
+  font: 600 1.45rem/1.25 var(--font-body);
+  letter-spacing: -0.04em;
+}
+.demo-heading p {
+  max-width: 510px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.demo-stage {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  min-height: 470px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface-dark);
+}
+.demo-narration {
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--surface);
+}
+.demo-narration h4 {
+  font: 600 clamp(1.7rem, 3vw, 2.6rem)/1.12 var(--font-body);
+  letter-spacing: -0.045em;
+  margin: 1.1rem 0;
+}
+.demo-narration > p {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+}
+.demo-label {
+  margin-top: 2.5rem;
+  font: 0.62rem/1.7 var(--font-mono);
+  color: var(--muted);
+}
+.demo-screen {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.screen-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  font: 0.72rem/1.4 var(--font-mono);
+}
+.screen-status {
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  font-size: 0.6rem;
+  padding: 0.15rem 0.4rem;
+}
+.demo-feed {
+  height: 340px;
+  padding: 1.5rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  flex: 1 1 340px;
+}
+.demo-message {
+  margin-bottom: 1rem;
+  font: 0.8rem/1.7 var(--font-mono);
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+.message-sender {
+  display: block;
+  color: var(--accent);
+  font: 0.6rem/1.8 var(--font-mono);
+  margin-bottom: 0.2rem;
+}
+[data-surface="chat"] .demo-feed {
+  background-image: radial-gradient(var(--border) 0.65px, transparent 0.65px);
+  background-size: 19px 19px;
+}
+[data-surface="chat"] .demo-message {
+  background: var(--surface);
+  border-radius: 0 12px 12px;
+  padding: 0.7rem 1rem;
+  width: fit-content;
+  max-width: 90%;
+  font-family: var(--font-body);
+}
+[data-surface="chat"] .from-user {
+  margin-left: auto;
+  background: var(--accent-soft);
+  border: 1px solid var(--border);
+  border-radius: 12px 0 12px 12px;
+}
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.25rem 0 0.5rem;
+}
+.player-controls button {
+  color: var(--text);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 0.65rem 1rem;
+  font: 0.72rem var(--font-body);
+  white-space: nowrap;
+}
+.player-controls .try-button {
+  background: var(--accent);
+  color: var(--surface-dark);
+  border-color: var(--accent);
+  margin-left: 0.6rem;
+  font-weight: 600;
+}
+.scene-seek {
+  flex: 1;
+  width: 60px;
+  min-width: 30px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.player-controls button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.scene-detail {
+  font: 0.64rem/1.8 var(--font-mono);
+  color: var(--muted);
+  min-height: 2.2em;
+}
+.demo-actions {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.demo-actions button {
+  background: var(--accent-soft);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.8rem;
+  border-radius: 7px;
+  font: 0.72rem var(--font-body);
+}
+.demo-player button:hover:not(:disabled) {
+  filter: brightness(1.2);
+}
+.demo-player :focus-visible,
+.treasury-proof summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.demo-composer {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem 1.2rem;
+}
+.demo-composer input {
+  flex: 1;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 0.7rem 1rem;
+  color: var(--text);
+  font: 0.8rem var(--font-body);
+}
+.demo-composer button {
+  border-radius: 50%;
+  width: 38px;
+  background: var(--accent);
+  color: var(--surface-dark);
+  border: 0;
+}
+.account-strip {
+  font: 0.65rem/1.7 var(--font-mono);
+  color: var(--accent);
+  padding: 0.75rem 1.5rem;
+  background: var(--accent-soft);
+}
+.trade-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  width: 100%;
+}
+.trade-form label {
+  flex: 1;
+  font-size: 0.65rem;
+  color: var(--muted);
+  min-width: 90px;
+}
+.trade-form input,
+.trade-form select {
+  display: block;
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 4px;
+}
+.trade-form button {
+  width: 100%;
+}
+.treasury-section {
+  border-top: 1px solid var(--border);
+}
+.treasury-proof {
+  max-width: 1100px;
+  margin: 2rem auto 0;
+}
+.treasury-proof summary {
+  font: 0.8rem var(--font-body);
+  color: var(--text-dim);
+  padding: 1rem 0;
+}
+.proof-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.proof-pair video {
+  width: 100%;
+  border-radius: 8px;
+}
+.proof-pair figcaption {
+  font-size: 0.7rem;
+  color: var(--muted);
+  padding: 0.5rem 0;
+}
+#projects > .demo-eyebrow {
+  margin-bottom: 1.5rem;
+}
+.roblox-project {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding: 3rem 0;
+  color: var(--text);
+}
+.roblox-project h3 {
+  font: 600 clamp(2rem, 4vw, 3.5rem)/1.08 var(--font-body);
+  letter-spacing: -0.04em;
+  margin: 1.2rem 0;
+}
+.roblox-project p {
+  color: var(--text-dim);
+  max-width: 460px;
+  font-size: 0.95rem;
+}
+.development-note {
+  display: block;
+  margin-top: 1.8rem;
+  color: var(--muted);
+  font: 0.65rem/1.8 var(--font-mono);
+}
+.roblox-art {
+  height: 320px;
+  position: relative;
+  overflow: hidden;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.roblox-art span {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 1.2rem;
+  font: 0.6rem var(--font-mono);
+  color: var(--muted);
+}
+.build-block {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  transform: rotate(-25deg) skew(10deg, 10deg);
+  box-shadow: -15px 15px 0 var(--accent-soft);
+}
+.block-one {
+  top: 100px;
+  left: 22%;
+}
+.block-two {
+  top: 60px;
+  left: 48%;
+}
+.block-three {
+  top: 155px;
+  left: 53%;
+  width: 65px;
+  height: 65px;
+}
+.demo-player [hidden] {
+  display: none !important;
+}
+@media (max-width: 760px) {
+  .demo-section {
+    padding: 5rem 6vw;
+  }
+  .chapter-tabs {
+    gap: 1rem;
+  }
+  .chapter-tabs button {
+    font-size: 0.65rem;
+    text-align: left;
+  }
+  .demo-heading {
+    display: block;
+    padding: 1.6rem 0;
+  }
+  .demo-heading p {
+    margin-top: 0.8rem;
+  }
+  .demo-stage {
+    grid-template-columns: 1fr;
+  }
+  .demo-narration {
+    padding: 1.5rem;
+  }
+  .demo-narration h4 {
+    margin: 0.6rem 0;
+  }
+  .demo-label {
+    margin-top: 1rem;
+  }
+  .demo-feed {
+    flex-basis: 300px;
+    max-height: 340px;
+  }
+  .player-controls {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .player-controls .try-button {
+    margin-left: 0;
+  }
+  .player-controls button {
+    padding: 0.7rem;
+  }
+  .player-controls .try-button {
+    width: 100%;
+    margin-top: 0.4rem;
+  }
+  .roblox-project,
+  .proof-pair {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .demo-player *,
+  .roblox-art * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@keyframes message-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.message-enter {
+  animation: message-enter 450ms ease-out both;
+}

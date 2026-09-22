@@ -24,6 +24,7 @@
     <a href="#hero" class="dot-link" data-label="Home" aria-label="Go to Home"></a>
     <a href="#about" class="dot-link" data-label="About" aria-label="Go to About"></a>
     <a href="#experience" class="dot-link" data-label="Experience" aria-label="Go to Experience"></a>
+    <a href="#work" class="dot-link" data-label="Demos" aria-label="Go to Demos"></a>
     <a href="#projects" class="dot-link" data-label="Projects" aria-label="Go to Projects"></a>
     <a href="#contact" class="dot-link" data-label="Contact" aria-label="Go to Contact"></a>
   </nav>
@@ -166,7 +167,7 @@
               <p class="story-desc">Building AI agents that guide SMEs through Industry 4.0 adoption — document
                 processing, RAG pipelines, workflow automation, autonomous systems that actually ship. I automate anything repetitive
                 and fix whatever breaks at 2am. Usually both.</p>
-              <button class="story-cta" data-exp="beyond">See what I built →</button>
+              <a class="story-cta" href="#work">Watch it, then try it →</a>
             </div>
 
             <div class="story-scene" data-scene="2" data-phase="300k is abit scary to manage">
@@ -174,10 +175,8 @@
               <h3 class="story-company" data-scroll-text>Monash University Malaysia Engineering Club</h3>
               <p class="story-role" data-scroll-text>Head Treasurer</p>
               <p class="story-desc">Got handed a six-figure student budget and told not to mess it up. Automated most of
-                the tedious work so I could focus on not letting anyone down. My predecessor lived in Excel
-                spreadsheets;
-                I live in Python scripts.</p>
-              <button class="story-cta" data-exp="monash">View the impact →</button>
+                the tedious work so I could focus on not letting anyone down. It started with Python scripts, evolved with better AI, and became scheduled work in Codex.</p>
+              <a class="story-cta" href="#treasury">Follow the evolution →</a>
             </div>
 
           </div>
@@ -204,112 +203,32 @@
       </div>
     </section>
 
-    <!-- ── Projects ── -->
+    <section id="work" class="zone-dark demo-section" aria-labelledby="work-heading">
+      <div class="work-intro"><span class="demo-eyebrow">Built at Beyond Photography / evolving into my own tools</span>
+      <h2 id="work-heading">Started with a bot.<br>Kept going.</h2>
+      <p>From answering customers to taking action. Three chapters you can watch, then get your hands on.</p></div>
+      <div id="demo-player"></div>
+      <noscript><p>Enable JavaScript to play the interactive demos. The story: customer onboarding and retrieval, a trading harness, then my personal agent workspace. All accounts and actions shown are simulated.</p></noscript>
+    </section>
+
+    <section id="treasury" class="zone-dark demo-section treasury-section" aria-labelledby="treasury-heading">
+      <div class="work-intro"><span class="demo-eyebrow">Monash Engineering Club / Head Treasurer</span>
+      <h2 id="treasury-heading">Less chasing cells.<br>More getting it done.</h2>
+      <p>The job stayed the same. The way I did it didn’t.</p></div>
+      <div id="treasury-player"></div>
+      <details class="treasury-proof"><summary>See the original before &amp; after recordings ↗</summary>
+        <div class="proof-pair"><figure><video src="videos/monash-before-60s.mp4" controls muted playsinline preload="none"></video><figcaption>Before · manual spreadsheet work</figcaption></figure>
+        <figure><video src="videos/monash-after-60s.mp4" controls muted playsinline preload="none"></video><figcaption>After · the original automation</figcaption></figure></div>
+      </details>
+    </section>
+
     <section id="projects" class="zone-dark" aria-labelledby="proj-heading">
-      <h2 class="projects-section-title" id="proj-heading">Projects</h2>
-
-      <!-- 01: AI Agents (intern chatbot + part-time trading agent) -->
-      <article class="project-scene project-scene--agents" data-project="agents" data-reveal>
-        <div class="project-scene-inner project-scene-inner--stacked">
-          <div class="project-info project-info--full">
-            <span class="project-num">01</span>
-            <h3 class="project-title">AI Agents, On the Clock</h3>
-            <p class="project-desc">Two agents from two jobs. As an intern I shipped a WhatsApp bot that handles
-              inbound customer messages and triggers backend workflows on its own. Now, as a part-time AI Engineer,
-              I build a sentiment-driven trading agent that reasons through market signals via structured tool
-              calling. 70% accuracy on directional calls, slightly better than my gut feeling.</p>
-            <ul class="project-tags">
-              <li>LangChain</li>
-              <li>Tool Calling</li>
-              <li>WhatsApp API</li>
-              <li>Python</li>
-              <li>Node.js</li>
-            </ul>
-          </div>
-          <div class="agents-demos">
-            <figure class="agent-demo-col">
-              <figcaption class="demo-caption">Intern · WhatsApp Bot</figcaption>
-              <div class="project-demo project-demo--phone">
-                <div class="phone-frame">
-                  <div class="phone-header">
-                    <span class="phone-contact">Customer</span>
-                    <span class="phone-status">online</span>
-                  </div>
-                  <div class="phone-chat" data-chat>
-                    <div class="chat-bubble chat-bubble--in">
-                      <p>Hi, do you have this in stock?</p>
-                      <span class="chat-time">14:21</span>
-                    </div>
-                    <div class="chat-bubble chat-bubble--out">
-                      <p>Yes! Available in 3 sizes. Want me to send pricing?</p>
-                      <span class="chat-time">14:21</span>
-                    </div>
-                    <div class="chat-bubble chat-bubble--in">
-                      <p>Yes please</p>
-                      <span class="chat-time">14:22</span>
-                    </div>
-                    <div class="chat-bubble chat-bubble--out">
-                      <p>Sent! Reply BOOK to reserve yours.</p>
-                      <span class="chat-time">14:22</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </figure>
-            <figure class="agent-demo-col">
-              <figcaption class="demo-caption">Part-time AI Engineer · Trading Agent</figcaption>
-              <div class="project-demo project-demo--terminal">
-                <div class="agent-terminal">
-                  <div class="terminal-bar">
-                    <span class="terminal-dot t-red"></span>
-                    <span class="terminal-dot t-yellow"></span>
-                    <span class="terminal-dot t-green"></span>
-                    <span class="terminal-title">trading-agent</span>
-                  </div>
-                  <div class="terminal-body" data-terminal="trading"></div>
-                </div>
-              </div>
-            </figure>
-          </div>
-        </div>
-      </article>
-
-      <!-- 02: LMS -->
-      <article class="project-scene project-scene--lms" data-project="lms" data-reveal>
-        <div class="project-scene-inner">
-          <div class="project-info project-info--full">
-            <span class="project-num">02</span>
-            <h3 class="project-title">Learning Management System</h3>
-            <p class="project-desc">Full-stack RESTful LMS with 15+ API endpoints, 50+ unit tests, and 3 distinct user
-              roles. Designed for scalability with clean architecture and comprehensive test coverage.</p>
-            <ul class="project-tags">
-              <li>Flask</li>
-              <li>MySQL</li>
-              <li>REST API</li>
-              <li>Python</li>
-            </ul>
-          </div>
-          <div class="project-demo project-demo--routes">
-            <div class="route-bar" data-route>
-              <span class="route-method">GET</span>
-              <span class="route-path">/api/courses</span>
-            </div>
-            <div class="route-bar" data-route>
-              <span class="route-method">POST</span>
-              <span class="route-path">/api/enroll</span>
-            </div>
-            <div class="route-bar" data-route>
-              <span class="route-method">GET</span>
-              <span class="route-path">/api/progress</span>
-            </div>
-            <div class="route-bar" data-route>
-              <span class="route-method">DELETE</span>
-              <span class="route-path">/api/drop</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
+      <span class="demo-eyebrow">Off the clock</span>
+      <h2 class="projects-section-title" id="proj-heading">Side project.</h2>
+      <article class="roblox-project"><div><span class="demo-eyebrow">Roblox / In development</span><h3>A different kind<br>of world-building.</h3>
+      <p>I’m making a Roblox game. Still building, still figuring things out. Gameplay and a closer look are coming when there’s something worth showing.</p>
+      <span class="development-note">Work in progress — playtest not open yet</span></div>
+      <div class="roblox-art" aria-hidden="true"><div class="build-block block-one"></div><div class="build-block block-two"></div><div class="build-block block-three"></div><span>WORLD UNDER CONSTRUCTION</span></div></article>
     </section>
 
     <!-- ── Contact ── -->

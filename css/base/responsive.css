@@ -179,3 +179,12 @@
   body, button { cursor: auto; }
   .exp-overlay { transition: none; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .story-scroll-container { height: auto; }
+  .story-sticky { position: relative; height: auto; display: block; perspective: none; }
+  .story-scenes { position: relative; display: grid; gap: 4rem; padding: 5rem 6vw; height: auto; width: 100%; }
+  .story-scene { position: relative; inset: auto; opacity: 1; transform: none; pointer-events: auto; width: 100%; }
+  .story-label, .story-desc, .story-cta { opacity: 1; transform: none; }
+  .story-bg, .exp-header, .story-progress, .story-scroll-cue { display: none; }
+}

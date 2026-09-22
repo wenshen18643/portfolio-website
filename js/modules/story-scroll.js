@@ -49,45 +49,6 @@ const scrollCueHideThreshold = 0.03;
 const mobileBreakpoint = 768;
 
 /**
- * Wraps each text node inside a container in individually animated characters.
- *
- * @param {HTMLElement} container - The element whose text will be split.
- * @param {number} baseDelay - Base animation delay in milliseconds.
- */
-function wrapTextInAnimatedCharacters(container, baseDelay) {
-  const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
-  const textNodes = [];
-  let node;
-  while (node = walker.nextNode()) {
-    if (node.textContent.trim().length > 0) textNodes.push(node);
-  }
-
-  let characterIndex = 0;
-  textNodes.forEach(textNode => {
-    const text = textNode.textContent;
-    const wrapper = document.createElement('span');
-    const characters = [];
-
-    for (let index = 0; index < text.length; index++) {
-      const character = text[index];
-      if (character === ' ') {
-        characters.push(' ');
-      } else {
-        const delay = baseDelay + characterIndex * 15;
-        characters.push(`<span class="char-run" style="animation-delay:${delay}ms">${character}</span>`);
-        characterIndex++;
-      }
-    }
-
-    wrapper.innerHTML = characters.join('');
-    while (wrapper.firstChild) {
-      textNode.parentNode.insertBefore(wrapper.firstChild, textNode);
-    }
-    textNode.parentNode.removeChild(textNode);
-  });
-}
-
-/**
  * Splits scroll-text elements into per-character spans for animation.
  */
 function splitScrollTextIntoCharacters() {
@@ -202,18 +163,10 @@ export function initializeStoryScroll() {
       dot.classList.toggle('active', index === activeSceneIndex);
     });
 
-    let maxLocalProgress = -1;
-    let focusedScene = null;
-
     scenes.forEach((scene, sceneIndex) => {
       const localProgress = getLocalProgress(scrollProgress, sceneIndex);
       const isFirstSceneLanding = sceneIndex === 0 && scrollProgress < landingScrollThreshold;
       const isLastSceneLanding = sceneIndex === sceneCount - 1 && scrollProgress > exitScrollThreshold;
-
-      if (localProgress > maxLocalProgress && localProgress <= 1) {
-        maxLocalProgress = localProgress;
-        focusedScene = scene;
-      }
 
       let rotateY = 0;
       let translateX = 0;
