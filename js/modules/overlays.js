@@ -17,14 +17,6 @@ function renderMedia(media) {
     );
     media.images.forEach((shot) => {
       const item = createElement("figure", "case-shot");
-      const link = createElement("a", "case-shot-link");
-      link.href = shot.src;
-      link.target = "_blank";
-      link.rel = "noopener";
-      link.setAttribute(
-        "aria-label",
-        `${shot.label} — open full-size image in a new tab`,
-      );
       const image = document.createElement("img");
       image.src = shot.src;
       image.alt = shot.label;
@@ -32,16 +24,12 @@ function renderMedia(media) {
       image.height = shot.height;
       image.loading = "lazy";
       image.decoding = "async";
-      link.append(
-        image,
-        createElement("span", "case-shot-open", "View full size ↗"),
-      );
       const caption = createElement("figcaption", "");
       caption.append(
         createElement("strong", "", shot.label),
         createElement("p", "", shot.caption),
       );
-      item.append(link, caption);
+      item.append(image, caption);
       gallery.append(item);
     });
     return gallery;

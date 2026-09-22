@@ -9,7 +9,7 @@ npm ci
 npm run dev
 ```
 
-Screenshots for the Mei case study live in `Images/Mei/`, ordered from onboarding through trading to personal Codex mode. Each `media.images` entry includes a label, caption and intrinsic dimensions to reserve space while loading. Images link to their full-size version. The marketplace image is privacy-edited; never replace it with the unredacted registration screenshot.
+Screenshots for the Mei case study live in `Images/Mei/`, ordered from onboarding through trading to personal Codex mode. Each `media.images` entry includes a label, caption and intrinsic dimensions to reserve space while loading. Images are displayed in a single column at a consistent width, with readable captions underneath. The marketplace image is privacy-edited; never replace it with the unredacted registration screenshot.
 
 ## Adding the recordings
 

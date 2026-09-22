@@ -118,9 +118,6 @@ test("Mei screenshots follow the customer journey and end with private Codex con
       )
       .toBe(true);
     await expect(shot).toHaveCSS("max-height", "none");
-    const link = page.locator(".case-shot-link").nth(i);
-    await expect(link).toHaveAttribute("href", await shot.getAttribute("src"));
-    await expect(link).toHaveAttribute("target", "_blank");
   }
   await expect(page.locator(".case-shot").last()).toContainText(
     "/model gpt-5.6-sol medium",
@@ -140,8 +137,14 @@ test("screenshots use the gallery width and captions sit below images", async ({
   const shots = page.locator(".case-gallery").first().locator(".case-shot");
   const first = await shots.nth(0).boundingBox();
   const second = await shots.nth(1).boundingBox();
-  expect(Math.abs(first.y - second.y)).toBeLessThan(2);
-  expect(second.x).toBeGreaterThan(first.x);
+  expect(second.y).toBeGreaterThanOrEqual(first.y + first.height);
+  expect(second.width).toBeCloseTo(first.width, 0);
+  expect(first.width).toBeGreaterThan(900);
+  await expect(page.locator(".case-gallery a, .case-shot-open")).toHaveCount(0);
+  await expect(shots.first().locator("figcaption")).toHaveCSS(
+    "font-size",
+    "18px",
+  );
   for (const shot of await shots.all()) {
     const image = await shot.locator("img").boundingBox();
     const caption = await shot.locator("figcaption").boundingBox();
