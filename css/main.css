@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Caveat:wght@500;600&family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600&display=swap');
 @import 'base/tokens.css';
 @import 'base/reset.css';
-@import 'components/cursor.css';
 @import 'components/dot-nav.css';
 @import 'components/reveal.css';
 @import 'sections/hero.css';

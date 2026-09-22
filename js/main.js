@@ -3,7 +3,6 @@
  * @module main
  */
 
-import './modules/cursor.js';
 import { scramble } from './modules/utils.js';
 import { initializeHeroCanvas, initializeHeroEntranceSequence, initializeHeroParallax, initializeTypewriter } from './modules/hero.js';
 import { initializeReveals } from './modules/reveals.js';

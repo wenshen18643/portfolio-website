@@ -175,7 +175,6 @@
     transition-duration: 0.001ms !important;
   }
   [data-reveal] { opacity: 1; transform: none; transition: none; }
-  .cursor, .cursor-ping { display: none; }
   body, button { cursor: auto; }
   .exp-overlay { transition: none; }
 }
