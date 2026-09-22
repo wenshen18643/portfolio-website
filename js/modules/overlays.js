@@ -9,14 +9,61 @@ function createElement(tag, className, text) {
 }
 
 /** Displays supplied media or a quiet placeholder for a future recording. */
-function renderMedia(media) {
+function renderMedia(media, sectionId) {
   if (media.images) {
     const gallery = createElement(
       "div",
       `case-media case-gallery case-gallery-${media.layout}`,
     );
-    media.images.forEach((shot) => {
+    const controls = createElement("div", "case-steps");
+    controls.setAttribute("role", "tablist");
+    controls.setAttribute("aria-label", "Workflow screenshots");
+    const panels = [];
+    const buttons = [];
+    function selectShot(index, focus = false) {
+      panels.forEach((panel, position) => {
+        panel.hidden = position !== index;
+        buttons[position].setAttribute(
+          "aria-selected",
+          String(position === index),
+        );
+        buttons[position].tabIndex = position === index ? 0 : -1;
+      });
+      if (focus) buttons[index].focus();
+    }
+    if (media.images.length > 1) gallery.append(controls);
+    media.images.forEach((shot, index) => {
       const item = createElement("figure", "case-shot");
+      if (media.images.length > 1) {
+        const button = createElement(
+          "button",
+          "case-step",
+          shot.label.replace(/^\d+ · /, ""),
+        );
+        button.type = "button";
+        button.id = `${sectionId}-tab-${index}`;
+        button.setAttribute("role", "tab");
+        button.setAttribute("aria-controls", `${sectionId}-shot-${index}`);
+        button.addEventListener("click", () => selectShot(index));
+        button.addEventListener("keydown", (event) => {
+          const keys = {
+            ArrowRight: (index + 1) % media.images.length,
+            ArrowLeft: (index + media.images.length - 1) % media.images.length,
+            Home: 0,
+            End: media.images.length - 1,
+          };
+          if (event.key in keys) {
+            event.preventDefault();
+            selectShot(keys[event.key], true);
+          }
+        });
+        item.id = `${sectionId}-shot-${index}`;
+        item.setAttribute("role", "tabpanel");
+        item.setAttribute("aria-labelledby", button.id);
+        buttons.push(button);
+        panels.push(item);
+        controls.append(button);
+      }
       const image = document.createElement("img");
       image.src = shot.src;
       image.alt = shot.label;
@@ -29,9 +76,10 @@ function renderMedia(media) {
         createElement("strong", "", shot.label),
         createElement("p", "", shot.caption),
       );
-      item.append(image, caption);
+      item.append(caption, image);
       gallery.append(item);
     });
+    if (panels.length) selectShot(0);
     return gallery;
   }
   const figure = createElement("figure", "case-media");
@@ -90,18 +138,31 @@ function renderCase(container, id) {
   );
   header.append(title, createElement("p", "case-intro", data.intro), roles);
   container.append(header);
+  const navigation = createElement("nav", "case-index");
+  navigation.setAttribute("aria-label", "Case study chapters");
+  container.append(navigation);
   data.sections.forEach((section, index) => {
     const article = createElement("section", "case-section");
     const text = createElement("div", "case-copy");
     const title = createElement("h3", "", section.title);
     title.id = `case-${id}-${index}`;
     article.setAttribute("aria-labelledby", title.id);
+    article.id = `${title.id}-section`;
+    const chapter = createElement("a", "", section.nav || section.title);
+    chapter.href = `#${article.id}`;
+    chapter.addEventListener("click", (event) => {
+      event.preventDefault();
+      article.scrollIntoView({ block: "start", behavior: "instant" });
+    });
+    navigation.append(chapter);
     text.append(title);
+    const body = createElement("div", "case-body");
     section.paragraphs.forEach((paragraph) =>
-      text.append(createElement("p", "", paragraph)),
+      body.append(createElement("p", "", paragraph)),
     );
+    text.append(body);
     article.append(text);
-    if (section.media) article.append(renderMedia(section.media));
+    if (section.media) article.append(renderMedia(section.media, title.id));
     container.append(article);
   });
   const footer = createElement("footer", "case-footer");
@@ -157,7 +218,9 @@ export function initializeOverlay() {
     if (event.key !== "Tab") return;
     const controls = [
       ...overlay.querySelectorAll("button, a, video[controls]"),
-    ].filter((element) => element.getClientRects().length);
+    ].filter(
+      (element) => element.getClientRects().length && element.tabIndex !== -1,
+    );
     const first = controls[0];
     const last = controls.at(-1);
     if (event.shiftKey && document.activeElement === first) {

@@ -111,6 +111,9 @@ test("Mei screenshots follow the customer journey and end with private Codex con
   for (let i = 0; i < names.length; i++) {
     const shot = images.nth(i);
     await expect(shot).toHaveAttribute("src", new RegExp(names[i]));
+    const panel = shot.locator("..");
+    const label = await panel.getAttribute("aria-labelledby");
+    if (label) await page.locator(`#${label}`).click();
     await shot.scrollIntoViewIfNeeded();
     await expect
       .poll(() =>
@@ -126,28 +129,30 @@ test("Mei screenshots follow the customer journey and end with private Codex con
   await expect(page.locator(".case-video-placeholder")).toHaveCount(0);
 });
 
-test("screenshots use the gallery width and captions sit below images", async ({
+test("workflow tabs support keyboard navigation without image links", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.locator('[data-exp="beyond"]').click();
-  await expect(
-    page.getByRole("heading", { name: "Keeping it running." }),
-  ).toHaveCount(0);
-  const shots = page.locator(".case-gallery").first().locator(".case-shot");
-  const first = await shots.nth(0).boundingBox();
-  const second = await shots.nth(1).boundingBox();
-  expect(second.y).toBeGreaterThanOrEqual(first.y + first.height);
-  expect(second.width).toBeCloseTo(first.width, 0);
-  expect(first.width).toBeGreaterThan(900);
+  const gallery = page.locator(".case-gallery").first();
+  const tabs = gallery.getByRole("tab");
+  await expect(gallery.getByRole("tabpanel")).toHaveCount(1);
+  await tabs.first().focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(tabs.nth(1)).toBeFocused();
+  await expect(tabs.nth(1)).toHaveAttribute("aria-selected", "true");
+  await expect(gallery.locator(".case-shot").nth(0)).toBeHidden();
+  await expect(gallery.locator(".case-shot").nth(1)).toBeVisible();
+  await page.keyboard.press("Home");
+  await expect(tabs.first()).toBeFocused();
   await expect(page.locator(".case-gallery a, .case-shot-open")).toHaveCount(0);
-  await expect(shots.first().locator("figcaption")).toHaveCSS(
+  await expect(gallery.locator("figcaption").first()).toHaveCSS(
     "font-size",
     "18px",
   );
-  for (const shot of await shots.all()) {
-    const image = await shot.locator("img").boundingBox();
-    const caption = await shot.locator("figcaption").boundingBox();
-    expect(caption.y).toBeGreaterThanOrEqual(image.y + image.height);
-  }
+  await expect(
+    page
+      .getByRole("navigation", { name: "Case study chapters" })
+      .getByRole("link"),
+  ).toHaveCount(4);
 });

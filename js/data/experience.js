@@ -11,6 +11,7 @@ export const experienceData = {
     sections: [
       {
         title: "It started in WhatsApp.",
+        nav: "Onboarding",
         paragraphs: [
           "The first job was helping customers get from a first message to a completed profile. Mei gathers their language, experience, preferred markets, trading style, and risk appetite through a conversation, then guides them towards the strategy marketplace.",
           "Behind the chat, I built retrieval workflows for text, images, and voice, and worked through prompt-injection boundaries. Source material should help answer a question without becoming a new set of instructions for the bot.",
@@ -45,6 +46,7 @@ export const experienceData = {
       },
       {
         title: "From onboarding to the strategy market.",
+        nav: "Strategy market",
         paragraphs: [
           "The next step connects the conversation to the strategy website. A customer can ask for strategies, compare the available options, and choose one without having to restart the conversation elsewhere.",
         ],
@@ -67,6 +69,7 @@ export const experienceData = {
       },
       {
         title: "Then the agent needed tools.",
+        nav: "Trading harness",
         paragraphs: [
           "I built a custom trading harness so Mei could move from answering questions to inspecting markets and taking actions. The workflow connects a request to structured tools, then brings the result back into the same chat.",
           "These examples show the sequence: inspect the market, confirm an order, and follow what the system actually did. A proposed action and a completed trade have different messages.",
@@ -112,6 +115,7 @@ export const experienceData = {
       },
       {
         title: "A coding workspace inside WhatsApp.",
+        nav: "Personal Codex",
         paragraphs: [
           "I added a private /codex mode for my own development work. Sending /codex starts a coding session, so I can pass in a request, screenshot or document from WhatsApp and follow the work there.",
           "The session exposes explicit controls: /status checks progress, /cancel stops work, and /exit leaves Codex mode. Model selection uses /model with the full model identifier and an optional reasoning effort.",
@@ -152,6 +156,7 @@ export const experienceData = {
     sections: [
       {
         title: "First, I wrote the code.",
+        nav: "The original automation",
         paragraphs: [
           "The starting point was repetitive spreadsheet work. I built a Python pipeline to pull data from Asana, clean it, and write structured updates into the budget tracker.",
           "That gave the work a repeatable process and reduced the time spent manually moving information. These are the original before-and-after recordings.",
@@ -175,6 +180,7 @@ export const experienceData = {
       },
       {
         title: "Then AI made it a daily workflow.",
+        nav: "Scheduled review",
         paragraphs: [
           "As AI became more capable, I moved from running the original scripts myself to scheduling the recurring treasury review in Codex. The daily MUMEC tracker and reply review brings that work into one routine.",
           "The task is scheduled for 1 PM each day. I still review the numbers and handle the decisions; the aim is to spend less time preparing the review and more time on the items that need attention.",
