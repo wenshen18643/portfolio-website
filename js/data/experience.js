@@ -279,7 +279,7 @@ export const experienceData = {
           "I built the tray, drag-and-drop merge rules, food tiers, eating cadence, weight gain, and the tutorial that introduces the loop one action at a time. The same input path supports mouse, touch, and gamepad.",
         ],
         deepDive: [
-          "The client owns immediate presentation—dragging, shrinking bites, animation, and screen-clamped prompts—while the server validates the action and returns the authoritative state. That split keeps the loop responsive without letting a client award itself food, weight, or cash.",
+          "The client owns immediate presentation for dragging, shrinking bites, animation, and screen-clamped prompts, while the server validates the action and returns the authoritative state. That split keeps the loop responsive without letting a client award itself food, weight, or cash.",
         ],
         media: {
           layout: "wide",
@@ -293,7 +293,7 @@ export const experienceData = {
               height: 793,
               label: "02 · The merge loop",
               caption:
-                "The first playable tutorial asks the player to combine matching food directly on the tray. I implemented the drag interaction and staged coach marks instead of explaining the loop in a wall of text. It solves the hardest onboarding question—what do I touch first?—and I would next test how quickly a new player reaches their first higher-tier meal without help.",
+                "The first playable tutorial asks the player to combine matching food directly on the tray. I implemented the drag interaction and staged coach marks instead of explaining the loop in a wall of text. It solves the hardest onboarding question: what do I touch first? I would next test how quickly a new player reaches their first higher-tier meal without help.",
             },
           ],
         },

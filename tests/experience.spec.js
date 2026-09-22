@@ -182,6 +182,20 @@ test("footer omits the implementation note", async ({ page }) => {
   await expect(page.getByRole("link", { name: /Back to top/ })).toBeVisible();
 });
 
+test("portfolio copy does not use em dashes", async ({ page }) => {
+  const emDash = String.fromCodePoint(0x2014);
+  expect(await page.locator("body").innerText()).not.toContain(emDash);
+  expect(
+    await page.locator('meta[name="description"]').getAttribute("content"),
+  ).not.toContain(emDash);
+
+  for (const id of ["headspace", "beyond", "monash", "roblox"]) {
+    await page.locator(`[data-exp="${id}"]`).click();
+    expect(await page.getByRole("dialog").innerText()).not.toContain(emDash);
+    await page.keyboard.press("Escape");
+  }
+});
+
 test("case study headings, captions, and screenshot tabs align to their columns", async ({
   page,
 }) => {
@@ -263,6 +277,19 @@ test("Mei screenshots follow the customer journey and end with private Codex con
       )
       .toBe(true);
     await expect(shot).toHaveCSS("max-height", "none");
+    const alignment = await shot.evaluate((image) => {
+      const figure = image.parentElement;
+      const caption = figure.querySelector("figcaption");
+      const imageRect = image.getBoundingClientRect();
+      const captionRect = caption.getBoundingClientRect();
+      const containerRect = figure.getBoundingClientRect();
+      return {
+        image: Math.abs(imageRect.width - containerRect.width),
+        caption: Math.abs(captionRect.width - containerRect.width),
+      };
+    });
+    expect(alignment.image).toBeLessThan(1);
+    expect(alignment.caption).toBeLessThan(1);
   }
   await expect(page.locator(".case-shot").last()).toContainText(
     "/model gpt-5.6-sol medium",
