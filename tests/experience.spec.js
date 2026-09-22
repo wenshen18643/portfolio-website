@@ -6,8 +6,8 @@ test.beforeEach(async ({ page }) => {
 });
 
 for (const [id, title, count] of [
-  ["beyond", "Beyond Photography", 5],
-  ["monash", "Monash Engineering Club", 3],
+  ["beyond", "Beyond Photography", 4],
+  ["monash", "Monash Engineering Club", 2],
   ["headspace", "HeadSpace SS15", 2],
   ["roblox", "Roblox", 1],
 ]) {
@@ -44,12 +44,11 @@ test("treasury keeps the original recordings with native controls", async ({
   }
   await expect(page.locator(".case-copy h3")).toHaveText([
     "First, I wrote the code.",
-    "Then AI got better.",
-    "From running it to scheduling it.",
+    "Then AI made it a daily workflow.",
   ]);
 });
 
-test("mobile case studies fit and placeholders do not pretend to be videos", async ({
+test("mobile case studies fit without empty media placeholders", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -128,4 +127,24 @@ test("Mei screenshots follow the customer journey and end with private Codex con
   );
   await expect(page.locator(".case-shot").last()).toContainText("/exit");
   await expect(page.locator(".case-video-placeholder")).toHaveCount(0);
+});
+
+test("screenshots use the gallery width and captions sit below images", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.locator('[data-exp="beyond"]').click();
+  await expect(
+    page.getByRole("heading", { name: "Keeping it running." }),
+  ).toHaveCount(0);
+  const shots = page.locator(".case-gallery").first().locator(".case-shot");
+  const first = await shots.nth(0).boundingBox();
+  const second = await shots.nth(1).boundingBox();
+  expect(Math.abs(first.y - second.y)).toBeLessThan(2);
+  expect(second.x).toBeGreaterThan(first.x);
+  for (const shot of await shots.all()) {
+    const image = await shot.locator("img").boundingBox();
+    const caption = await shot.locator("figcaption").boundingBox();
+    expect(caption.y).toBeGreaterThanOrEqual(image.y + image.height);
+  }
 });

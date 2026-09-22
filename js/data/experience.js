@@ -3,7 +3,7 @@ export const experienceData = {
   beyond: {
     company: "Beyond Photography",
     intro:
-      "I joined as an AI Engineer Intern and continued part-time. The work started with a WhatsApp customer-service bot, then grew into trading tools, retrieval pipelines, and the infrastructure needed to keep them running.",
+      "I joined as an AI Engineer Intern and continued part-time. The work started with a WhatsApp customer-service bot, then grew into trading tools, retrieval pipelines, a private coding mode I use for my own work.",
     roles: [
       { title: "Part-time AI Engineer", period: "Feb 2026 — Present" },
       { title: "AI Engineer Intern", period: "Oct 2025 — Feb 2026" },
@@ -122,8 +122,8 @@ export const experienceData = {
             {
               src: new URL("../../Images/Mei/codex-work.png", import.meta.url)
                 .href,
-              width: 1477,
-              height: 985,
+              width: 1535,
+              height: 1024,
               label: "A bug report becomes a coding task",
               caption:
                 "I forward two bugs into a new /codex session. The agent traces the relevant code, preserves existing changes, reports progress and sends a verification file. It also distinguishes the tested account fix from the website issue that still needs more information.",
@@ -141,13 +141,6 @@ export const experienceData = {
             },
           ],
         },
-      },
-      {
-        title: "Keeping it running.",
-        paragraphs: [
-          "Alongside the agents, I worked on Proxmox infrastructure, VM provisioning, container management, and deployment automation. Automating container cloning reduced a repeated deployment process from roughly 20 minutes to 30 seconds.",
-          "The common thread was reducing repeated work: less manual setup, clearer workflows, and more time to investigate the parts that actually needed attention.",
-        ],
       },
     ],
   },
@@ -181,25 +174,26 @@ export const experienceData = {
         },
       },
       {
-        title: "Then AI got better.",
+        title: "Then AI made it a daily workflow.",
         paragraphs: [
-          "As AI became more capable, I started looking beyond moving rows. The next useful step was helping review the information: finding missing details, making sense of updates, and preparing something I could check.",
-          "The responsibility still sits with me. The point is to spend less time assembling the review and more time on the exceptions that need a decision.",
+          "As AI became more capable, I moved from running the original scripts myself to scheduling the recurring treasury review in Codex. The daily MUMEC tracker and reply review brings that work into one routine.",
+          "The task is scheduled for 1 PM each day. I still review the numbers and handle the decisions; the aim is to spend less time preparing the review and more time on the items that need attention.",
         ],
         media: {
-          label: "The AI-assisted treasury workflow",
-          caption: "A new recording will show how the review process evolved.",
-        },
-      },
-      {
-        title: "From running it to scheduling it.",
-        paragraphs: [
-          "The next part of the story is scheduled work in Codex: preparing the recurring review and bringing the result back to me.",
-          "The aim is a useful handoff with the changes and outstanding questions made clear. I still review the numbers and handle the decisions.",
-        ],
-        media: {
-          label: "Scheduled work in Codex",
-          caption: "Workflow recording coming soon.",
+          layout: "wide",
+          images: [
+            {
+              src: new URL(
+                "../../Images/Monash/scheduled-review.png",
+                import.meta.url,
+              ).href,
+              width: 1919,
+              height: 1028,
+              label: "The daily treasury review, scheduled in Codex",
+              caption:
+                "The active schedule for the MUMEC tracker and reply review. This shows the recurring task setup; the original before-and-after recordings above show where the automation started.",
+            },
+          ],
         },
       },
     ],
