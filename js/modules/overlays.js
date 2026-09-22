@@ -132,11 +132,7 @@ function renderCase(container, id) {
   const header = createElement("header", "case-header");
   const title = createElement("h2", "case-title", data.company);
   title.id = "overlayTitle";
-  const roles = createElement("div", "case-roles");
-  data.roles.forEach((role) =>
-    roles.append(createElement("p", "", role.title)),
-  );
-  header.append(title, createElement("p", "case-intro", data.intro), roles);
+  header.append(title, createElement("p", "case-intro", data.intro));
   container.append(header);
   const navigation = createElement("div", "case-index");
   navigation.setAttribute("role", "tablist");

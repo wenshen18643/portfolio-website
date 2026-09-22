@@ -90,13 +90,6 @@
   max-width: 780px;
   margin: 2rem 0;
 }
-.case-roles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 2rem;
-  color: var(--text-dim);
-  font: 0.85rem/1.8 var(--font-mono);
-}
 .case-section {
   padding: 4rem 6vw;
   scroll-margin-top: 5rem;
@@ -239,7 +232,7 @@
 }
 .case-header {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 2rem 3rem;
   padding-block: 3.5rem;
 }
@@ -248,13 +241,6 @@
 }
 .case-intro {
   margin: 0;
-}
-.case-roles {
-  display: grid;
-  align-content: end;
-  justify-content: end;
-  font-family: var(--font-body);
-  font-size: 1rem;
 }
 .case-index {
   display: flex;
@@ -338,9 +324,6 @@
   }
   .case-header {
     padding: 2rem 1rem;
-  }
-  .case-roles {
-    justify-content: start;
   }
   .case-index {
     margin-inline: 1rem;

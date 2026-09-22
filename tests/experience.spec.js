@@ -87,7 +87,9 @@ test("Roblox is a personal project inside experience and no AI calls are made", 
   await expect(page.locator('#experience [data-exp="roblox"]')).toBeVisible();
   await expect(page.locator("#projects")).toHaveCount(0);
   await page.locator('[data-exp="roblox"]').click();
-  await expect(page.locator(".case-roles")).toContainText("Personal project");
+  await expect(page.locator(".case-intro")).toContainText(
+    "personal game project",
+  );
   await expect(page.getByRole("textbox")).toHaveCount(0);
   expect(apiCalls).toEqual([]);
 });
@@ -167,9 +169,7 @@ test("chapter tabs replace the visible section and omit employment dates", async
     .getByRole("tablist", { name: "Case study chapters" })
     .getByRole("tab");
   await expect(page.locator(".case-section:visible")).toHaveCount(1);
-  await expect(page.locator(".case-roles")).not.toContainText(
-    /2025|2026|Present/,
-  );
+  await expect(page.locator(".case-roles")).toHaveCount(0);
   const initialScroll = await page
     .locator(".case-scroll")
     .evaluate((e) => e.scrollTop);
