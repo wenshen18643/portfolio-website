@@ -202,14 +202,7 @@ test("customer onboarding precedes the strategy marketplace and consent is requi
   bot.send("start onboarding");
   bot.send("English");
   expect(bot.send("show strategies").text).toContain("call you");
-  for (const answer of [
-    "Alex",
-    "Beginner",
-    "Gold",
-    "Swing",
-    "Low",
-    "use demo account",
-  ])
+  for (const answer of ["Alex", "Beginner", "Gold", "Swing", "Low"])
     bot.send(answer);
   expect(bot.send("copy Gold Intraday").text).toContain("disclaimer");
   expect(bot.context().pending).toBeNull();
@@ -217,4 +210,15 @@ test("customer onboarding precedes the strategy marketplace and consent is requi
     "Next is the strategy marketplace",
   );
   expect(bot.send("copy Gold Intraday").text).toContain("Reply YES");
+});
+
+test("demo account is assigned automatically and risk leads directly to consent", () => {
+  const bot = createDemoBot();
+  expect(bot.context().profile.mt5Account).toBe("880042");
+  bot.send("start onboarding");
+  for (const answer of ["English", "Alex", "Beginner", "Gold", "Swing"])
+    bot.send(answer);
+  expect(bot.send("medium to high").text).toContain("risk disclaimer");
+  expect(bot.context().onboardingStep).toBe(6);
+  expect(bot.send("yes").text).toContain("strategy marketplace");
 });

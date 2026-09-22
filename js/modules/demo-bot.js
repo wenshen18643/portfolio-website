@@ -15,7 +15,6 @@ const questions = [
     ["Scalping", "Intraday", "Swing"],
   ],
   ["What’s your risk appetite?", ["Low", "Medium", "High"]],
-  ["Use fictional MT5 account 880042 for this demo?", ["Use demo account"]],
   [
     "Trading can result in losses. Do you accept the sample risk disclaimer?",
     ["I accept", "Decline"],
@@ -43,7 +42,7 @@ export function createDemoBot() {
     pending: null,
     draft: null,
     onboarding: -1,
-    profile: {},
+    profile: { mt5Account: "880042" },
     registered: false,
     verified: false,
     registration: null,
@@ -95,7 +94,6 @@ export function createDemoBot() {
           "你主要关注哪些市场？例如黄金、外汇或加密货币。",
           "你偏好哪种交易风格：短线、日内，还是波段？",
           "你的风险偏好是低、中，还是高？",
-          "这次演示使用模拟 MT5 账户 880042，可以吗？",
           "交易存在亏损风险。你是否接受这份演示风险声明？",
         ][state.onboarding],
       );
@@ -226,7 +224,12 @@ export function createDemoBot() {
 
   /** Handles one message, preserving conversation and confirmation boundaries. */
   function send(raw) {
-    const text = raw.trim().slice(0, 500);
+    let text = raw.trim().slice(0, 500);
+    if (
+      state.onboarding === questions.length - 1 &&
+      /^(yes|yes please|confirm|是|好的|确认)[.!。！]*$/i.test(text)
+    )
+      text = "i accept";
     const language = normalizeLanguage(text, {});
     if (language) {
       state.profile.language = language.value;
@@ -507,7 +510,7 @@ export function createDemoBot() {
         return reply(
           "What language would you like to use? Type its name, for example Chinese, English, or Bahasa Melayu.",
         );
-      if (state.onboarding === 7) {
+      if (state.onboarding === questions.length - 1) {
         if (
           !/^(i accept|accept|agree|i agree|accept disclaimer|接受|我接受|同意|我同意)$/i.test(
             text,
@@ -539,10 +542,8 @@ export function createDemoBot() {
         "markets",
         "tradingStyle",
         "riskAppetite",
-        "mt5Account",
       ][state.onboarding];
-      if (field)
-        state.profile[field] = state.onboarding === 6 ? "880042" : text;
+      if (field) state.profile[field] = text;
       state.onboarding++;
       return askProfile();
     }
