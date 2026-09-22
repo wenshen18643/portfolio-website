@@ -111,6 +111,10 @@ test("Mei screenshots follow the customer journey and end with private Codex con
   for (let i = 0; i < names.length; i++) {
     const shot = images.nth(i);
     await expect(shot).toHaveAttribute("src", new RegExp(names[i]));
+    const section = shot.locator("xpath=ancestor::section");
+    await page
+      .locator(`#${await section.getAttribute("aria-labelledby")}`)
+      .click();
     const panel = shot.locator("..");
     const label = await panel.getAttribute("aria-labelledby");
     if (label) await page.locator(`#${label}`).click();
@@ -151,8 +155,35 @@ test("workflow tabs support keyboard navigation without image links", async ({
     "18px",
   );
   await expect(
-    page
-      .getByRole("navigation", { name: "Case study chapters" })
-      .getByRole("link"),
+    page.getByRole("tablist", { name: "Case study chapters" }).getByRole("tab"),
   ).toHaveCount(4);
+});
+
+test("chapter tabs replace the visible section and omit employment dates", async ({
+  page,
+}) => {
+  await page.locator('[data-exp="beyond"]').click();
+  const tabs = page
+    .getByRole("tablist", { name: "Case study chapters" })
+    .getByRole("tab");
+  await expect(page.locator(".case-section:visible")).toHaveCount(1);
+  await expect(page.locator(".case-roles")).not.toContainText(
+    /2025|2026|Present/,
+  );
+  const initialScroll = await page
+    .locator(".case-scroll")
+    .evaluate((e) => e.scrollTop);
+  await tabs.last().click();
+  await expect(page.locator(".case-section:visible")).toHaveCount(1);
+  await expect(page.locator(".case-section:visible h3")).toHaveText(
+    "A coding workspace inside WhatsApp.",
+  );
+  expect(await page.locator(".case-scroll").evaluate((e) => e.scrollTop)).toBe(
+    initialScroll,
+  );
+  await page.keyboard.press("Home");
+  await expect(tabs.first()).toBeFocused();
+  await expect(page.locator(".case-section:visible h3")).toHaveText(
+    "It started in WhatsApp.",
+  );
 });

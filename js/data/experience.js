@@ -5,8 +5,8 @@ export const experienceData = {
     intro:
       "I joined as an AI Engineer Intern and continued part-time. The work started with a WhatsApp customer-service bot, then grew into trading tools, retrieval pipelines, a private coding mode I use for my own work.",
     roles: [
-      { title: "Part-time AI Engineer", period: "Feb 2026 — Present" },
-      { title: "AI Engineer Intern", period: "Oct 2025 — Feb 2026" },
+      { title: "Part-time AI Engineer" },
+      { title: "AI Engineer Intern" },
     ],
     sections: [
       {
@@ -152,7 +152,7 @@ export const experienceData = {
     company: "Monash Engineering Club",
     intro:
       "As Head Treasurer of the Monash University Malaysia Engineering Club, I oversee an annual budget of more than RM 300,000 across student clubs and events. The responsibility is financial, but a lot of the daily work is information: collecting it, checking it, and keeping it useful.",
-    roles: [{ title: "Head Treasurer", period: "Jul 2025 — Present" }],
+    roles: [{ title: "Head Treasurer" }],
     sections: [
       {
         title: "First, I wrote the code.",
@@ -208,9 +208,7 @@ export const experienceData = {
     company: "HeadSpace SS15",
     intro:
       "Before the agents and automation, I worked as a co-working space coordinator. It was a very direct introduction to operations: people needed a space that worked, and someone had to keep the small problems from getting in their way.",
-    roles: [
-      { title: "Co-working Space Coordinator", period: "Jan 2024 — Present" },
-    ],
+    roles: [{ title: "Co-working Space Coordinator" }],
     sections: [
       {
         title: "The everyday work.",
@@ -239,7 +237,7 @@ export const experienceData = {
     company: "Roblox",
     intro:
       "A personal game project in development. I’m keeping the details under wraps until I have gameplay worth showing.",
-    roles: [{ title: "Personal project", period: "In development" }],
+    roles: [{ title: "Personal project" }],
     sections: [
       {
         title: "Inside the build.",

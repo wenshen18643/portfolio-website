@@ -1,6 +1,6 @@
 # Wen-Shen’s portfolio
 
-A static HTML, CSS and JavaScript portfolio. The home page retains its original design. Experience buttons open scrollable case studies: an introduction and role dates, explanations of the work, and supporting images or video.
+A static HTML, CSS and JavaScript portfolio. The home page retains its original design. Experience buttons open scrollable case studies: an introduction and role context, explanations of the work, and supporting images or video.
 
 Beyond Photography covers the customer bot, trading harness, and personal coding mode. Treasury follows code → AI-assisted work → scheduled work, retaining the original before/after recordings. HeadSpace covers space operations and community work. Roblox appears within Experience as a clearly labelled personal project.
 
@@ -9,7 +9,7 @@ npm ci
 npm run dev
 ```
 
-Screenshots for the Mei case study live in `Images/Mei/`, ordered from onboarding through trading to personal Codex mode. Each `media.images` entry includes a label, caption and intrinsic dimensions to reserve space while loading. Related screenshots are grouped into keyboard-accessible workflow tabs, with readable captions and large images. Chapter links let visitors jump between stages. The marketplace image is privacy-edited; never replace it with the unredacted registration screenshot.
+Screenshots for the Mei case study live in `Images/Mei/`, ordered from onboarding through trading to personal Codex mode. Each `media.images` entry includes a label, caption and intrinsic dimensions to reserve space while loading. Related screenshots are grouped into keyboard-accessible workflow tabs, with readable captions and large images. Chapter tabs show one stage at a time without jumping down the page. The marketplace image is privacy-edited; never replace it with the unredacted registration screenshot.
 
 ## Adding the recordings
 

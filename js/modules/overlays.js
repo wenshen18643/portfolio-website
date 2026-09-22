@@ -134,13 +134,29 @@ function renderCase(container, id) {
   title.id = "overlayTitle";
   const roles = createElement("div", "case-roles");
   data.roles.forEach((role) =>
-    roles.append(createElement("p", "", `${role.title} · ${role.period}`)),
+    roles.append(createElement("p", "", role.title)),
   );
   header.append(title, createElement("p", "case-intro", data.intro), roles);
   container.append(header);
-  const navigation = createElement("nav", "case-index");
+  const navigation = createElement("div", "case-index");
+  navigation.setAttribute("role", "tablist");
   navigation.setAttribute("aria-label", "Case study chapters");
   container.append(navigation);
+  const chapters = [];
+  const chapterButtons = [];
+  function selectChapter(index, focus = false) {
+    chapters.forEach((panel, position) => {
+      panel.hidden = position !== index;
+      if (panel.hidden)
+        panel.querySelectorAll("video").forEach((video) => video.pause());
+      chapterButtons[position].setAttribute(
+        "aria-selected",
+        String(position === index),
+      );
+      chapterButtons[position].tabIndex = position === index ? 0 : -1;
+    });
+    if (focus) chapterButtons[index].focus();
+  }
   data.sections.forEach((section, index) => {
     const article = createElement("section", "case-section");
     const text = createElement("div", "case-copy");
@@ -148,12 +164,28 @@ function renderCase(container, id) {
     title.id = `case-${id}-${index}`;
     article.setAttribute("aria-labelledby", title.id);
     article.id = `${title.id}-section`;
-    const chapter = createElement("a", "", section.nav || section.title);
-    chapter.href = `#${article.id}`;
-    chapter.addEventListener("click", (event) => {
-      event.preventDefault();
-      article.scrollIntoView({ block: "start", behavior: "instant" });
+    const chapter = createElement("button", "", section.nav || section.title);
+    chapter.type = "button";
+    chapter.id = `${title.id}-chapter`;
+    chapter.setAttribute("role", "tab");
+    chapter.setAttribute("aria-controls", article.id);
+    article.setAttribute("role", "tabpanel");
+    article.setAttribute("aria-labelledby", chapter.id);
+    chapter.addEventListener("click", () => selectChapter(index));
+    chapter.addEventListener("keydown", (event) => {
+      const keys = {
+        ArrowRight: (index + 1) % data.sections.length,
+        ArrowLeft: (index + data.sections.length - 1) % data.sections.length,
+        Home: 0,
+        End: data.sections.length - 1,
+      };
+      if (event.key in keys) {
+        event.preventDefault();
+        selectChapter(keys[event.key], true);
+      }
     });
+    chapters.push(article);
+    chapterButtons.push(chapter);
     navigation.append(chapter);
     text.append(title);
     const body = createElement("div", "case-body");
@@ -165,6 +197,7 @@ function renderCase(container, id) {
     if (section.media) article.append(renderMedia(section.media, title.id));
     container.append(article);
   });
+  selectChapter(0);
   const footer = createElement("footer", "case-footer");
   const close = createElement("button", "", "Back to the portfolio ↑");
   close.type = "button";
