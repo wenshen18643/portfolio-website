@@ -7,9 +7,10 @@ test.beforeEach(async ({ page }) => {
 
 for (const [id, title, count] of [
   ["beyond", "Beyond Photography", 3],
-  ["monash", "Monash Engineering Club", 2],
+  ["monash", "Monash University Engineering Club", 2],
   ["headspace", "HeadSpace SS15", 1],
   ["roblox", "McFatty's", 5],
+  ["nextHack", "Sentinel", 1],
 ]) {
   test(`${id} opens a case study with explanation and media`, async ({
     page,
@@ -145,6 +146,20 @@ test("Roblox is the fourth scene in Experience and no AI calls are made", async 
   expect(apiCalls).toEqual([]);
 });
 
+test("Side Projects links to both documented projects", async ({ page }) => {
+  const scene = page.locator("#experience .story-scene").nth(3);
+  await expect(scene.locator(".story-actions .story-cta")).toHaveCount(2);
+  await expect(scene.locator('[data-exp="nextHack"]')).toHaveText(
+    "See Sentinel →",
+  );
+  await scene.locator('[data-exp="nextHack"]').click();
+  await expect(page.locator("#overlayTitle")).toHaveText("Sentinel");
+  await expect(page.locator(".case-section")).toContainText(
+    "Risk, Behavior, and Anomaly agents",
+  );
+  await expect(page.locator(".case-shot img")).toHaveCount(1);
+});
+
 test("experience transitions linger and project actions stand out", async ({
   page,
 }) => {
@@ -204,7 +219,7 @@ test("portfolio copy does not use em dashes", async ({ page }) => {
     await page.locator('meta[name="description"]').getAttribute("content"),
   ).not.toContain(emDash);
 
-  for (const id of ["headspace", "beyond", "monash", "roblox"]) {
+  for (const id of ["headspace", "beyond", "monash", "roblox", "nextHack"]) {
     await page.locator(`[data-exp="${id}"]`).click();
     expect(await page.getByRole("dialog").innerText()).not.toContain(emDash);
     await page.keyboard.press("Escape");
@@ -320,7 +335,7 @@ test("Beyond keeps the casual overview separate from the technical detail", asyn
   await expect(page.locator(".case-index button")).toHaveText([
     "Customer service",
     "Trading bot",
-    "DevMode",
+    "Production systems",
   ]);
   await expect(page.locator(".case-deep-dive")).toHaveCount(3);
   await expect(page.locator(".case-deep-dive").first()).not.toHaveAttribute(
@@ -380,7 +395,9 @@ test("chapter tabs replace the visible section and omit employment dates", async
     .evaluate((e) => e.scrollTop);
   await tabs.last().click();
   await expect(page.locator(".case-section:visible")).toHaveCount(1);
-  await expect(page.locator(".case-section:visible h3")).toHaveText("DevMode.");
+  await expect(page.locator(".case-section:visible h3")).toHaveText(
+    "Production, even away from my desk.",
+  );
   expect(await page.locator(".case-scroll").evaluate((e) => e.scrollTop)).toBe(
     initialScroll,
   );

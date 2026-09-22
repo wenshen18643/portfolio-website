@@ -7,7 +7,7 @@ import { prefersReducedMotion } from './utils.js';
 
 const typewriterPhrases = [
   'Built as proof of work. So its less CViy.',
-  'Monash SWE · CGPA 3.725',
+  'Monash SWE · CGPA 3.73',
   'Speaks 4 Languages Badly',
   'I Drive'
 ];

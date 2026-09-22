@@ -6,22 +6,32 @@
 \usepackage{enumitem}
 \usepackage{xcolor}
 \usepackage{hyperref}
-\hypersetup{
-    colorlinks=false,    
-    linkbordercolor=accent,    
-    urlbordercolor=accent,     
-    pdfborderstyle={/S/U/W 1}
-}
-\usepackage{fontawesome5} 
+\usepackage{fontawesome5}
 
 % --- Settings ---
 \definecolor{primary}{HTML}{2E2E2E}
 \definecolor{accent}{HTML}{8F0D0D}
-\setlist[itemize]{leftmargin=0.15in, itemsep=2pt, parsep=0pt, topsep=2pt}
 
-% Section formatting
-\titleformat{\section}{\large\bfseries\color{accent}\uppercase}{}{0em}{}[\titlerule]
-\titlespacing{\section}{0pt}{12pt}{8pt}
+\hypersetup{
+    colorlinks=false,
+    linkbordercolor=accent,
+    urlbordercolor=accent,
+    pdfborderstyle={/S/U/W 1}
+}
+
+\setlist[itemize]{
+    leftmargin=0.15in,
+    itemsep=2pt,
+    parsep=0pt,
+    topsep=2pt
+}
+
+\titleformat{\section}
+    {\large\bfseries\color{accent}\uppercase}
+    {}{0em}{}
+    [\titlerule]
+
+\titlespacing{\section}{0pt}{10pt}{6pt}
 
 \begin{document}
 
@@ -31,109 +41,105 @@
     \small
     \faPhone\ +60 12-595 6822 \ $|$ \
     \faEnvelope\ \href{mailto:wenshen18643@gmail.com}{wenshen18643@gmail.com} \ $|$ \
-    \faLinkedin\ \href{https://linkedin.com/in/wen-shen-lum}{linkedin.com/in/wen-shen-lum} \ $|$ \
-    \faGlobe\ \href{https://wenshen.dev}{wenshen.dev} \ $|$ \
-    \faMapMarker*\ SS19, Subang Jaya
+    \faLinkedin\ \href{https://www.linkedin.com/in/wen-shen-lum-7a7681380}{LinkedIn} \ $|$ \
+    \faMapMarker*\ Subang Jaya, Malaysia
 \end{center}
 
 % --- Summary ---
 \section*{Summary}
 \noindent
-Software Engineering student at Monash University building production AI agents and infrastructure for SME digital transformation.
-Shipped autonomous agentic systems, multi-modal RAG pipelines, and containerized deployments guiding 3--4 clients through Industry 4.0 adoption.
-Seeking applied research or engineering roles at the intersection of industrial AI, IIoT, and smart manufacturing.
+Software Engineering student and part-time AI Engineer with hands-on experience building production backend services, REST APIs, database-driven automation, AI integrations, background workers, containerized infrastructure, and multiplayer game systems. Experienced with Node.js, Python, SQL, Docker, LLM/RAG systems, Roblox Studio, Luau, and third-party API integrations. Available for freelance backend, AI engineering, and game-development work.
 
 % --- Education ---
 \section*{Education}
 \noindent
 \textbf{Monash University Malaysia} \hfill Oct 2024 -- Present \\
-Bachelor of Engineering (Software Engineering) \hfill \textbf{CGPA : 3.725} \\
-\textit{Awards: Monash High Achiever Award}
+Bachelor of Engineering (Software Engineering) \hfill CGPA: 3.73 \\
+\textit{Monash High Achiever Award}
 
 % --- Experience ---
 \section*{Experience}
 
 \noindent
-\textbf{Part-time AI Agent Engineer }$|$ \textit{Beyond Photography} \hfill Feb 2026 -- Present
+\textbf{AI Engineer (Part-time)} $|$ \textit{Beyond Photography}
+\hfill Feb 2026 -- Present
 \begin{itemize}
-    \item Architected modular agentic AI platform with tool-use orchestration and autonomous task execution, onboarded across 3--4 enterprise client deployments.
-    \item Administered Proxmox VE cluster of 30--50 VMs, maintaining 10 concurrent production environments for live AI service deployments.
-    \item Developing proof-of-concept AI automation systems for SME clients, enabling structured Industry 4.0 adoption by eliminating manual operational bottlenecks before full deployment.
-\end{itemize}
-
-\vspace{4pt}
-\noindent
-\textbf{AI Researcher Intern} $|$ \textit{Beyond Photography} \hfill Oct 2025 -- Feb 2026
-\begin{itemize}
-    \item Reduced deployment time from \textbf{20 minutes to 30 seconds}, saving \textbf{10 engineer-hours/month} across 30+ deployments.
-    \item Developed LLM-powered WhatsApp chatbot for client-facing customer support and sales, automating inbound enquiry handling and lead qualification via structured conversation flows.
-    \item Architected multi-modal \textbf{RAG pipeline} (PDF, image, voice) achieving \textbf{$\sim$90\% retrieval accuracy} versus full-context baseline, with dynamic re-indexing via text extraction for scalable document updates.
+    \item Built and deployed an AWS-hosted \textbf{WhatsApp trading platform} serving \textbf{100+ active users}, converting natural-language instructions into validated MetaTrader 5 operations through backend APIs.
+    \item Designed a \textbf{provider-agnostic LLM integration layer} supporting model routing, structured outputs, validation, fallback handling, and external service integrations.
+    \item Migrated legacy AI infrastructure to the \textbf{Vercel AI SDK}, simplifying the application architecture and \textbf{tripling feature deployment velocity}.
+    \item Developed \textbf{Hidden Markov Models} for real-time market regime and volatility detection and integrated model outputs into production workflows.
 \end{itemize}
 
 \vspace{6pt}
 
 \noindent
-\textbf{Head Treasurer} $|$ \textit{Monash University Engineering Club} \hfill Jul 2025 -- Present
+\textbf{AI Engineering Intern} $|$ \textit{Beyond Photography}
+\hfill Oct 2025 -- Feb 2026
 \begin{itemize}
-    \item Automated financial synchronization via Python/Asana/Google Sheets APIs, saving \textbf{5 hours/week}.
-    \item Implemented OAuth2-secured budget logic, achieving \textbf{100\%} expenditure tracking accuracy.
-    \item Oversaw \textbf{RM 300K+} annual budget across all Engineering Club allocations, processing $\sim$5 claims and up to 10 purchase approvals weekly with \textbf{zero financial discrepancies}.
+    \item Developed backend automation services using \textbf{Node.js, REST APIs, SQL, and background workers} to manage cloud-container lifecycle operations, status changes, reminders, and notifications.
+    \item Built database-driven workflows integrating \textbf{Microsoft SQL Server, Proxmox, Nginx, and external APIs}, including automated container provisioning, shutdown, and email notifications.
+    \item Helped build a client-facing WhatsApp AI agent and a \textbf{$\sim$90\%-accuracy multimodal RAG system} with document processing and automated re-indexing.
+    \item Optimized CI/CD and deployment workflows, reducing deployment time from \textbf{20 minutes to approximately 30 seconds}.
 \end{itemize}
 
 \vspace{6pt}
 
 \noindent
-\textbf{Co-working Space Coordinator} $|$ \textit{HeadSpace SS15} \hfill Jan 2024 -- Present
+\textbf{Head Treasurer} $|$ \textit{Monash University Engineering Club}
+\hfill Jul 2025 -- Present
 \begin{itemize}
-    \item Maintained day-to-day operations and tenant relations for a co-working space serving \textbf{15--20 active accounts}, resolving facilities and administrative requests end-to-end.
-    \item Organised \textbf{5+ corporate events} and community programs, managing vendor coordination, scheduling, and on-site execution.
+    \item Built a Python automation pipeline integrating \textbf{Asana and Google Sheets APIs} to synchronize financial records and automatically validate submissions.
+    \item Implemented validation and compliance logic with automated alerts, reducing manual administrative work by \textbf{5+ hours weekly}.
+    \item Led a 5-member finance committee and standardized financial review workflows, reducing processing time by \textbf{10\%}.
 \end{itemize}
 
-% --- Technical Projects ---
+% --- Projects ---
+\newpage
 \section*{Projects}
 
 \noindent
-\textbf{Budget Claim Analysis Dashboard} \hfill Jan 2026 -- Present
+\textbf{McFatty's -- Roblox Restaurant-Management Game}
+\hfill 2026 -- Present
 \begin{itemize}
-    \item Built Python ETL pipeline and vanilla JS frontend delivering real-time operational analytics and automated reporting for multi-club financial oversight.
-    \item Reduced reporting time by \textbf{80\%} via automated data ingestion, transformation, and spending categorization.
+    \item Designed and built the core \textbf{merge, eat, refill, and sell} gameplay loop, including drag-and-drop food merging, tier progression, weight gain, restaurant income, tutorials, upgrades, perks, achievements, agents, and rebirths.
+    \item Developed a modular \textbf{client-server architecture} supporting 20 player restaurant plots, with server-authoritative progression and economy state while clients handle responsive UI, food visuals, and NPC animation.
+    \item Reduced unnecessary network replication by moving cosmetic animation to clients, quantizing worker-scale updates, reconciling worker state at controlled intervals, and applying distance checks and per-player rate limits to station requests.
+    \item Created a data-driven agent and worker system using shared Luau configuration modules, runtime station assignment, rarity-based presentation, fallback character rigs, and cross-platform mouse, touch, and gamepad input.
 \end{itemize}
 
 \vspace{6pt}
 
 \noindent
-\textbf{AI Trading Agent} $|$ \textit{Beyond Photography}
+\textbf{NextHack 2026 -- AI Fraud Detection Platform (Finalist)}
+\hfill Jul 2026
 \begin{itemize}
-    \item Built autonomous sentiment-driven trading agent with structured tool calling and multi-step reasoning.
-    \item Achieved 70\% accuracy on directional market calls via prompt-driven decision framework.
+    \item Built a real-time fraud detection Chrome extension that analyzes transaction data before checkout execution.
+    \item Designed a parallel \textbf{multi-agent architecture} with Risk, Behavior, and Anomaly agents producing structured outputs for downstream decision logic.
+    \item Built backend integrations for transaction processing, AI inference, and aggregation of agent results.
 \end{itemize}
 
 \vspace{6pt}
 
 \noindent
-\textbf{Automated Door Control System} $|$ \textit{Arduino, PIR Sensor, Servo Motors} \hfill Coursework
+\textbf{Cloud Container Automation Platform}
+\hfill 2025 -- 2026
 \begin{itemize}
-    \item Designed motion-sensing entry system using PIR sensor to detect movement and trigger dual servo motors.
-    \item Implemented sensor-to-actuator control loop for real-time mechanical response in embedded environment.
+    \item Built Node.js services connecting \textbf{SQL Server, Proxmox, Nginx, email APIs, and background workers} to automate cloud container operations.
+    \item Implemented database-backed status tracking, scheduled expiry handling, renewal reminders, error handling, and automated lifecycle actions.
 \end{itemize}
 
-\vspace{6pt}
-
-\noindent
-\textbf{Intelligent Traffic Light Controller} $|$ \textit{Arduino} \hfill Coursework
-\begin{itemize}
-    \item Built programmable traffic light system with custom state-machine logic for intersection flow management.
-    \item Programmed timing sequences and safety interlocks in embedded C for Arduino microcontroller.
-\end{itemize}
-
-% --- Skills & Languages ---
+% --- Skills ---
 \section*{Skills \& Languages}
+
 \begin{itemize}
-    \item \textbf{AI \& Automation:} Agentic AI, RAG Pipelines, IIoT Integration, LLM Integration, n8n
-    \item \textbf{Programming:} Python, JavaScript (Node.js), SQL, HTML/CSS
-    \item \textbf{Infrastructure:} Proxmox VE, Docker, Nginx, Container Management, Git, REST APIs
-    \item \textbf{Data \& Analytics:} ETL Pipelines, Real-time Dashboards, Automated Reporting, Data Visualization
-    \item \textbf{Languages:} English (Fluent), Malay (Native), Mandarin (Conversational), German (B1)
+    \item \textbf{Backend:} Node.js, Express, Python, REST APIs, background workers, API integrations
+    \item \textbf{Databases:} SQL, Microsoft SQL Server, database schemas, queries, relational data
+    \item \textbf{AI:} LLM integration, RAG pipelines, agentic AI, structured outputs, model routing
+    \item \textbf{Game Development:} Roblox Studio, Luau, client-server architecture, multiplayer systems, gameplay UI, data-driven design
+    \item \textbf{Cloud \& Infrastructure:} Docker, AWS, Proxmox VE, Nginx, CI/CD, Git
+    \item \textbf{Security \& Architecture:} API authentication, validation, rate limiting, RBAC concepts, tenant-isolation patterns
+    \item \textbf{Frontend:} JavaScript, React, HTML/CSS; working familiarity with TypeScript
+    \item \textbf{Languages:} English (fluent), Malay, Mandarin (conversational), German (A2)
 \end{itemize}
 
 \end{document}

@@ -307,6 +307,22 @@
   transform: translateY(10px);
 }
 
+.story-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.story-cta-secondary {
+  color: var(--accent);
+  background: color-mix(in oklch, var(--bg) 86%, transparent);
+}
+
+.story-scene.active .story-cta-secondary.in:hover {
+  color: var(--bg);
+  background: var(--accent);
+}
+
 .story-cta::before {
   content: '';
   position: absolute;

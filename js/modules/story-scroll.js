@@ -209,7 +209,7 @@ export function initializeStoryScroll() {
       const roleCharacters = scene.querySelectorAll('.story-role .scroll-char');
       const label = scene.querySelector('.story-label');
       const description = scene.querySelector('.story-desc');
-      const callToAction = scene.querySelector('.story-cta');
+      const callsToAction = scene.querySelectorAll('.story-cta');
 
       const isActive = (localProgress > 0 && localProgress <= 1) || isFirstSceneLanding || isLastSceneLanding;
 
@@ -221,7 +221,7 @@ export function initializeStoryScroll() {
           titleCharacters.forEach(character => character.classList.add('in'));
           roleCharacters.forEach(character => character.classList.add('in'));
           if (description) description.classList.add('in');
-          if (callToAction) callToAction.classList.add('in');
+          callsToAction.forEach(callToAction => callToAction.classList.add('in'));
         } else {
           if (label) label.classList.toggle('in', localProgress > labelRevealThreshold);
 
@@ -234,7 +234,7 @@ export function initializeStoryScroll() {
           roleCharacters.forEach((character, index) => character.classList.toggle('in', index < roleRevealCount));
 
           if (description) description.classList.toggle('in', localProgress > descriptionRevealThreshold);
-          if (callToAction) callToAction.classList.toggle('in', localProgress > callToActionRevealThreshold);
+          callsToAction.forEach(callToAction => callToAction.classList.toggle('in', localProgress > callToActionRevealThreshold));
         }
       } else {
         scene.classList.remove('active');
@@ -242,7 +242,7 @@ export function initializeStoryScroll() {
         titleCharacters.forEach(character => character.classList.remove('in'));
         roleCharacters.forEach(character => character.classList.remove('in'));
         if (description) description.classList.remove('in');
-        if (callToAction) callToAction.classList.remove('in');
+        callsToAction.forEach(callToAction => callToAction.classList.remove('in'));
       }
     });
 

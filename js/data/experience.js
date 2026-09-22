@@ -3,10 +3,10 @@ export const experienceData = {
   beyond: {
     company: "Beyond Photography",
     intro:
-      "Mei started as a WhatsApp customer-service bot. It grew into a system that can manage customer state, connect people to trading strategies, work with live trading tools, and switch into DevMode when I need to fix something myself.",
+      "I joined as an AI Engineering Intern building production automation and infrastructure, then continued as a part-time AI Engineer. My work now includes Mei, an AWS-hosted WhatsApp platform used by more than 100 active users for customer support, strategy discovery, and live trading workflows.",
     roles: [
       { title: "Part-time AI Engineer" },
-      { title: "AI Engineer Intern" },
+      { title: "AI Engineering Intern" },
     ],
     sections: [
       {
@@ -14,7 +14,7 @@ export const experienceData = {
         nav: "Customer service",
         paragraphs: [
           "Mei takes a new customer from their first message to a usable profile, remembers where they stopped, and carries that context into the strategy marketplace. They can compare a strategy, register, verify their email, and finish setup without starting over on another channel.",
-          "It also answers questions from company material across text, images, and voice. The useful part is not just finding a similar passage; it is keeping that material grounded as evidence instead of letting it quietly rewrite how the bot behaves.",
+          "It also answers questions from company material across text, images, and voice. The multimodal RAG pipeline reached about 90% accuracy in internal testing, but the more important design choice was keeping retrieved material grounded as evidence instead of letting it quietly rewrite how the bot behaves.",
         ],
         deepDive: [
           "Onboarding is backed by stored profile state rather than a long prompt pretending to remember. Answers are normalised, written to the database, read back on every turn, and used to choose the next missing question. That makes the flow resumable and stops an older chat message from overwriting a field that is already saved.",
@@ -65,7 +65,7 @@ export const experienceData = {
         title: "Trading from chat.",
         nav: "Trading bot",
         paragraphs: [
-          "I built the trading layer so Mei could inspect a market, explain what it sees, and manage a real position from the same conversation. It can read indicators or charts, ask for anything missing, confirm the exact action, and report what the broker actually did.",
+          "I built the trading layer so Mei could inspect a market, explain what it sees, and manage a real position from the same conversation. It can read indicators or charts, use a Hidden Markov Model to identify market regime and volatility, ask for anything missing, confirm the exact action, and report what the broker actually did.",
           "That last part matters. A suggested trade, an order waiting for approval, a broker fill, and an open position are four different states, so Mei treats them differently instead of replying with a vague ‘done.’",
         ],
         deepDive: [
@@ -114,13 +114,15 @@ export const experienceData = {
         },
       },
       {
-        title: "DevMode.",
-        nav: "DevMode",
+        title: "Production, even away from my desk.",
+        nav: "Production systems",
         paragraphs: [
-          "DevMode is the private mode I use when something needs fixing and I am away from my computer. I can start a session from WhatsApp, send a request, screenshot, or document, and follow the work from the same chat.",
-          "The commands stay simple: /status checks the task, /cancel stops it, /model changes the model used for the next request, and /exit returns Mei to the normal assistant.",
+          "Before Mei grew into its current product, I built Node.js services connecting SQL Server, Proxmox, Nginx, email APIs, and background workers. The system automated container provisioning, status changes, expiry handling, shutdowns, reminders, and notifications.",
+          "I also built DevMode, the private mode I use when something needs fixing away from my computer. I can start a coding session from WhatsApp, send a request or screenshot, and follow the work from the same chat without exposing the shell as a public interface.",
         ],
         deepDive: [
+          "The AI layer is provider-agnostic: model routing, structured outputs, validation, fallbacks, and external integrations sit behind one boundary. Migrating legacy AI infrastructure to the Vercel AI SDK simplified that path and helped triple feature deployment velocity.",
+          "The infrastructure work combined database-backed state with background jobs and explicit failure handling. CI/CD improvements reduced a typical deployment from about twenty minutes to roughly thirty seconds.",
           "DevMode keeps coding sessions separate from normal chat. /codex creates a fresh work session, while later messages are routed into that session with their attachments and conversation context. Progress updates come back through WhatsApp without exposing the shell as a general public interface.",
           "Command parsing happens before ordinary assistant routing, so session controls are deterministic. Model changes require a valid full model ID and optional reasoning effort; invalid shortcuts are rejected without changing the current configuration.",
           "Stopping and leaving are different operations. /cancel interrupts the current job, while /exit disables DevMode, stops pending coding work, keeps completed edits, and ensures the next /codex begins with a clean session.",
@@ -154,7 +156,7 @@ export const experienceData = {
     ],
   },
   monash: {
-    company: "Monash Engineering Club",
+    company: "Monash University Engineering Club",
     intro:
       "As Head Treasurer of the Monash University Malaysia Engineering Club, I oversee an annual budget of more than RM 300,000 across student clubs and events. The responsibility is financial, but a lot of the daily work is information: collecting it, checking it, and keeping it useful.",
     roles: [{ title: "Head Treasurer" }],
@@ -163,8 +165,8 @@ export const experienceData = {
         title: "First, I wrote the code.",
         nav: "The original automation",
         paragraphs: [
-          "The starting point was repetitive spreadsheet work. I built a Python pipeline to pull data from Asana, clean it, and write structured updates into the budget tracker.",
-          "That gave the work a repeatable process and reduced the time spent manually moving information. These are the original before-and-after recordings.",
+          "The starting point was repetitive spreadsheet work. I built a Python pipeline to pull data from Asana, clean it, validate submissions, and write structured updates into the budget tracker.",
+          "That repeatable process and its automated alerts now save more than five hours of manual administration each week. These are the original before-and-after recordings.",
         ],
         media: {
           videos: [
@@ -188,7 +190,7 @@ export const experienceData = {
         nav: "Scheduled review",
         paragraphs: [
           "As AI became more capable, I moved from running the original scripts myself to scheduling the recurring treasury review in Codex. The daily MUMEC tracker and reply review brings that work into one routine.",
-          "The task is scheduled for 1 PM each day. I still review the numbers and handle the decisions; the aim is to spend less time preparing the review and more time on the items that need attention.",
+          "The task is scheduled for 1 PM each day. I still review the numbers, lead the five-person finance committee, and handle the decisions; standardising the review workflow has reduced processing time by 10%.",
         ],
         media: {
           layout: "wide",
@@ -229,6 +231,42 @@ export const experienceData = {
           ).href,
           label: "HeadSpace SS15",
           caption: "The co-working space where I started.",
+        },
+      },
+    ],
+  },
+  nextHack: {
+    company: "Sentinel",
+    intro:
+      "A NextHack 2026 finalist built to warn people about risky bank transfers before they send money. Our working MVP used a Chrome extension and a multi-agent backend to analyse transaction context without requiring a bank to replace its existing interface.",
+    roles: [{ title: "Backend & AI Developer" }],
+    sections: [
+      {
+        title: "Three signals, one decision.",
+        nav: "Architecture & result",
+        paragraphs: [
+          "Most fraud systems see only the behavior inside one platform. Sentinel explored a layer that could work across supported transaction sites, combine behavioral signals, and return a clear warning at the moment a user was about to transfer money.",
+          "I built backend integrations for transaction processing, AI inference, and aggregation. Risk, Behavior, and Anomaly agents produce structured assessments for a final decision engine, which returns either a normal flow or a specific warning that the user can act on.",
+        ],
+        deepDive: [
+          "The Chrome extension collects the active transaction context through its content and background scripts, then sends it to a Next.js API hosted on Vercel. An orchestrator runs the three specialist agents in parallel and passes their structured outputs to the decision engine instead of asking one model to make every judgment at once.",
+          "Supabase stores the data and insights needed by the analysis flow, while Vercel observability provides logs and alerts. The model boundary is compatible with OpenAI-style providers, which keeps the architecture from depending on one inference vendor.",
+        ],
+        media: {
+          layout: "wide",
+          images: [
+            {
+              src: new URL(
+                "../../Images/NextHack/architecture.png",
+                import.meta.url,
+              ).href,
+              width: 2250,
+              height: 1290,
+              label: "Sentinel's technical architecture",
+              caption:
+                "The finalist MVP connected a browser extension to a Vercel-hosted API, three specialist agents, a decision engine, Supabase, and production observability. The extension could then warn the user before a suspicious transfer while still leaving the final choice with them.",
+            },
+          ],
         },
       },
     ],
