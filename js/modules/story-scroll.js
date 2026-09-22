@@ -8,14 +8,6 @@ import { prefersReducedMotion } from './utils.js';
 const landingScrollThreshold = 0.15;
 const exitScrollThreshold = 0.85;
 
-const animationBounds = [
-  { start: 0.00, end: 0.35 },
-  { start: 0.25, end: 0.65 },
-  { start: 0.55, end: 1.00 },
-];
-
-const uiBounds = [0, 0.30, 0.60, 1.0];
-
 const fadeInPhaseLength = 0.12;
 const fadeOutPhaseLength = 0.12;
 const fadeInOpacityMultiplier = 1.8;
@@ -105,6 +97,12 @@ export function initializeStoryScroll() {
 
   const isMobile = window.matchMedia(`(max-width: ${mobileBreakpoint}px)`).matches;
   const sceneCount = scenes.length;
+  const sceneInterval = 1 / sceneCount;
+  const overlap = sceneInterval * 0.3;
+  const animationBounds = Array.from({ length: sceneCount }, (_, index) => ({
+    start: Math.max(0, index * sceneInterval - overlap),
+    end: Math.min(1, (index + 1) * sceneInterval + overlap),
+  }));
 
   splitScrollTextIntoCharacters();
 
@@ -115,10 +113,7 @@ export function initializeStoryScroll() {
    * @returns {number} Index of the active scene.
    */
   function getActiveSceneIndex(progress) {
-    for (let index = 0; index < sceneCount; index++) {
-      if (progress >= uiBounds[index] && progress < uiBounds[index + 1]) return index;
-    }
-    return sceneCount - 1;
+    return Math.min(sceneCount - 1, Math.floor(progress * sceneCount));
   }
 
   /**
@@ -149,7 +144,7 @@ export function initializeStoryScroll() {
     if (scrollCue) {
       scrollCue.classList.toggle('hidden', scrollProgress > scrollCueHideThreshold);
     }
-    if (progressFill) progressFill.style.width = `${progressPercentage}%`;
+    if (progressFill) progressFill.style.transform = `scaleX(${progressPercentage / 100})`;
 
     progressDots.forEach((dot, index) => {
       dot.classList.toggle('active', index === activeSceneIndex);

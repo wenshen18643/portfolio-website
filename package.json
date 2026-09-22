@@ -7,8 +7,8 @@
     "build": "vite build",
     "lint:fix": "eslint js tests *.config.js --fix",
     "lint": "eslint js tests *.config.js --max-warnings 0",
-    "format": "prettier --write js/data/experience.js js/modules/overlays.js css/components/overlays.css css/sections/side-project.css tests package.json *.config.js",
-    "format:check": "prettier --check js/data/experience.js js/modules/overlays.js css/components/overlays.css css/sections/side-project.css tests package.json *.config.js",
+    "format": "prettier --write js/data/experience.js js/modules/overlays.js css/components/overlays.css tests package.json *.config.js",
+    "format:check": "prettier --check js/data/experience.js js/modules/overlays.js css/components/overlays.css tests package.json *.config.js",
     "test": "playwright test"
   },
   "devDependencies": {

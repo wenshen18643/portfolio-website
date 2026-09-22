@@ -82,26 +82,31 @@ test("mobile case studies fit without empty media placeholders", async ({
   await page.screenshot({ path: "test-results/case-mobile.png" });
 });
 
-test("Roblox lives in Side Projects within Experience and no AI calls are made", async ({
+test("Roblox is the fourth scene in Experience and no AI calls are made", async ({
   page,
 }) => {
   const apiCalls = [];
   page.on("request", (request) => {
     if (request.url().includes("/api/chat")) apiCalls.push(request.url());
   });
-  await expect(page.locator('#experience [data-exp="roblox"]')).toBeVisible();
-  await expect(page.locator("#side-projects")).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Side Projects" }),
-  ).toBeVisible();
-  await expect(
-    page.locator('#side-projects [data-exp="roblox"]'),
-  ).toBeVisible();
+  const scenes = page.locator("#experience .story-scene");
+  await expect(scenes).toHaveCount(4);
+  await expect(scenes.nth(0).locator(".story-company")).toHaveText(
+    "HeadSpace SS15",
+  );
+  await expect(scenes.nth(1).locator(".story-company")).toHaveText(
+    "Beyond Photography",
+  );
+  await expect(scenes.nth(2).locator(".story-company")).toHaveText("MUMEC");
+  await expect(scenes.nth(3).locator(".story-company")).toHaveText(
+    "Side Projects",
+  );
+  await expect(page.locator("#side-projects")).toHaveCount(0);
   await expect(
     page.locator(".roblox-project, .roblox-art, .build-block"),
   ).toHaveCount(0);
   await expect(page.locator("#projects")).toHaveCount(0);
-  await page.locator('#side-projects [data-exp="roblox"]').click();
+  await scenes.nth(3).locator('[data-exp="roblox"]').click();
   await expect(page.locator(".case-intro")).toContainText(
     "personal game project",
   );
@@ -111,25 +116,6 @@ test("Roblox lives in Side Projects within Experience and no AI calls are made",
   ).toHaveCount(0);
   expect(apiCalls).toEqual([]);
 });
-
-for (const viewport of [
-  { width: 390, height: 844 },
-  { width: 1440, height: 1000 },
-]) {
-  test(`side projects fits at ${viewport.width}px`, async ({ page }) => {
-    await page.setViewportSize(viewport);
-    await page.locator("#side-projects").scrollIntoViewIfNeeded();
-    const section = page.locator("#side-projects");
-    expect(
-      await section.evaluate(
-        (element) => element.scrollWidth <= element.clientWidth,
-      ),
-    ).toBe(true);
-    await expect(
-      page.locator(".roblox-project, .roblox-art, .build-block"),
-    ).toHaveCount(0);
-  });
-}
 
 test("Mei screenshots follow the customer journey and end with private Codex controls", async ({
   page,

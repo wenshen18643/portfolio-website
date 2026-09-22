@@ -52,7 +52,7 @@
 }
 
 .story-scroll-container {
-  height: 800vh;
+  height: 900vh;
   position: relative;
 }
 
@@ -315,8 +315,8 @@
   display: inline-block;
   opacity: 0;
   transform: translateY(30px) rotate(-8deg) scale(0.85);
-  transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: opacity 0.4s var(--ease-expo),
+              transform 0.4s var(--ease-expo);
 }
 
 .scroll-char.in {
@@ -347,9 +347,11 @@
 .story-progress-fill {
   height: 100%;
   background: var(--accent);
-  width: 0%;
+  width: 100%;
   border-radius: 1px;
-  transition: width 0.1s linear;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.1s linear;
 }
 
 .story-progress-dots {
