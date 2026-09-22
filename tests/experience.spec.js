@@ -203,20 +203,23 @@ test("case study headings, captions, and screenshot tabs align to their columns"
     await expect(heading).toHaveCSS("justify-self", "start");
     await expect(heading).toHaveCSS("text-align", "left");
     await expect(caption).toHaveCSS("display", "block");
-    await expect(caption).toHaveCSS("max-width", "1000px");
+    await expect(caption).toHaveCSS("max-width", "none");
     await expect(caption.locator("p")).toHaveCSS("text-align", "left");
     const alignment = await caption.evaluate((element) => {
       const captionRect = element.getBoundingClientRect();
       const imageRect = element.nextElementSibling.getBoundingClientRect();
+      const containerRect = element.parentElement.getBoundingClientRect();
       return {
         left: Math.abs(captionRect.left - imageRect.left),
         right: Math.abs(captionRect.right - imageRect.right),
         width: Math.abs(captionRect.width - imageRect.width),
+        container: Math.abs(captionRect.width - containerRect.width),
       };
     });
     expect(alignment.left).toBeLessThan(1);
     expect(alignment.right).toBeLessThan(1);
     expect(alignment.width).toBeLessThan(1);
+    expect(alignment.container).toBeLessThan(1);
   }
 
   await page.keyboard.press("Escape");

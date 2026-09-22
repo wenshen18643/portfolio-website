@@ -337,8 +337,7 @@
 .exp-overlay[data-case="roblox"] .case-shot figcaption {
   display: block;
   width: 100%;
-  max-width: 1000px;
-  margin-inline: auto;
+  max-width: none;
 }
 .exp-overlay[data-case="roblox"] .case-shot figcaption strong {
   margin-bottom: 0.75rem;
@@ -348,6 +347,9 @@
   width: 100%;
   max-width: none;
   text-align: left;
+}
+.exp-overlay[data-case="roblox"] .case-shot img {
+  max-width: none;
 }
 .case-scroll {
   scrollbar-color: var(--accent) var(--bg);
