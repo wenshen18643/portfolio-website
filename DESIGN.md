@@ -50,4 +50,4 @@ The grouped poster rule lives in `css/base/reset.css` (`.hero-name, .bridge-text
 - **Agent terminal**: `--ink-deep` panel, lime prompt, cream agent lines, amber tool lines.
 - **Pills over chips**: tags, status, CTAs use 100px-radius pill shapes.
 - **Overlay (experience detail)**: full per-company theme worlds in `css/components/overlay-themes.css`, switched via `theme-<id>` classes and a decor layer. Beyond = darkroom (near-black, red safelight, content develops in from blur/sepia). Monash = ledger (ruled paper, numbered entry rows, "Audited ✓" stamp slam). HeadSpace = scrapbook (warm paper, taped polaroid proof, rotated sticky notes, Caveat handwriting accents).
-- **Side Projects act**: a dedicated ink-deep section after Experience, led by oversized poster typography and a simple editorial project row. Personal projects never sit inside the professional Experience story.
+- **Side Projects act**: an ink-deep subsection at the end of Experience, led by oversized poster typography and a simple editorial project row. It remains visually distinct from the professional story while sharing the same Experience destination.

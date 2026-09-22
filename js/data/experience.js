@@ -236,15 +236,15 @@ export const experienceData = {
   roblox: {
     company: "Roblox",
     intro:
-      "A personal game project in development. I’m keeping the details under wraps until I have gameplay worth showing.",
+      "A personal game project in development. This case study will use screenshots to explain the game, the systems behind it, and what I learned while building it.",
     roles: [{ title: "Personal project" }],
     sections: [
       {
-        title: "Inside the build.",
+        title: "Building the game.",
         paragraphs: [
-          "Gameplay footage and a closer look at the development process will be added here. Playtesting will open once the game is ready to share.",
+          "The final case study will begin with the game’s core idea, then show the mechanic I built, the Roblox Studio systems behind it, and one problem that changed how I approached the design.",
+          "Each screenshot will explain what the viewer is looking at, what I personally contributed, and why that part mattered. Playtesting will open when the game is ready to share.",
         ],
-        media: { label: "Gameplay preview", caption: "Recording coming soon." },
       },
     ],
   },

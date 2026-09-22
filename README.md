@@ -2,7 +2,7 @@
 
 A static HTML, CSS and JavaScript portfolio. The home page retains its original design. Experience buttons open scrollable case studies: an introduction, explanations of the work, and supporting images or video.
 
-Beyond Photography covers the customer bot, trading harness, and personal coding mode. Treasury follows code → AI-assisted work → scheduled work, retaining the original before/after recordings. HeadSpace covers space operations and community work. Roblox appears in a separate Side Projects section as a clearly labelled personal project.
+Beyond Photography covers the customer bot, trading harness, and personal coding mode. Treasury follows code → AI-assisted work → scheduled work, retaining the original before/after recordings. HeadSpace covers space operations and community work. Roblox appears in a Side Projects subsection within Experience as a clearly labelled personal project.
 
 ```sh
 npm ci

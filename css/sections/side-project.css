@@ -6,10 +6,11 @@
   --muted: oklch(0.73 0.06 135);
   --accent: var(--lime-bright);
   --border: oklch(0.36 0.06 148);
-  min-height: 100vh;
+  min-height: 90vh;
   padding: clamp(5rem, 10vw, 9rem) 6vw calc(var(--seam) + 6rem);
   color: var(--text);
   background: var(--bg);
+  border-top: 1px solid var(--border);
 }
 
 .side-projects-heading-wrap {
@@ -95,6 +96,7 @@
 @media (max-width: 760px) {
   #side-projects {
     min-height: auto;
+    margin-inline: -1.5rem;
     padding-inline: 1.5rem;
   }
 

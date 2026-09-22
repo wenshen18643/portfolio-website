@@ -20,7 +20,9 @@ for (const [id, title, count] of [
     await expect(page.locator("#overlayTitle")).toHaveText(title);
     await expect(page.locator(".case-intro")).not.toBeEmpty();
     await expect(page.locator(".case-section")).toHaveCount(count);
-    await expect(page.locator(".case-media").first()).toBeAttached();
+    if (id !== "roblox") {
+      await expect(page.locator(".case-media").first()).toBeAttached();
+    }
     await expect(
       page.locator(".demo-player, .demo-composer, .chapter-tabs"),
     ).toHaveCount(0);
@@ -80,14 +82,14 @@ test("mobile case studies fit without empty media placeholders", async ({
   await page.screenshot({ path: "test-results/case-mobile.png" });
 });
 
-test("Roblox lives in its own side-projects section and no AI calls are made", async ({
+test("Roblox lives in Side Projects within Experience and no AI calls are made", async ({
   page,
 }) => {
   const apiCalls = [];
   page.on("request", (request) => {
     if (request.url().includes("/api/chat")) apiCalls.push(request.url());
   });
-  await expect(page.locator('#experience [data-exp="roblox"]')).toHaveCount(0);
+  await expect(page.locator('#experience [data-exp="roblox"]')).toBeVisible();
   await expect(page.locator("#side-projects")).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Side Projects" }),
@@ -104,6 +106,9 @@ test("Roblox lives in its own side-projects section and no AI calls are made", a
     "personal game project",
   );
   await expect(page.getByRole("textbox")).toHaveCount(0);
+  await expect(
+    page.locator(".case-video-placeholder, .case-media video"),
+  ).toHaveCount(0);
   expect(apiCalls).toEqual([]);
 });
 
