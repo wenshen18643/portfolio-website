@@ -269,6 +269,32 @@ export const experienceData = {
           ],
         },
       },
+      {
+        title: "A warning before the money moves.",
+        nav: "Working demo",
+        paragraphs: [
+          "The working MVP runs directly on a supported bank-transfer page. It reads the transaction context, sends the relevant signals through the analysis pipeline, and returns a warning before the user confirms the transfer.",
+          "The two recordings show different reasons for intervention: suspicious wording and recipient details in one flow, then a late-night transfer to a first-time recipient for a round amount in the other. The warning explains the detected pattern while leaving the final decision with the user.",
+        ],
+        media: {
+          videos: [
+            {
+              src: new URL(
+                "../../videos/sentinel-demo-risk.mp4",
+                import.meta.url,
+              ).href,
+              label: "Suspicious transaction details demo",
+            },
+            {
+              src: new URL(
+                "../../videos/sentinel-demo-behavior.mp4",
+                import.meta.url,
+              ).href,
+              label: "Behavioral risk warning demo",
+            },
+          ],
+        },
+      },
     ],
   },
   roblox: {

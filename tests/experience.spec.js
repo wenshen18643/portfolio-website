@@ -10,7 +10,7 @@ for (const [id, title, count] of [
   ["monash", "Monash University Engineering Club", 2],
   ["headspace", "HeadSpace SS15", 1],
   ["roblox", "McFatty's", 5],
-  ["nextHack", "Sentinel", 1],
+  ["nextHack", "Sentinel", 2],
 ]) {
   test(`${id} opens a case study with explanation and media`, async ({
     page,
@@ -154,10 +154,18 @@ test("Side Projects links to both documented projects", async ({ page }) => {
   );
   await scene.locator('[data-exp="nextHack"]').click();
   await expect(page.locator("#overlayTitle")).toHaveText("Sentinel");
-  await expect(page.locator(".case-section")).toContainText(
+  await expect(page.locator(".case-section:visible")).toContainText(
     "Risk, Behavior, and Anomaly agents",
   );
   await expect(page.locator(".case-shot img")).toHaveCount(1);
+  await page.getByRole("tab", { name: "Working demo" }).click();
+  const videos = page.locator(".case-section:visible video");
+  await expect(videos).toHaveCount(2);
+  for (const video of await videos.all()) {
+    await expect(video).toHaveAttribute("controls", "");
+    const response = await page.request.get(await video.getAttribute("src"));
+    expect(response.ok()).toBe(true);
+  }
 });
 
 test("experience transitions linger and project actions stand out", async ({
