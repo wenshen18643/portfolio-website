@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
 for (const [id, title, count] of [
   ["beyond", "Beyond Photography", 3],
   ["monash", "Monash Engineering Club", 2],
-  ["headspace", "HeadSpace SS15", 2],
+  ["headspace", "HeadSpace SS15", 1],
   ["roblox", "McFatty's", 5],
 ]) {
   test(`${id} opens a case study with explanation and media`, async ({
@@ -48,6 +48,21 @@ test("treasury keeps the original recordings with native controls", async ({
     "First, I wrote the code.",
     "Then AI made it a daily workflow.",
   ]);
+});
+
+test("HeadSpace keeps its story with the illustrated chapter only", async ({
+  page,
+}) => {
+  await page.locator('[data-exp="headspace"]').click();
+  await expect(page.locator(".case-index button")).toHaveCount(1);
+  await expect(page.locator(".case-index button")).toHaveText(
+    "The everyday work.",
+  );
+  await expect(page.locator(".case-section")).toContainText("community events");
+  await expect(page.locator(".case-section img")).toHaveCount(1);
+  await expect(
+    page.getByRole("tab", { name: "A space is also its people." }),
+  ).toHaveCount(0);
 });
 
 test("mobile case studies fit without empty media placeholders", async ({

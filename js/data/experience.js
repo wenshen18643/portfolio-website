@@ -219,6 +219,8 @@ export const experienceData = {
         title: "The everyday work.",
         paragraphs: [
           "I supported a space with more than 20 tenants, coordinated bookings, and handled tenant questions. Some days that meant keeping the Wi-Fi and printers working; others meant listening carefully enough to understand what someone actually needed.",
+          "I helped coordinate community events and kept communication moving between the people using the space. The work required organisation, but also patience when plans changed or something stopped working.",
+          "That experience still shapes how I approach software: understand the person and the problem first, then work out what needs fixing. The technical solution is only part of the job.",
         ],
         media: {
           image: new URL(
@@ -228,13 +230,6 @@ export const experienceData = {
           label: "HeadSpace SS15",
           caption: "The co-working space where I started.",
         },
-      },
-      {
-        title: "A space is also its people.",
-        paragraphs: [
-          "I helped coordinate community events and kept communication moving between the people using the space. The work required organisation, but also patience when plans changed or something stopped working.",
-          "That experience still shapes how I approach software: understand the person and the problem first, then work out what needs fixing. The technical solution is only part of the job.",
-        ],
       },
     ],
   },
