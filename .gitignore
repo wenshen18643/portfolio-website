@@ -36,3 +36,4 @@ PRODUCT.md
 dist/
 test-results/
 playwright-report/
+.env*

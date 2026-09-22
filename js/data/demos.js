@@ -1,29 +1,3 @@
-export const onboardingQuestions = [
-  [
-    "What language would you like to chat in?",
-    ["English", "Bahasa Melayu", "中文"],
-  ],
-  [
-    "What should I call you? Use a fictional name for this demo.",
-    ["Alex", "Sam"],
-  ],
-  [
-    "How much trading experience do you have?",
-    ["Beginner", "Intermediate", "Advanced"],
-  ],
-  ["Which markets interest you?", ["Gold", "Forex", "Crypto"]],
-  ["What’s your trading style?", ["Intraday", "Swing", "Scalping"]],
-  ["How would you describe your risk appetite?", ["Low", "Medium", "High"]],
-  [
-    "Let’s use the fictional MT5 account 880042 for this walkthrough.",
-    ["Use demo account"],
-  ],
-  [
-    "Trading involves risk. Accept the sample disclaimer to submit this fictional account for review.",
-    ["Accept disclaimer", "Decline"],
-  ],
-];
-
 export const chapters = [
   {
     title: "The customer service bot",

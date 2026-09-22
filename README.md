@@ -1,27 +1,25 @@
 # Wen-Shen’s portfolio
 
-A static HTML, CSS, and JavaScript portfolio. The interactive stories run entirely in the browser using fictional data. No API keys, backend, Mei checkout, WhatsApp membership, broker, or AI service is required.
+HTML, CSS, and JavaScript with a server-only AI chat endpoint. Open Beyond Photography for the customer bot, trading harness, and personal-mode chapters. Open Head Treasurer for code → AI → scheduled work. Side projects contains the Roblox work in progress.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open the local URL printed by Vite. To build a portable static site, run `npm run build` and serve `dist/`.
+The demo account runs locally in the visitor’s browser. Trades, quotes, strategies, customer details, and workspace actions are fictional. The account remembers positions and balances across chapters until the experience is closed or the page is reloaded. No real broker or WhatsApp connection exists.
 
-## Stories
+## AI configuration
 
-- Customer service: full profile onboarding, consent, marketplace registration and verification, sample retrieval citations, and an illustrative prompt-injection boundary.
-- Trading harness: fictional MT5 account 880042, configurable order proposals, a local per-order risk check, cancellation and confirmation. Prices and contract assumptions are fixed examples.
-- Personal mode: a fictional owner workspace with task, draft, review, and handoff actions.
-- Treasury: code → AI-assisted review → a scheduled workflow preview, using the same sample claims. Original before/after recordings remain available.
-- Side project: Roblox work in progress. Replace the placeholder with supplied gameplay and a permitted playtest link later.
+Set `OPENROUTER_API_KEY` and `OPENROUTER_MODEL` in `.env.local` for local development, or in the Vercel project’s Production and Preview environment variables. Never prefix the key with `VITE_`: it must only be read by the server. `.env.local` is ignored by Git. No runtime dependency on the Mei repository exists.
 
-Edit `js/data/demos.js` for narrated scenes and `js/modules/demos.js` for interactive behavior. Personal mode and later treasury stages are illustrative; replace their scripts with verified details before describing them as production behavior. The sample retrieval answers are deterministic, not a live RAG evaluation.
+Vercel serves `api/chat.js` as a server function; Vite provides the same endpoint during development. The model interprets casual messages and answers questions. The deterministic account engine validates proposals, requires confirmation, and calculates account state. Offline/provider-failure mode remains usable and is explicitly labeled OFFLINE DEMO. Personal-mode free text uses the same model but cannot execute commands.
 
-Playback starts on request, supports pause/previous/next/seek, and pauses offscreen or when the browser tab is hidden. All stories have a separate interactive mode. Reduced-motion preferences disable decorative animation.
+Each model request is bounded to 500 output tokens, 20 seconds, and a 16 KB request. The endpoint has a 20 requests/minute/IP in-memory limit; this is per warm function instance, not a global billing cap. Configure provider spending limits or a shared gateway limit for a global budget.
 
-## Checks
+Chat history and simulated account context are sent to OpenRouter for replies. Only enter fictional details. Private history from the source project was consulted to understand workflows and is not bundled or sent to the model.
+
+## Checks and deployment
 
 ```sh
 npm run lint:fix
@@ -32,4 +30,6 @@ npx playwright install chromium
 npm test
 ```
 
-Browser tests cover consent, marketplace verification, order risk/confirmation/cancellation, unsafe text rendering, chapter switching, personal handoff, treasury preview, and mobile overflow. This is plain JavaScript, so no separate type compilation is configured.
+Vercel builds with `npm run build`, serves `dist/`, and deploys the API function. A static-only host can run the offline demo but cannot provide AI replies. Plain JavaScript has no separate type compilation step.
+
+Tests cover conversation state, onboarding consent, strategy verification, trade risk, confirmations, closures, P&L, model routing, key isolation, failure fallback, and mobile/modal navigation. Edit `js/data/demos.js` for walkthroughs, `js/modules/demo-bot.js` for account behavior, and `api/chat.js` for model instructions. Roblox gameplay and a permitted playtest link can be added when supplied.

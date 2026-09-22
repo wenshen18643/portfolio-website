@@ -5,6 +5,7 @@
 
 import { prefersReducedMotion } from './utils.js';
 import { experienceData } from '../data/experience.js';
+import { mountDemo } from './demos.js';
 
 const overlayThemeClasses = ['theme-beyond', 'theme-monash', 'theme-headspace'];
 
@@ -19,7 +20,7 @@ const overlayThemeDecorations = {
  *
  * @param {Object} data - Experience entry data object.
  */
-function buildOverlayContent(data) {
+function buildOverlayContent(data, experienceId) {
   const watermarkElement = document.getElementById('overlayWatermark');
   const leftPanel = document.getElementById('overlayLeft');
   const bodyPanel = document.getElementById('overlayBody');
@@ -142,7 +143,7 @@ function buildOverlayContent(data) {
   `;
 
   bodyPanel.innerHTML = `
-    ${contentHtml}
+    ${["beyond", "monash"].includes(experienceId) ? '<div id="experience-demo" class="zone-dark"></div>' : contentHtml}
     ${noteHtml}
     ${proofHtml}
     ${peopleHtml}
@@ -156,6 +157,7 @@ export function initializeOverlay() {
   const overlay = document.getElementById('expOverlay');
   const closeButton = document.getElementById('overlayClose');
   let lastFocusedElement = null;
+  let disposeDemo = () => {};
 
   const initialRevealDelay = 150;
   const revealStaggerMilliseconds = 90;
@@ -172,7 +174,11 @@ export function initializeOverlay() {
     decorContainer.classList.remove('decor-in');
     decorContainer.innerHTML = overlayThemeDecorations[experienceId] || '';
 
-    buildOverlayContent(data);
+    disposeDemo();
+    overlay.classList.toggle("has-demo", experienceId !== "headspace");
+    buildOverlayContent(data, experienceId);
+    const demoRoot = document.getElementById("experience-demo");
+    disposeDemo = demoRoot ? mountDemo(demoRoot, experienceId) : () => {};
     overlay.removeAttribute('hidden');
 
     requestAnimationFrame(() => {
@@ -204,15 +210,17 @@ export function initializeOverlay() {
 
     closeButton.focus();
     document.body.style.overflow = 'hidden';
+    document.querySelector('main').inert = true;
   }
 
   function closeOverlay() {
+    disposeDemo();
+    overlay.querySelectorAll('video').forEach(video => video.pause());
     overlay.classList.remove('open');
-    overlay.addEventListener('transitionend', () => {
-      overlay.setAttribute('hidden', '');
-      document.body.style.overflow = '';
-      if (lastFocusedElement) lastFocusedElement.focus();
-    }, { once: true });
+    overlay.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+    document.querySelector('main').inert = false;
+    if (lastFocusedElement) lastFocusedElement.focus();
   }
 
   document.querySelectorAll('.story-cta[data-exp]').forEach(card => {
@@ -222,7 +230,15 @@ export function initializeOverlay() {
   closeButton.addEventListener('click', closeOverlay);
 
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && overlay.classList.contains('open')) closeOverlay();
+    if (!overlay.classList.contains('open')) return;
+    if (event.key === 'Escape') closeOverlay();
+    if (event.key === 'Tab') {
+      const focusable = [...overlay.querySelectorAll('button, a, input, select, summary, video[controls]')].filter(element => !element.disabled && element.getClientRects().length);
+      const first = focusable[0];
+      const last = focusable.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
   });
 }
 
