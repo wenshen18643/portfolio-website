@@ -572,3 +572,15 @@
   display: block;
   margin-bottom: 0.4rem;
 }
+
+.restart-demo {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font: 0.72rem var(--font-body);
+  padding: 0.5rem 0.7rem;
+  border-radius: 6px;
+}
+.screen-bar .screen-status {
+  margin-left: auto;
+}

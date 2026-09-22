@@ -16,7 +16,7 @@ export function mountDemo(root, experienceId) {
       "<p><strong>01 / Pure code</strong>Python pulled Asana data, cleaned it, and updated the budget tracker.</p><p><strong>02 / AI got better</strong>The workflow evolved from moving rows to helping review claims and spot missing information.</p><p><strong>03 / Scheduled work</strong>Prepare the review on a schedule and bring the exceptions back to me.</p>";
     return () => {};
   }
-  const bot = createDemoBot();
+  let bot = createDemoBot();
   const history = [];
   let chapter = 0;
   let controller;
@@ -28,11 +28,11 @@ export function mountDemo(root, experienceId) {
   root.dataset.surface = "chat";
   root.innerHTML = `<div class="chapter-tabs" aria-label="Demo chapters"></div>
     <div class="demo-stage"><div class="demo-screen zone-dark">
-    <div class="screen-bar"><span class="screen-name">Mei</span><span class="screen-status">DEMO</span></div>
+    <div class="screen-bar"><span class="screen-name">Mei</span><span class="screen-status">DEMO</span><button type="button" class="restart-demo">Restart demo</button></div>
     <div class="account-strip" hidden>MT5 880042 · <span class="account-balance"></span> · <span class="position-count"></span></div>
     <div class="demo-feed" role="log" aria-live="polite" aria-label="Demo transcript"></div>
-    <form class="demo-composer"><input maxlength="500" autocomplete="off" placeholder="输入消息…" aria-label="Message the simulated assistant"><button type="submit" aria-label="Send message">↑</button></form>
-    </div></div><p class="scene-detail">AI chat · fictional account and prices · no real orders</p>`;
+    <form class="demo-composer"><input maxlength="500" autocomplete="off" placeholder="Message Mei…" aria-label="Message the simulated assistant"><button type="submit" aria-label="Send message">↑</button></form>
+    </div></div><p class="scene-detail">Fictional account · this tab only · Restart clears chat, language and trades</p>`;
   const find = (selector) => root.querySelector(selector);
   const feed = find(".demo-feed");
   const input = find("input");
@@ -174,13 +174,23 @@ export function mountDemo(root, experienceId) {
     if (index === 0) addMessage("Mei", bot.send("start onboarding").text);
     else {
       bot.leaveOnboarding();
+      const chinese = bot.context().profile.language === "Mandarin";
       addMessage(
         "Mei",
         index === 1
-          ? "模拟账户 880042 已就绪。你可以让我查看策略、下单、查询持仓或平仓。比如：买入 0.01 手黄金，止损 2390，止盈 2420。"
-          : "这里是个人工作区演示。你想让我帮你处理什么任务？",
+          ? chinese
+            ? "模拟账户 880042 已就绪。你可以让我查看策略、下单、查询持仓或平仓。"
+            : "Demo account 880042 is ready. Ask me to check strategies, place an order, or show positions."
+          : chinese
+            ? "这里是个人工作区演示。你想让我帮你处理什么任务？"
+            : "This is the personal workspace demo. What would you like to work on?",
       );
     }
+    input.value = "";
+    input.placeholder =
+      bot.context().profile.language === "Mandarin"
+        ? "输入消息…"
+        : "Message Mei…";
     renderAccount();
   }
   ["Customer service", "Trading harness", "Personal mode"].forEach(
@@ -201,6 +211,12 @@ export function mountDemo(root, experienceId) {
     if (!text || waiting) return;
     input.value = "";
     sendMessage(text);
+  });
+  find(".restart-demo").addEventListener("click", () => {
+    controller?.abort();
+    bot = createDemoBot();
+    selectChapter(0);
+    input.focus();
   });
   selectChapter(0);
   return () => {

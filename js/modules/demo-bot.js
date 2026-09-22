@@ -43,7 +43,7 @@ export function createDemoBot() {
     pending: null,
     draft: null,
     onboarding: -1,
-    profile: { language: "Mandarin" },
+    profile: {},
     registered: false,
     verified: false,
     registration: null,
@@ -230,6 +230,7 @@ export function createDemoBot() {
     const language = normalizeLanguage(text, {});
     if (language) {
       state.profile.language = language.value;
+      if (state.onboarding === 0) state.onboarding = 1;
       return state.onboarding >= 0
         ? askProfile()
         : reply(
@@ -239,6 +240,16 @@ export function createDemoBot() {
           );
     }
     if (!text) return reply("What would you like to check?", suggestions);
+    if (
+      state.onboarding >= 0 &&
+      /\b(buy|sell|copy|claim|strategies|strats|marketplace)\b|策略市场|买入|卖出/.test(
+        text.toLowerCase(),
+      ) &&
+      !/\?|\b(?:how|what|why)\b|什么|怎么/.test(text.toLowerCase())
+    ) {
+      return askProfile();
+    }
+
     if (
       /ignore.{0,40}instruction|reveal.{0,40}(prompt|customer|secret)|bypass|system prompt/i.test(
         text,
@@ -484,10 +495,18 @@ export function createDemoBot() {
       return updateOrder(text);
     }
     if (/onboard|sign up|start onboarding|restart onboarding/i.test(text)) {
-      state.onboarding = 1;
+      if (state.profile.onboardingComplete)
+        return reply(
+          "Welcome back to the strategy marketplace. Explore Trend Follow, Gold Intraday, or Reversal Watch. Which would you like to try?",
+        );
+      state.onboarding = state.profile.language ? 1 : 0;
       return askProfile();
     }
     if (state.onboarding >= 0) {
+      if (state.onboarding === 0)
+        return reply(
+          "What language would you like to use? Type its name, for example Chinese, English, or Bahasa Melayu.",
+        );
       if (state.onboarding === 7) {
         if (
           !/^(i accept|accept|agree|i agree|accept disclaimer|接受|我接受|同意|我同意)$/i.test(
@@ -507,8 +526,9 @@ export function createDemoBot() {
           ]);
         }
         state.onboarding = -1;
+        state.profile.onboardingComplete = true;
         return reply(
-          `Thanks, ${state.profile.name || "Alex"}. Demo MT5 880042 is submitted for review. Marketplace verification is separate.`,
+          `Thanks, ${state.profile.name || "Alex"}. Demo MT5 880042 is submitted for review. In this demo, that review is simulated. Next is the strategy marketplace: Trend Follow, Gold Intraday, and Reversal Watch. Which would you like to explore? Marketplace registration and email verification are still required before strategy setup.`,
           ["Check strategies for gold", "Show balance"],
         );
       }
