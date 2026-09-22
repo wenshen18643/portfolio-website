@@ -1,0 +1,100 @@
+.demo-eyebrow {
+  display: block;
+  font: 0.7rem/1.7 var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.roblox-project {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding: 3rem 0;
+  color: var(--text);
+}
+.roblox-project h3 {
+  font: 600 clamp(2rem, 4vw, 3.5rem)/1.08 var(--font-body);
+  letter-spacing: -0.04em;
+  margin: 1.2rem 0;
+}
+.roblox-project p {
+  color: var(--text-dim);
+  max-width: 460px;
+  font-size: 0.95rem;
+}
+.development-note {
+  display: block;
+  margin-top: 1.8rem;
+  color: var(--muted);
+  font: 0.65rem/1.8 var(--font-mono);
+}
+.roblox-art {
+  height: 320px;
+  position: relative;
+  overflow: hidden;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.roblox-art span {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 1.2rem;
+  font: 0.6rem var(--font-mono);
+  color: var(--muted);
+}
+.build-block {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  transform: rotate(-25deg) skew(10deg, 10deg);
+  box-shadow: -15px 15px 0 var(--accent-soft);
+}
+.block-one {
+  top: 100px;
+  left: 22%;
+}
+.block-two {
+  top: 60px;
+  left: 48%;
+}
+.block-three {
+  top: 155px;
+  left: 53%;
+  width: 65px;
+  height: 65px;
+}
+
+@media (max-width: 760px) {
+  .roblox-project {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.experience-project {
+  margin: 0 6vw;
+  padding-bottom: calc(var(--seam) + 4rem);
+}
+.project-case-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.8rem 1.3rem;
+  border-radius: 100px;
+  background: transparent;
+  cursor: pointer;
+  font: 0.75rem var(--font-mono);
+}
+.project-case-link:hover {
+  color: var(--bg);
+  background: var(--accent);
+}

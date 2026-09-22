@@ -1,0 +1,94 @@
+import { test, expect } from "@playwright/test";
+
+test.beforeEach(async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+});
+
+for (const [id, title, count] of [
+  ["beyond", "Beyond Photography", 4],
+  ["monash", "Monash Engineering Club", 3],
+  ["headspace", "HeadSpace SS15", 2],
+  ["roblox", "Roblox", 1],
+]) {
+  test(`${id} opens a case study with explanation and media`, async ({
+    page,
+  }) => {
+    const opener = page.locator(`[data-exp="${id}"]`);
+    await opener.click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await expect(page.locator("#overlayTitle")).toHaveText(title);
+    await expect(page.locator(".case-intro")).not.toBeEmpty();
+    await expect(page.locator(".case-section")).toHaveCount(count);
+    await expect(page.locator(".case-media").first()).toBeAttached();
+    await expect(
+      page.locator(".demo-player, .demo-composer, .chapter-tabs"),
+    ).toHaveCount(0);
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).toBeHidden();
+    await expect(opener).toBeFocused();
+  });
+}
+
+test("treasury keeps the original recordings with native controls", async ({
+  page,
+}) => {
+  await page.locator('[data-exp="monash"]').click();
+  const videos = page.locator(".case-media video");
+  await expect(videos).toHaveCount(2);
+  for (const video of await videos.all()) {
+    await expect(video).toHaveAttribute("controls", "");
+    await expect(video).not.toHaveAttribute("autoplay");
+    const response = await page.request.get(await video.getAttribute("src"));
+    expect(response.ok()).toBe(true);
+  }
+  await expect(page.locator(".case-copy h3")).toHaveText([
+    "First, I wrote the code.",
+    "Then AI got better.",
+    "From running it to scheduling it.",
+  ]);
+});
+
+test("mobile case studies fit and placeholders do not pretend to be videos", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator('[data-exp="beyond"]').click();
+  const scroll = page.locator(".case-scroll");
+  expect(
+    await scroll.evaluate(
+      (element) => element.scrollWidth <= element.clientWidth,
+    ),
+  ).toBe(true);
+  await expect(page.locator(".case-video-placeholder")).toHaveCount(3);
+  await expect(
+    page.locator(
+      ".case-video-placeholder button, .case-video-placeholder video",
+    ),
+  ).toHaveCount(0);
+  await page.getByRole("button", { name: "Close experience detail" }).focus();
+  await page.keyboard.press("Shift+Tab");
+  await expect(
+    page.getByRole("button", { name: "Back to the portfolio" }),
+  ).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("button", { name: "Close experience detail" }),
+  ).toBeFocused();
+  await page.screenshot({ path: "test-results/case-mobile.png" });
+});
+
+test("Roblox is a personal project inside experience and no AI calls are made", async ({
+  page,
+}) => {
+  const apiCalls = [];
+  page.on("request", (request) => {
+    if (request.url().includes("/api/chat")) apiCalls.push(request.url());
+  });
+  await expect(page.locator('#experience [data-exp="roblox"]')).toBeVisible();
+  await expect(page.locator("#projects")).toHaveCount(0);
+  await page.locator('[data-exp="roblox"]').click();
+  await expect(page.locator(".case-roles")).toContainText("Personal project");
+  await expect(page.getByRole("textbox")).toHaveCount(0);
+  expect(apiCalls).toEqual([]);
+});
