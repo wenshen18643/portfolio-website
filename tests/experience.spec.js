@@ -166,6 +166,10 @@ test("Side Projects links to both documented projects", async ({ page }) => {
     const response = await page.request.get(await video.getAttribute("src"));
     expect(response.ok()).toBe(true);
   }
+  const videoHeights = await videos.evaluateAll((elements) =>
+    elements.map((video) => video.getBoundingClientRect().height),
+  );
+  expect(Math.abs(videoHeights[0] - videoHeights[1])).toBeLessThan(1);
 });
 
 test("experience transitions linger and project actions stand out", async ({
